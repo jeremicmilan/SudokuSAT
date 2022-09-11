@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using Google.OrTools.Sat;
 
@@ -15,6 +17,23 @@ namespace SudokuSAT
         public int BoxSize { get; private set; }
 
         public SudokuCell[,] SudokuGrid { get; private set; }
+        public List<SudokuCell> SudokuCells
+        {
+            get
+            {
+                List<SudokuCell> sudokuCells = new();
+
+                for (var column = 0; column < Width; column++)
+                {
+                    for (var row = 0; row < Height; row++)
+                    {
+                        sudokuCells.Add(SudokuGrid[column, row]);
+                    }
+                }
+
+                return sudokuCells;
+            }
+        }
 
         public MainWindow Window { get; private set; }
 
@@ -34,7 +53,8 @@ namespace SudokuSAT
                 StringParameters = "enumerate_all_solutions:true"
             };
 
-            CpSolverStatus solverStatus = solver.Solve(GenerateModel(), new SolutionCounter(this, solver));
+            CpModel model = GenerateModel();
+            CpSolverStatus solverStatus = solver.Solve(model, new SolutionCounter(this, solver));
 
             switch (solverStatus)
             {
@@ -56,6 +76,51 @@ namespace SudokuSAT
                     break;
             }
         }
+
+        public void Explore()
+        {
+            new Thread(ExploreInternal).Start();
+        }
+
+        public void ExploreInternal()
+        {
+            Thread.CurrentThread.Name = "Explore";
+
+            ParallelOptions parallelOptions = new();
+            parallelOptions.MaxDegreeOfParallelism = Environment.ProcessorCount - 2;
+            Parallel.ForEach(SudokuCells, parallelOptions, (sudokuCell) =>
+            {
+                for (int i = SudokuCell.MinValue; i <= SudokuCell.MaxValue; i++)
+                {
+                    CpSolver solver = new();
+                    BoundedLinearExpression boundedLinearExpression = sudokuCell.ValueVar == i;
+                    CpModel model = GenerateModel();
+                    model.Add(sudokuCell.ValueVar == i);
+                    CpSolverStatus solverStatus = solver.Solve(model);
+                    switch (solverStatus)
+                    {
+                        case CpSolverStatus.Unknown:
+                        case CpSolverStatus.ModelInvalid:
+                            Window.statusLabel.Content = "Solver status: " + solverStatus;
+                            return;
+
+                        case CpSolverStatus.Infeasible:
+                            Window.solutionCount.Content = 0;
+                            break;
+
+                        case CpSolverStatus.Feasible:
+                        case CpSolverStatus.Optimal:
+                            sudokuCell.PossibleValues.Add(i);
+                            Window.Dispatcher.Invoke(() =>
+                            {
+                                sudokuCell.SolutionsLabel.Content = sudokuCell.PossibleValues.Count;
+                            });
+                            break;
+                    }
+                }
+            });
+        }
+
 
         private CpModel GenerateModel()
         {

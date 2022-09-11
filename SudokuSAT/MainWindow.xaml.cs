@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SudokuSAT
 {
@@ -36,6 +25,11 @@ namespace SudokuSAT
             GenerateGrid();
         }
 
+        private void Generate_Click(object sender, RoutedEventArgs e)
+        {
+            GenerateGrid();
+        }
+
         private void Solve_Click(object sender, RoutedEventArgs e)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
@@ -44,9 +38,9 @@ namespace SudokuSAT
             solveTime.Content = stopwatch.Elapsed;
         }
 
-        private void Generate_Click(object sender, RoutedEventArgs e)
+        private void Explore_Click(object sender, RoutedEventArgs e)
         {
-            GenerateGrid();
+            SudokuGrid.Explore();
         }
 
         private void GenerateGrid()
@@ -62,10 +56,17 @@ namespace SudokuSAT
             {
                 for (var row = 0; row < GridHeight; row++)
                 {
-                    var border = CreateBorder(column, row);
+                    Border border = CreateBorder(column, row);
                     SudokuCell sudokuCell = CreateCell(column, row);
                     SudokuGrid.SudokuGrid[column, row] = sudokuCell;
-                    border.Child = sudokuCell.TextBox;
+                    UniformGrid cellGrid = new()
+                    {
+                        Rows = 3,
+                        Columns = 3
+                    };
+                    cellGrid.Children.Add(sudokuCell.ValueTextBox);
+                    cellGrid.Children.Add(sudokuCell.SolutionsLabel);
+                    border.Child = cellGrid;
                     grid.Children.Add(border);
                 }
             }
@@ -90,15 +91,21 @@ namespace SudokuSAT
 
         private static SudokuCell CreateCell(int column, int row)
         {
-            var textBox = new TextBox
+            var valueTextBox = new TextBox
             {
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center
             };
 
-            SudokuCell sudokuCell = new(column, row, textBox);
+            var solutionsLabel = new Label
+            {
+                VerticalAlignment = VerticalAlignment.Bottom,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
 
-            textBox.TextChanged += sudokuCell.OnValueChanged;
+            SudokuCell sudokuCell = new(column, row, valueTextBox, solutionsLabel);
+
+            valueTextBox.TextChanged += sudokuCell.OnValueChanged;
 
             return sudokuCell;
         }

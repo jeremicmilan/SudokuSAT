@@ -1,5 +1,5 @@
 ﻿using Google.OrTools.Sat;
-using System;
+using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace SudokuSAT
@@ -19,21 +19,25 @@ namespace SudokuSAT
             set;
         }
 
+        public HashSet<int> PossibleValues { get; set; } = new();
+
         public void SetValue(int value)
         {
             Value = value;
-            TextBox.Text = value.ToString();
+            ValueTextBox.Text = value.ToString();
         }
 
         public IntVar? ValueVar { get; set; }
 
-        public TextBox TextBox { get; set; }
+        public TextBox ValueTextBox { get; set; }
+        public Label SolutionsLabel { get; set; }
 
-        public SudokuCell(int column, int row, TextBox textBox)
+        public SudokuCell(int column, int row, TextBox textBox, Label solutionsLabel)
         {
             Column = column;
             Row = row;
-            TextBox = textBox;
+            ValueTextBox = textBox;
+            SolutionsLabel = solutionsLabel;
         }
 
         public void OnValueChanged(object sender, TextChangedEventArgs textChangedEventArgs)
@@ -48,12 +52,17 @@ namespace SudokuSAT
                 }
             }
 
-            TextBox.Text = Value?.ToString();
+            ValueTextBox.Text = Value?.ToString();
         }
 
         internal void AddValueConstrainct(CpModel model)
         {
             ValueVar = model.NewIntVar(MinValue, MaxValue, "cell_c" + Column + "_r" + Row);
+
+            if (Value.HasValue)
+            {
+                model.Add(ValueVar == Value.Value);
+            }
         }
 
         internal void UpdateSolvedValue(CpSolver solver)

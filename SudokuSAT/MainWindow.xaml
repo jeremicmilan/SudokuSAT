@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SudokuSAT"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="131*"/>
-            <ColumnDefinition Width="69*"/>
+            <ColumnDefinition Width="800"/>
+            <ColumnDefinition Width="200*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="Solve" Grid.Column="1" Content="Solve" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Click="Solve_Click"/>
         <Button x:Name="Generate" Grid.Column="1" Content="Generate" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top" Click="Generate_Click"/>
+        <Button x:Name="Solve" Grid.Column="1" Content="Solve" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Click="Solve_Click"/>
+        <Button x:Name="Explore" Grid.Column="1" Content="Explore" HorizontalAlignment="Left" Margin="47,126,0,0" VerticalAlignment="Top" Click="Explore_Click"/>
         <Border x:Name="SudokuGridPlaceholder" Margin="10,10,10,10"/>
         <Slider x:Name="gridWidth" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="64" Minimum="1" Maximum="9" SmallChange="1" Value="9" IsSnapToTickEnabled="True" TickFrequency="1"/>
         <TextBox Text="{Binding Value, ElementName=gridWidth, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="79,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
@@ -22,7 +23,7 @@
         <TextBox Text="{Binding Value, ElementName=boxSize, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="79,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
         <Label x:Name="statusLabel" Grid.Column="1" Content="" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Height="207" Width="256"/>
         <Label x:Name="solveTime" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top" Width="99"/>
-        <Label x:Name="solutionCount" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="60,123,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="solutionCount" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="10,151,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
