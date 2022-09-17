@@ -21,7 +21,7 @@ namespace SudokuSAT
 
             ParallelOptions parallelOptions = new()
             {
-                MaxDegreeOfParallelism = Environment.ProcessorCount - 2
+                MaxDegreeOfParallelism = sudoku.Height
             };
             Parallel.ForEach(sudoku.SudokuCells, parallelOptions, (sudokuCell) =>
             {
