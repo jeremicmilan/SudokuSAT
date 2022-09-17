@@ -126,5 +126,26 @@ namespace SudokuSAT
         {
             model.AddAllDifferent(cells.Select(cell => cell.ValueVar));
         }
+
+        internal void Load()
+        {
+            int?[,] values = new int?[9, 9]
+            {
+                { null,    3, null, null, null, null, null,    6, null, },
+                {    7, null, null, null,    8, null, null, null,    5, },
+                {    2, null, null, null, null, null,    9, null,    1, },
+                { null, null, null,    3, null, null,    7, null, null, },
+                { null, null, null,    4, null,    8,    5, null, null, },
+                {    4,    7, null, null, null,    5, null, null, null, },
+                {    6,    2,    7, null, null,    9,    1, null, null, },
+                { null, null,    3,    7,    4,    2,    6, null,    9, },
+                {    9,    5, null, null, null,    1, null,    8,    7, },
+            };
+
+            foreach (SudokuCell sudokuCell in SudokuCells)
+            {
+                sudokuCell.SetValue(values[sudokuCell.Column, sudokuCell.Row]);
+            }
+        }
     }
 }

@@ -21,10 +21,10 @@ namespace SudokuSAT
 
         public HashSet<int> PossibleValues { get; set; } = new();
 
-        public void SetValue(int value)
+        public void SetValue(int? value)
         {
             Value = value;
-            ValueTextBox.Text = value.ToString();
+            ValueTextBox.Text = value.HasValue ? value.ToString() : "";
         }
 
         public IntVar? ValueVar { get; set; }

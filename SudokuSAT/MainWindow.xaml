@@ -24,6 +24,7 @@
         <Label x:Name="statusLabel" Grid.Column="1" Content="" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Height="207" Width="256"/>
         <Label x:Name="solveTime" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top" Width="99"/>
         <Label x:Name="solutionCount" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="10,151,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="Load" Grid.Column="1" Content="Load" HorizontalAlignment="Left" Margin="95,126,0,0" VerticalAlignment="Top" Click="Load_Click"/>
 
     </Grid>
 </Window>

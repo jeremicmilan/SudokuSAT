@@ -47,6 +47,11 @@ namespace SudokuSAT
             new Thread(() => SudokuSolver.Explore(Sudoku)).Start();
         }
 
+        private void Load_Click(object sender, RoutedEventArgs e)
+        {
+            Sudoku.Load();
+        }
+
         private void GenerateGrid()
         {
             Sudoku = new(GridWidth, GridHeight, BoxSize);
