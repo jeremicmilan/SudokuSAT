@@ -50,15 +50,15 @@ namespace SudokuSAT
         private void GenerateGrid()
         {
             Sudoku = new(GridWidth, GridHeight, BoxSize);
-            UniformGrid grid = new()
+            UniformGrid mainGrid = new()
             {
-                Rows = GridWidth,
-                Columns = GridHeight
+                Rows = GridHeight,
+                Columns = GridWidth
             };
 
-            for (var column = 0; column < GridWidth; column++)
+            for (var row = 0; row < GridHeight; row++)
             {
-                for (var row = 0; row < GridHeight; row++)
+                for (var column = 0; column < GridWidth; column++)
                 {
                     Border border = CreateBorder(column, row);
                     SudokuCell sudokuCell = CreateCell(column, row);
@@ -71,20 +71,20 @@ namespace SudokuSAT
                     cellGrid.Children.Add(sudokuCell.ValueTextBox);
                     cellGrid.Children.Add(sudokuCell.SolutionsLabel);
                     border.Child = cellGrid;
-                    grid.Children.Add(border);
+                    mainGrid.Children.Add(border);
                 }
             }
 
-            SudokuGridPlaceholder.Child = grid;
+            SudokuGridPlaceholder.Child = mainGrid;
         }
 
         private Border CreateBorder(int column, int row)
         {
             int thick = 3, thin = 1;
-            var left = row % BoxSize == 0 ? thick : thin;
-            var top = column % BoxSize == 0 ? thick : thin;
-            var right = row == GridHeight - 1 ? thick : 0;
-            var bottom = column == GridWidth - 1 ? thick : 0;
+            var top = row % BoxSize == 0 ? thick : thin;
+            var left = column % BoxSize == 0 ? thick : thin;
+            var bottom = row == GridHeight - 1 ? thick : 0;
+            var right = column == GridWidth - 1 ? thick : 0;
 
             return new Border
             {

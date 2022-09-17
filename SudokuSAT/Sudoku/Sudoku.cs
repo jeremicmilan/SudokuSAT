@@ -71,8 +71,8 @@ namespace SudokuSAT
 
         private SudokuCell[] GetColumn(int columnNumber)
         {
-            return Enumerable.Range(0, SudokuGrid.GetLength(0))
-                    .Select(x => SudokuGrid[x, columnNumber])
+            return Enumerable.Range(0, SudokuGrid.GetLength(1))
+                    .Select(x => SudokuGrid[columnNumber, x])
                     .ToArray();
         }
 
@@ -86,8 +86,8 @@ namespace SudokuSAT
 
         private SudokuCell[] GetRow(int rowNumber)
         {
-            return Enumerable.Range(0, SudokuGrid.GetLength(1))
-                    .Select(x => SudokuGrid[rowNumber, x])
+            return Enumerable.Range(0, SudokuGrid.GetLength(0))
+                    .Select(x => SudokuGrid[x, rowNumber])
                     .ToArray();
         }
 
