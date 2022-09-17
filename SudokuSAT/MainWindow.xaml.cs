@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -15,13 +16,16 @@ namespace SudokuSAT
         public int GridHeight => (int)gridHeight.Value;
         public int BoxSize => (int)boxSize.Value;
 
-        private Sudoku SudokuGrid;
+        private readonly SudokuSolver SudokuSolver;
+
+        private Sudoku Sudoku;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            SudokuGrid = new(GridWidth, GridHeight, BoxSize, this); // For compiler to shut up
+            SudokuSolver = new(this);
+            Sudoku = new(GridWidth, GridHeight, BoxSize); // For compiler to shut up
             GenerateGrid();
         }
 
@@ -33,19 +37,19 @@ namespace SudokuSAT
         private void Solve_Click(object sender, RoutedEventArgs e)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
-            SudokuGrid.Solve();
+            SudokuSolver.Solve(Sudoku);
             stopwatch.Stop();
             solveTime.Content = stopwatch.Elapsed;
         }
 
         private void Explore_Click(object sender, RoutedEventArgs e)
         {
-            SudokuGrid.Explore();
+            new Thread(() => SudokuSolver.Explore(Sudoku)).Start();
         }
 
         private void GenerateGrid()
         {
-            SudokuGrid = new(GridWidth, GridHeight, BoxSize, this);
+            Sudoku = new(GridWidth, GridHeight, BoxSize);
             UniformGrid grid = new()
             {
                 Rows = GridWidth,
@@ -58,7 +62,7 @@ namespace SudokuSAT
                 {
                     Border border = CreateBorder(column, row);
                     SudokuCell sudokuCell = CreateCell(column, row);
-                    SudokuGrid.SudokuGrid[column, row] = sudokuCell;
+                    Sudoku.SudokuGrid[column, row] = sudokuCell;
                     UniformGrid cellGrid = new()
                     {
                         Rows = 3,

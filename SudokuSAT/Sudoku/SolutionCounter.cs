@@ -8,25 +8,25 @@ namespace SudokuSAT
     {
         public const int MaxSolutionCount = 100;
 
-        Sudoku Sudoku { get; set; }
+        SudokuSolver SudokuSolver { get; set; }
         CpSolver Solver { get; set; }
 
         private int SolutionCount { get; set; }
 
-        public SolutionCounter(Sudoku sudoku, CpSolver solver)
+        public SolutionCounter(SudokuSolver sudokuSolver, CpSolver solver)
         {
-            Sudoku = sudoku;
+            SudokuSolver = sudokuSolver;
             Solver = solver;
         }
 
         public override void OnSolutionCallback()
         {
             SolutionCount++;
-            Sudoku.Window.solutionCount.Content = SolutionCount;
+            SudokuSolver.Window.solutionCount.Content = SolutionCount;
 
             if (SolutionCount > MaxSolutionCount)
             {
-                Sudoku.Window.solutionCount.Content = MaxSolutionCount + "+";
+                SudokuSolver.Window.solutionCount.Content = MaxSolutionCount + "+";
                 Solver.StopSearch();
             }
         }

@@ -35,94 +35,15 @@ namespace SudokuSAT
             }
         }
 
-        public MainWindow Window { get; private set; }
-
-        public Sudoku(int width, int height, int boxSize, MainWindow window)
+        public Sudoku(int width, int height, int boxSize)
         {
             Width = width;
             Height = height;
             SudokuGrid = new SudokuCell[Width, Height];
             BoxSize = boxSize;
-            Window = window;
         }
 
-        public void Solve()
-        {
-            CpSolver solver = new()
-            {
-                StringParameters = "enumerate_all_solutions:true"
-            };
-
-            CpModel model = GenerateModel();
-            CpSolverStatus solverStatus = solver.Solve(model, new SolutionCounter(this, solver));
-
-            switch (solverStatus)
-            {
-                case CpSolverStatus.Unknown:
-                case CpSolverStatus.ModelInvalid:
-                    Window.statusLabel.Content = "Solver status: " + solverStatus;
-                    return;
-
-                case CpSolverStatus.Infeasible:
-                    Window.solutionCount.Content = 0;
-                    break;
-
-                case CpSolverStatus.Feasible:
-                case CpSolverStatus.Optimal:
-                    foreach (var sudokuCell in SudokuGrid)
-                    {
-                        sudokuCell.UpdateSolvedValue(solver);
-                    }
-                    break;
-            }
-        }
-
-        public void Explore()
-        {
-            new Thread(ExploreInternal).Start();
-        }
-
-        public void ExploreInternal()
-        {
-            Thread.CurrentThread.Name = "Explore";
-
-            ParallelOptions parallelOptions = new();
-            parallelOptions.MaxDegreeOfParallelism = Environment.ProcessorCount - 2;
-            Parallel.ForEach(SudokuCells, parallelOptions, (sudokuCell) =>
-            {
-                for (int i = SudokuCell.MinValue; i <= SudokuCell.MaxValue; i++)
-                {
-                    CpSolver solver = new();
-                    BoundedLinearExpression boundedLinearExpression = sudokuCell.ValueVar == i;
-                    CpModel model = GenerateModel();
-                    model.Add(sudokuCell.ValueVar == i);
-                    CpSolverStatus solverStatus = solver.Solve(model);
-                    switch (solverStatus)
-                    {
-                        case CpSolverStatus.Unknown:
-                        case CpSolverStatus.ModelInvalid:
-                            Window.statusLabel.Content = "Solver status: " + solverStatus;
-                            return;
-
-                        case CpSolverStatus.Infeasible:
-                            Window.solutionCount.Content = 0;
-                            break;
-
-                        case CpSolverStatus.Feasible:
-                        case CpSolverStatus.Optimal:
-                            sudokuCell.PossibleValues.Add(i);
-                            Window.Dispatcher.Invoke(() =>
-                            {
-                                sudokuCell.SolutionsLabel.Content = sudokuCell.PossibleValues.Count;
-                            });
-                            break;
-                    }
-                }
-            });
-        }
-
-
-        private CpModel GenerateModel()
+        public CpModel GenerateModel()
         {
             CpModel model = new();
             AddCellConstraints(model); // This must always be first
