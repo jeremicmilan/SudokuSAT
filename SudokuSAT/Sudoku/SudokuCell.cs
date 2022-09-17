@@ -1,4 +1,5 @@
 ﻿using Google.OrTools.Sat;
+using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 
@@ -8,7 +9,6 @@ namespace SudokuSAT
     {
         public const int MinValue = 1;
         public const int MaxValue = 9;
-
 
         public int Column { get; set; }
         public int Row { get; set; }
@@ -38,6 +38,11 @@ namespace SudokuSAT
             Row = row;
             ValueTextBox = textBox;
             SolutionsLabel = solutionsLabel;
+        }
+
+        public SudokuCell Clone()
+        {
+            return new(Column, Row, ValueTextBox, SolutionsLabel);
         }
 
         public void OnValueChanged(object sender, TextChangedEventArgs textChangedEventArgs)

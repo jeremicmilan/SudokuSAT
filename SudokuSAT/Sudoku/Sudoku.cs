@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Dynamic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Media;
 using Google.OrTools.Sat;
 
 namespace SudokuSAT
@@ -41,6 +36,17 @@ namespace SudokuSAT
             Height = height;
             SudokuGrid = new SudokuCell[Width, Height];
             BoxSize = boxSize;
+        }
+
+        public Sudoku Clone()
+        {
+            Sudoku sudoku = new(Width, Height, BoxSize);
+            foreach (var cell in SudokuCells)
+            {
+                sudoku.SudokuGrid[cell.Column, cell.Row] = cell.Clone();
+            }
+
+            return sudoku;
         }
 
         public CpModel GenerateModel()
