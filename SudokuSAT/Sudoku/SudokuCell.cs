@@ -32,17 +32,18 @@ namespace SudokuSAT
         public TextBox ValueTextBox { get; set; }
         public Label SolutionsLabel { get; set; }
 
-        public SudokuCell(int column, int row, TextBox textBox, Label solutionsLabel)
+        public SudokuCell(int column, int row, TextBox textBox, Label solutionsLabel, int? value = null)
         {
             Column = column;
             Row = row;
             ValueTextBox = textBox;
             SolutionsLabel = solutionsLabel;
+            Value = value;
         }
 
         public SudokuCell Clone()
         {
-            return new(Column, Row, ValueTextBox, SolutionsLabel);
+            return new(Column, Row, ValueTextBox, SolutionsLabel, Value);
         }
 
         public void OnValueChanged(object sender, TextChangedEventArgs textChangedEventArgs)

@@ -33,28 +33,30 @@ namespace SudokuSAT
                         CpSolver solver = new();
                         CpModel model = sudokuTemp.GenerateModel();
 
-                        model.Add(sudokuTemp.SudokuGrid[sudokuCell.Column, sudokuCell.Row].ValueVar == i);
-
-                        CpSolverStatus solverStatus = solver.Solve(model);
-                        switch (solverStatus)
+                        if (!sudokuCell.Value.HasValue || sudokuCell.Value.Value == i)
                         {
-                            case CpSolverStatus.Unknown:
-                            case CpSolverStatus.ModelInvalid:
-                                Window.statusLabel.Content = "Solver status: " + solverStatus;
-                                return;
+                            model.Add(sudokuTemp.SudokuGrid[sudokuCell.Column, sudokuCell.Row].ValueVar == i);
 
-                            case CpSolverStatus.Infeasible:
-                                Window.solutionCount.Content = 0;
-                                break;
+                            CpSolverStatus solverStatus = solver.Solve(model);
+                            switch (solverStatus)
+                            {
+                                case CpSolverStatus.Unknown:
+                                case CpSolverStatus.ModelInvalid:
+                                    Window.statusLabel.Content = "Solver status: " + solverStatus;
+                                    return;
 
-                            case CpSolverStatus.Feasible:
-                            case CpSolverStatus.Optimal:
-                                sudokuCell.PossibleValues.Add(i);
-                                Window.Dispatcher.Invoke(() =>
-                                {
-                                    sudokuCell.SolutionsLabel.Content = sudokuCell.PossibleValues.Count;
-                                });
-                                break;
+                                case CpSolverStatus.Infeasible:
+                                    break;
+
+                                case CpSolverStatus.Feasible:
+                                case CpSolverStatus.Optimal:
+                                    sudokuCell.PossibleValues.Add(i);
+                                    Window.Dispatcher.Invoke(() =>
+                                    {
+                                        sudokuCell.SolutionsLabel.Content = sudokuCell.PossibleValues.Count;
+                                    });
+                                    break;
+                            }
                         }
                     }
                     catch (Exception exception)
