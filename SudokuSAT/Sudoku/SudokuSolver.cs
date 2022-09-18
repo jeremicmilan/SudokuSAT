@@ -85,8 +85,12 @@ namespace SudokuSAT
                                     {
                                         Label label = new()
                                         {
-                                            VerticalAlignment = VerticalAlignment.Center,
                                             HorizontalAlignment = HorizontalAlignment.Center,
+                                            VerticalAlignment = VerticalAlignment.Center,
+                                            HorizontalContentAlignment = HorizontalAlignment.Center,
+                                            VerticalContentAlignment = VerticalAlignment.Center,
+                                            MinWidth = sudokuCell.Border.ActualWidth / 3,
+                                            MinHeight = sudokuCell.Border.ActualHeight / 3,
                                             FontSize = sudokuCell.Border.ActualHeight * 0.3,
                                             Foreground = Brushes.Green,
                                             Content = i

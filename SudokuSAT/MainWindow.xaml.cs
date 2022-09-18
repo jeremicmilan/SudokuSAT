@@ -67,6 +67,8 @@ namespace SudokuSAT
                 {
                     Border border = CreateBorder(column, row);
                     SudokuCell sudokuCell = CreateCell(column, row, border);
+                    border.AddHandler(MouseLeftButtonDownEvent, new RoutedEventHandler(sudokuCell.OnClick));
+                    border.Child = new Label(); // dummy label so clicking works
                     Sudoku.SudokuGrid[column, row] = sudokuCell;
                     mainGrid.Children.Add(border);
                 }

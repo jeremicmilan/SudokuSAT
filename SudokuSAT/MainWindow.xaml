@@ -21,7 +21,7 @@
         <TextBox Text="{Binding Value, ElementName=gridHeight, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="79,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
         <Slider x:Name="boxSize" Grid.Column="1" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="64" Minimum="1" Maximum="9" SmallChange="1" Value="3" IsSnapToTickEnabled="True" TickFrequency="1"/>
         <TextBox Text="{Binding Value, ElementName=boxSize, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="79,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
-        <Label x:Name="statusLabel" Grid.Column="1" Content="" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Height="207" Width="256"/>
+        <Label x:Name="statusLabel" Grid.Column="1" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Height="207" Width="256"/>
         <Label x:Name="solveTime" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top" Width="99"/>
         <Label x:Name="solutionCount" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="10,151,0,0" VerticalAlignment="Top"/>
         <Button x:Name="Load" Grid.Column="1" Content="Load" HorizontalAlignment="Left" Margin="95,126,0,0" VerticalAlignment="Top" Click="Load_Click"/>
