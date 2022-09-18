@@ -1,8 +1,11 @@
 ﻿using System.Threading.Tasks;
 using System.Threading;
-using System;
 using Google.OrTools.Sat;
 using System.Windows;
+using System.Windows.Controls.Primitives;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Linq;
 
 namespace SudokuSAT
 {
@@ -26,43 +29,81 @@ namespace SudokuSAT
             Parallel.ForEach(sudoku.SudokuCells, parallelOptions, (sudokuCell) =>
             {
                 Sudoku sudokuTemp = sudoku.Clone();
-                for (int i = SudokuCell.MinValue; i <= SudokuCell.MaxValue; i++)
+
+                if (!sudokuCell.Value.HasValue)
                 {
-                    try
+                    sudokuCell.PossibleValues = new();
+
+                    for (int i = SudokuCell.MinValue; i <= SudokuCell.MaxValue; i++)
                     {
                         CpSolver solver = new();
                         CpModel model = sudokuTemp.GenerateModel();
 
-                        if (!sudokuCell.Value.HasValue || sudokuCell.Value.Value == i)
+                        model.Add(sudokuTemp.SudokuGrid[sudokuCell.Column, sudokuCell.Row].ValueVar == i);
+
+                        CpSolverStatus solverStatus = solver.Solve(model);
+                        switch (solverStatus)
                         {
-                            model.Add(sudokuTemp.SudokuGrid[sudokuCell.Column, sudokuCell.Row].ValueVar == i);
+                            case CpSolverStatus.Unknown:
+                            case CpSolverStatus.ModelInvalid:
+                                Window.statusLabel.Content = "Solver status: " + solverStatus;
+                                return;
 
-                            CpSolverStatus solverStatus = solver.Solve(model);
-                            switch (solverStatus)
-                            {
-                                case CpSolverStatus.Unknown:
-                                case CpSolverStatus.ModelInvalid:
-                                    Window.statusLabel.Content = "Solver status: " + solverStatus;
-                                    return;
+                            case CpSolverStatus.Infeasible:
+                                break;
 
-                                case CpSolverStatus.Infeasible:
-                                    break;
-
-                                case CpSolverStatus.Feasible:
-                                case CpSolverStatus.Optimal:
-                                    sudokuCell.PossibleValues.Add(i);
-                                    Window.Dispatcher.Invoke(() =>
-                                    {
-                                        sudokuCell.SolutionsLabel.Content = sudokuCell.PossibleValues.Count;
-                                    });
-                                    break;
-                            }
+                            case CpSolverStatus.Feasible:
+                            case CpSolverStatus.Optimal:
+                                sudokuCell.PossibleValues.Add(i);
+                                break;
                         }
                     }
-                    catch (Exception exception)
+
+                    Window.Dispatcher.Invoke(() =>
                     {
-                        Window.statusLabel.Content = exception.Message;
-                    }
+
+                        switch (sudokuCell.PossibleValues.Count)
+                        {
+                            case 0:
+                                sudokuCell.SetValue(0, ValueType.Solver);
+                                break;
+
+                            case 1:
+                                sudokuCell.SetValue(sudokuCell.PossibleValues.First(), ValueType.Solver);
+                                break;
+
+                            default:
+                                UniformGrid cellGrid = new()
+                                {
+                                    Rows = 3,
+                                    Columns = 3
+                                };
+
+                                for (int i = 1; i <= cellGrid.Rows * cellGrid.Columns; i++)
+                                {
+                                    if (sudokuCell.PossibleValues.Contains(i))
+                                    {
+                                        Label label = new()
+                                        {
+                                            VerticalAlignment = VerticalAlignment.Center,
+                                            HorizontalAlignment = HorizontalAlignment.Center,
+                                            FontSize = sudokuCell.Border.ActualHeight * 0.3,
+                                            Foreground = Brushes.Green,
+                                            Content = i
+                                        };
+                                        cellGrid.Children.Add(label);
+                                    }
+                                    else
+                                    {
+                                        cellGrid.Children.Add(new Label());
+                                    }
+                                }
+
+                                sudokuCell.Border.Child = cellGrid;
+                                break;
+                        }
+
+                    });
                 }
             });
         }

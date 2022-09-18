@@ -145,7 +145,14 @@ namespace SudokuSAT
             foreach (SudokuCell sudokuCell in SudokuCells)
             {
                 int value = values[sudokuCell.Column, sudokuCell.Row];
-                sudokuCell.SetValue(value == 0 ? null : value);
+                if (value > 0)
+                {
+                    sudokuCell.SetValue(value, ValueType.Given);
+                }
+                else
+                {
+                    sudokuCell.ClearValue();
+                }
             }
         }
     }
