@@ -129,22 +129,23 @@ namespace SudokuSAT
 
         internal void Load()
         {
-            int?[,] values = new int?[9, 9]
+            int[,] values = new int[9, 9]
             {
-                { null,    3, null, null, null, null, null,    6, null, },
-                {    7, null, null, null,    8, null, null, null,    5, },
-                {    2, null, null, null, null, null,    9, null,    1, },
-                { null, null, null,    3, null, null,    7, null, null, },
-                { null, null, null,    4, null,    8,    5, null, null, },
-                {    4,    7, null, null, null,    5, null, null, null, },
-                {    6,    2,    7, null, null,    9,    1, null, null, },
-                { null, null,    3,    7,    4,    2,    6, null,    9, },
-                {    9,    5, null, null, null,    1, null,    8,    7, },
+                { 0, 0, 5, 0, 0, 0, 3, 1, 0, },
+                { 0, 8, 0, 4, 1, 0, 0, 7, 0, },
+                { 1, 3, 0, 0, 0, 0, 0, 2, 0, },
+                { 0, 5, 0, 0, 6, 7, 8, 0, 0, },
+                { 3, 0, 0, 0, 0, 9, 0, 0, 4, },
+                { 0, 9, 0, 0, 0, 0, 0, 0, 0, },
+                { 0, 0, 0, 1, 0, 5, 7, 4, 0, },
+                { 0, 0, 0, 0, 0, 4, 0, 0, 0, },
+                { 0, 0, 6, 7, 0, 0, 0, 0, 0, },
             };
 
             foreach (SudokuCell sudokuCell in SudokuCells)
             {
-                sudokuCell.SetValue(values[sudokuCell.Column, sudokuCell.Row]);
+                int value = values[sudokuCell.Column, sudokuCell.Row];
+                sudokuCell.SetValue(value == 0 ? null : value);
             }
         }
     }
