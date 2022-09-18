@@ -30,6 +30,5 @@
         <Label x:Name="solutionCount" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="10,151,0,0" VerticalAlignment="Top"/>
         <Button x:Name="Load" Grid.Column="1" Content="Load" HorizontalAlignment="Left" Margin="95,126,0,0" VerticalAlignment="Top" Click="Load_Click"/>
         <Button x:Name="Clear" Grid.Column="1" Content="Clear" HorizontalAlignment="Left" Margin="130,126,0,0" VerticalAlignment="Top" Click="Clear_Click"/>
-
     </Grid>
 </Window>
