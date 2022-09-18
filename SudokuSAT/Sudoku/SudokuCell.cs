@@ -1,4 +1,6 @@
 ﻿using Google.OrTools.Sat;
+using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,20 +23,20 @@ namespace SudokuSAT
         public IntVar? ValueVar { get; set; }
 
 
-        public Border Border;
+        public Grid Grid;
         public bool IsSelected { get; set; } = false;
 
-        public SudokuCell(int column, int row, Border border, int? value = null)
+        public SudokuCell(int column, int row, Grid grid, int? value = null)
         {
             Column = column;
             Row = row;
-            Border = border;
+            Grid = grid;
             Value = value;
         }
 
         public SudokuCell Clone()
         {
-            return new(Column, Row, Border, Value);
+            return new(Column, Row, Grid, Value);
         }
 
         public static int GlobalSelectionCount = 0;
@@ -45,12 +47,12 @@ namespace SudokuSAT
             if (isSelected)
             {
                 SelectionOrderId = GlobalSelectionCount++;
-                Border.Background = Brushes.Yellow;
+                Grid.Background = Brushes.Yellow;
             }
             else
             {
                 SelectionOrderId = null;
-                Border.Background = null;
+                Grid.Background = null;
             }
         }
 
@@ -76,31 +78,44 @@ namespace SudokuSAT
             Value = value;
             Type = valueType;
 
-            Border.Child = new Label()
+            Grid.Children.Add(new Label()
             {
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 VerticalContentAlignment = VerticalAlignment.Center,
-                MinWidth = Border.ActualWidth,
-                MinHeight = Border.ActualHeight,
-                FontSize = Border.ActualHeight * 0.65,
+                MinWidth = Grid.ActualWidth,
+                MinHeight = Grid.ActualHeight,
+                FontSize = Grid.ActualHeight * 0.65,
                 Foreground = digitToColor[valueType],
                 Content = value > 0 ? value : "X"
-            };
+            });
         }
 
         public void ClearValue()
         {
             Value = null;
             Type = null;
-
-            Border.Child = new Label();
+            Grid.Children.Clear();
+            Grid.Children.Add(new Label()); // dummy label for selecting
         }
 
         internal void UpdateSolvedValue(CpSolver solver)
         {
             SetValue((int)solver.Value(ValueVar), ValueType.Solver);
+        }
+
+        public bool Adjacent(SudokuCell sudokuCell)
+        {
+            return Math.Abs(Column - sudokuCell.Column) <= 1
+                && Math.Abs(Row - sudokuCell.Row) <= 1
+                && !(Column == sudokuCell.Column && Row == sudokuCell.Row);
+        }
+
+        public bool OrthoAdjacent(SudokuCell sudokuCell)
+        {
+            return Math.Abs(Column - sudokuCell.Column) == 1 && Row == sudokuCell.Row
+                || Math.Abs(Row - sudokuCell.Row) == 1 && Column == sudokuCell.Column;
         }
     }
 }

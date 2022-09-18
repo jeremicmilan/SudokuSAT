@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Google.OrTools.Sat;
 
@@ -27,6 +28,11 @@ namespace SudokuSAT
             foreach (var cell in SudokuCells)
             {
                 sudoku.SudokuGrid[cell.Column, cell.Row] = cell.Clone();
+            }
+
+            foreach (SudokuElement sudokuElement in SudokuElements)
+            {
+                sudoku.SudokuElements.Add(sudokuElement.Clone(sudoku));
             }
 
             return sudoku;
@@ -58,7 +64,10 @@ namespace SudokuSAT
             }
         }
 
-        public List<SudokuCell> SelectedSudokuCells => SudokuCells.Where(cell => cell.IsSelected).ToList();
+        public List<SudokuCell> SelectedSudokuCells => SudokuCells
+            .Where(cell => cell.IsSelected)
+            .OrderBy(cell => cell.SelectionOrderId)
+            .ToList();
 
         public void ClearSelection()
         {
@@ -77,6 +86,7 @@ namespace SudokuSAT
             AddColumnConstraints(model);
             AddRowConstraints(model);
             AddBoxConstraints(model);
+            AddElementConstraints(model);
             return model;
         }
 
@@ -146,6 +156,16 @@ namespace SudokuSAT
         private static void AddAllDifferent(CpModel model, IEnumerable<SudokuCell> cells)
         {
             model.AddAllDifferent(cells.Select(cell => cell.ValueVar));
+        }
+
+        public List<SudokuElement> SudokuElements { get; private set; } = new();
+
+        private void AddElementConstraints(CpModel model)
+        {
+            foreach (SudokuElement sudokuElement in SudokuElements)
+            {
+                sudokuElement.AddConstraints(model);
+            }
         }
 
         internal void Load()

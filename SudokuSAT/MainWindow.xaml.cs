@@ -152,8 +152,13 @@ namespace SudokuSAT
                 for (var column = 0; column < GridWidth; column++)
                 {
                     Border border = CreateBorder(column, row);
-                    SudokuCell sudokuCell = CreateCell(column, row, border);
-                    border.AddHandler(MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
+                    mainGrid.Children.Add(border);
+
+                    Grid grid = new();
+                    border.Child = grid;
+                    grid.Children.Add(new Label()); // for clicking
+                    SudokuCell sudokuCell = new(column, row, grid);
+                    grid.AddHandler(MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
                     {
                         bool isSelected = sudokuCell.IsSelected;
                         if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
@@ -163,9 +168,7 @@ namespace SudokuSAT
 
                         sudokuCell.SetIsSelected(!isSelected);
                     }));
-                    border.Child = new Label(); // dummy label so clicking works
                     Sudoku.SudokuGrid[column, row] = sudokuCell;
-                    mainGrid.Children.Add(border);
                 }
             }
 
@@ -187,11 +190,11 @@ namespace SudokuSAT
             };
         }
 
-        private static SudokuCell CreateCell(int column, int row, Border border)
+        private void Arrow_Click(object sender, RoutedEventArgs e)
         {
-            SudokuCell sudokuCell = new(column, row, border);
-
-            return sudokuCell;
+            SudokuArrow sudokuArrow = new SudokuArrow(Sudoku.SelectedSudokuCells);
+            Sudoku.SudokuElements.Add(sudokuArrow);
+            sudokuArrow.Visualize();
         }
     }
 }

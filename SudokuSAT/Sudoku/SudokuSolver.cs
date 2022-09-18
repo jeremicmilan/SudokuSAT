@@ -6,6 +6,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Linq;
+using System;
 
 namespace SudokuSAT
 {
@@ -46,8 +47,7 @@ namespace SudokuSAT
                         {
                             case CpSolverStatus.Unknown:
                             case CpSolverStatus.ModelInvalid:
-                                Window.statusLabel.Content = "Solver status: " + solverStatus;
-                                return;
+                                throw new Exception("Solver status: " + solverStatus);
 
                             case CpSolverStatus.Infeasible:
                                 break;
@@ -89,9 +89,9 @@ namespace SudokuSAT
                                             VerticalAlignment = VerticalAlignment.Center,
                                             HorizontalContentAlignment = HorizontalAlignment.Center,
                                             VerticalContentAlignment = VerticalAlignment.Center,
-                                            MinWidth = sudokuCell.Border.ActualWidth / 3,
-                                            MinHeight = sudokuCell.Border.ActualHeight / 3,
-                                            FontSize = sudokuCell.Border.ActualHeight * 0.18,
+                                            MinWidth = sudokuCell.Grid.ActualWidth / 3,
+                                            MinHeight = sudokuCell.Grid.ActualHeight / 3,
+                                            FontSize = sudokuCell.Grid.ActualHeight * 0.18,
                                             Foreground = Brushes.Green,
                                             Content = i
                                         };
@@ -103,7 +103,7 @@ namespace SudokuSAT
                                     }
                                 }
 
-                                sudokuCell.Border.Child = cellGrid;
+                                sudokuCell.Grid.Children.Add(cellGrid);
                                 break;
                         }
 
@@ -126,8 +126,7 @@ namespace SudokuSAT
             {
                 case CpSolverStatus.Unknown:
                 case CpSolverStatus.ModelInvalid:
-                    Window.statusLabel.Content = "Solver status: " + solverStatus;
-                    return;
+                    throw new Exception("Solver status: " + solverStatus);
 
                 case CpSolverStatus.Infeasible:
                     Window.solutionCount.Content = 0;
