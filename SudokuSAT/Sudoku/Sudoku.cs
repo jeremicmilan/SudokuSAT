@@ -12,23 +12,6 @@ namespace SudokuSAT
         public int BoxSize { get; private set; }
 
         public SudokuCell[,] SudokuGrid { get; private set; }
-        public List<SudokuCell> SudokuCells
-        {
-            get
-            {
-                List<SudokuCell> sudokuCells = new();
-
-                for (var column = 0; column < Width; column++)
-                {
-                    for (var row = 0; row < Height; row++)
-                    {
-                        sudokuCells.Add(SudokuGrid[column, row]);
-                    }
-                }
-
-                return sudokuCells;
-            }
-        }
 
         public Sudoku(int width, int height, int boxSize)
         {
@@ -47,6 +30,42 @@ namespace SudokuSAT
             }
 
             return sudoku;
+        }
+
+        public List<SudokuCell> SudokuCells
+        {
+            get
+            {
+                List<SudokuCell> sudokuCells = new();
+
+                for (var column = 0; column < Width; column++)
+                {
+                    for (var row = 0; row < Height; row++)
+                    {
+                        sudokuCells.Add(SudokuGrid[column, row]);
+                    }
+                }
+
+                return sudokuCells;
+            }
+        }
+
+        internal void Clear()
+        {
+            foreach (SudokuCell sudokuCell in SudokuCells)
+            {
+                sudokuCell.ClearValue();
+            }
+        }
+
+        public List<SudokuCell> SelectedSudokuCells => SudokuCells.Where(cell => cell.IsSelected).ToList();
+
+        public void ClearSelection()
+        {
+            foreach (SudokuCell sudokuCell in SelectedSudokuCells)
+            {
+                sudokuCell.SetState(isSelected: false);
+            }
         }
 
         public CpModel GenerateModel()

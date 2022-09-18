@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SudokuSAT"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1000">
+        Title="MainWindow" Height="800" Width="1000"
+        KeyDown="OnButtonKeyDown">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="800"/>
@@ -25,6 +26,7 @@
         <Label x:Name="solveTime" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top" Width="99"/>
         <Label x:Name="solutionCount" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="10,151,0,0" VerticalAlignment="Top"/>
         <Button x:Name="Load" Grid.Column="1" Content="Load" HorizontalAlignment="Left" Margin="95,126,0,0" VerticalAlignment="Top" Click="Load_Click"/>
+        <Button x:Name="Clear" Grid.Column="1" Content="Clear" HorizontalAlignment="Left" Margin="130,126,0,0" VerticalAlignment="Top" Click="Clear_Click"/>
 
     </Grid>
 </Window>

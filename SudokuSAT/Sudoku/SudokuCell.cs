@@ -22,7 +22,7 @@ namespace SudokuSAT
 
 
         public Border Border;
-        public SudokuCellState State = SudokuCellState.Idle;
+        public bool IsSelected { get; set; } = false;
 
         public SudokuCell(int column, int row, Border border, int? value = null)
         {
@@ -37,39 +37,16 @@ namespace SudokuSAT
             return new(Column, Row, Border, Value);
         }
 
-        public void OnClick(object sender, RoutedEventArgs e)
+        public void SetState(bool isSelected)
         {
-            ToogleState();
-        }
-
-        public void ToogleState()
-        {
-            switch (State)
+            IsSelected = isSelected;
+            if (isSelected)
             {
-                case SudokuCellState.Idle:
-                    SetState(SudokuCellState.Selected);
-                    break;
-                case SudokuCellState.Selected:
-                    SetState(SudokuCellState.Idle);
-                    break;
-                default:
-                    throw new System.Exception("Unknown sudoku cell state: " + State);
+                Border.Background = Brushes.Yellow;
             }
-        }
-
-        public void SetState(SudokuCellState state)
-        {
-            State = state;
-            switch (state)
+            else
             {
-                case SudokuCellState.Idle:
-                    Border.Background = null;
-                    break;
-                case SudokuCellState.Selected:
-                    Border.Background = Brushes.Yellow;
-                    break;
-                default:
-                    throw new System.Exception("Unknown sudoku cell state: " + state);
+                Border.Background = null;
             }
         }
 
@@ -83,7 +60,7 @@ namespace SudokuSAT
             }
         }
 
-        private Dictionary<ValueType, SolidColorBrush> digitToColor = new()
+        private readonly Dictionary<ValueType, SolidColorBrush> digitToColor = new()
         {
             { ValueType.Given,  Brushes.Black },
             { ValueType.Solver, Brushes.Green },
@@ -113,6 +90,8 @@ namespace SudokuSAT
         {
             Value = null;
             Type = null;
+
+            Border.Child = new Label();
         }
 
         internal void UpdateSolvedValue(CpSolver solver)

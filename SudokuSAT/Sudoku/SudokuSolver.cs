@@ -91,7 +91,7 @@ namespace SudokuSAT
                                             VerticalContentAlignment = VerticalAlignment.Center,
                                             MinWidth = sudokuCell.Border.ActualWidth / 3,
                                             MinHeight = sudokuCell.Border.ActualHeight / 3,
-                                            FontSize = sudokuCell.Border.ActualHeight * 0.3,
+                                            FontSize = sudokuCell.Border.ActualHeight * 0.18,
                                             Foreground = Brushes.Green,
                                             Content = i
                                         };

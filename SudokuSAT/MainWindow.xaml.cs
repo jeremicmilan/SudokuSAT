@@ -3,6 +3,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace SudokuSAT
@@ -52,6 +53,78 @@ namespace SudokuSAT
             Sudoku.Load();
         }
 
+        private void OnButtonKeyDown(object sender, KeyEventArgs e)
+        {
+            int? value = null;
+            bool shouldDelete = false;
+            switch (e.Key)
+            {
+                case Key.D0:
+                case Key.NumPad0:
+                case Key.Delete:
+                case Key.Back:
+                    shouldDelete = true;
+                    break;
+
+                case Key.D1:
+                case Key.NumPad1:
+                    value = 1;
+                    break;
+
+                case Key.D2:
+                case Key.NumPad2:
+                    value = 2;
+                    break;
+
+                case Key.D3:
+                case Key.NumPad3:
+                    value = 3;
+                    break;
+
+                case Key.D4:
+                case Key.NumPad4:
+                    value = 4;
+                    break;
+
+                case Key.D5:
+                case Key.NumPad5:
+                    value = 5;
+                    break;
+
+                case Key.D6:
+                case Key.NumPad6:
+                    value = 6;
+                    break;
+
+                case Key.D7:
+                case Key.NumPad7:
+                    value = 7;
+                    break;
+
+                case Key.D8:
+                case Key.NumPad8:
+                    value = 8;
+                    break;
+
+                case Key.D9:
+                case Key.NumPad9:
+                    value = 9;
+                    break;
+            }
+
+            foreach (SudokuCell sudokuCell in Sudoku.SelectedSudokuCells)
+            {
+                if (shouldDelete)
+                {
+                    sudokuCell.ClearValue();
+                }
+                else if (value.HasValue)
+                {
+                    sudokuCell.SetValue(value.Value, ValueType.User);
+                }
+            }
+        }
+
         private void GenerateGrid()
         {
             Sudoku = new(GridWidth, GridHeight, BoxSize);
@@ -67,7 +140,12 @@ namespace SudokuSAT
                 {
                     Border border = CreateBorder(column, row);
                     SudokuCell sudokuCell = CreateCell(column, row, border);
-                    border.AddHandler(MouseLeftButtonDownEvent, new RoutedEventHandler(sudokuCell.OnClick));
+                    border.AddHandler(MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
+                    {
+                        bool isSelected = sudokuCell.IsSelected;
+                        Sudoku.ClearSelection();
+                        sudokuCell.SetState(!isSelected);
+                    }));
                     border.Child = new Label(); // dummy label so clicking works
                     Sudoku.SudokuGrid[column, row] = sudokuCell;
                     mainGrid.Children.Add(border);
@@ -97,6 +175,11 @@ namespace SudokuSAT
             SudokuCell sudokuCell = new(column, row, border);
 
             return sudokuCell;
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            Sudoku.Clear();
         }
     }
 }
