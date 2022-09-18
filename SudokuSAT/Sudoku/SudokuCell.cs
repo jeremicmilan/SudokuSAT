@@ -37,15 +37,19 @@ namespace SudokuSAT
             return new(Column, Row, Border, Value);
         }
 
-        public void SetState(bool isSelected)
+        public static int GlobalSelectionCount = 0;
+        public int? SelectionOrderId = null;
+        public void SetIsSelected(bool isSelected)
         {
             IsSelected = isSelected;
             if (isSelected)
             {
+                SelectionOrderId = GlobalSelectionCount++;
                 Border.Background = Brushes.Yellow;
             }
             else
             {
+                SelectionOrderId = null;
                 Border.Background = null;
             }
         }

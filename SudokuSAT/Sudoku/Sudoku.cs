@@ -64,8 +64,10 @@ namespace SudokuSAT
         {
             foreach (SudokuCell sudokuCell in SelectedSudokuCells)
             {
-                sudokuCell.SetState(isSelected: false);
+                sudokuCell.SetIsSelected(isSelected: false);
             }
+
+            SudokuCell.GlobalSelectionCount = 0;
         }
 
         public CpModel GenerateModel()

@@ -156,8 +156,12 @@ namespace SudokuSAT
                     border.AddHandler(MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
                     {
                         bool isSelected = sudokuCell.IsSelected;
-                        Sudoku.ClearSelection();
-                        sudokuCell.SetState(!isSelected);
+                        if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
+                        {
+                            Sudoku.ClearSelection();
+                        }
+
+                        sudokuCell.SetIsSelected(!isSelected);
                     }));
                     border.Child = new Label(); // dummy label so clicking works
                     Sudoku.SudokuGrid[column, row] = sudokuCell;
