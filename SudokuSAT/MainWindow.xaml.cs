@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,7 +54,19 @@ namespace SudokuSAT
             Sudoku.Load();
         }
 
-        private void OnButtonKeyDown(object sender, KeyEventArgs e)
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            Sudoku.Clear();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double height = e.NewSize.Width - 200 /* sidebar */ + 30 /* top */;
+            MinHeight = height;
+            MaxHeight = height;
+        }
+
+        private void Keyboard_KeyDown(object sender, KeyEventArgs e)
         {
             int? value = null;
             bool shouldDelete = false;
@@ -175,11 +188,6 @@ namespace SudokuSAT
             SudokuCell sudokuCell = new(column, row, border);
 
             return sudokuCell;
-        }
-
-        private void Clear_Click(object sender, RoutedEventArgs e)
-        {
-            Sudoku.Clear();
         }
     }
 }
