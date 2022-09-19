@@ -18,13 +18,12 @@ namespace SudokuSAT
 
         public SudokuCell[,] SudokuGrid { get; private set; }
 
-        public Sudoku(int width, int height, int boxSize, Grid? sudokuPlaceholder = null)
+        public Sudoku(int width, int height, int boxSize)
         {
             Width = width;
             Height = height;
             SudokuGrid = new SudokuCell[Width, Height];
             BoxSize = boxSize;
-            SudokuPlaceholderNullable = sudokuPlaceholder;
         }
 
         public Sudoku Clone()
@@ -67,21 +66,6 @@ namespace SudokuSAT
             {
                 sudokuCell.ClearValue();
             }
-        }
-
-        public List<SudokuCell> SelectedSudokuCells => SudokuCells
-            .Where(cell => cell.IsSelected)
-            .OrderBy(cell => cell.SelectionOrderId)
-            .ToList();
-
-        public void ClearSelection()
-        {
-            foreach (SudokuCell sudokuCell in SelectedSudokuCells)
-            {
-                sudokuCell.SetIsSelected(isSelected: false);
-            }
-
-            SudokuCell.GlobalSelectionCount = 0;
         }
 
         public CpModel GenerateModel()
@@ -200,62 +184,6 @@ namespace SudokuSAT
                     sudokuCell.ClearValue();
                 }
             }
-        }
-
-#pragma warning disable CS8603 // Possible null reference return.
-        private Grid? SudokuPlaceholderNullable { get; set; }
-        public Grid SudokuPlaceholder => SudokuPlaceholderNullable;
-#pragma warning restore CS8603 // Possible null reference return.
-
-        public void GenerateGrid()
-        {
-            UniformGrid sudokuGrid = new()
-            {
-                Rows = Height,
-                Columns = Width
-            };
-
-            for (var row = 0; row < Height; row++)
-            {
-                for (var column = 0; column < Width; column++)
-                {
-                    Border border = CreateBorder(column, row);
-                    sudokuGrid.Children.Add(border);
-
-                    Grid grid = new();
-                    border.Child = grid;
-                    grid.Children.Add(new Label()); // for clicking
-                    SudokuCell sudokuCell = new(this, column, row, grid);
-                    grid.AddHandler(UIElement.MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
-                    {
-                        bool isSelected = sudokuCell.IsSelected;
-                        if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
-                        {
-                            ClearSelection();
-                        }
-
-                        sudokuCell.SetIsSelected(!isSelected);
-                    }));
-                    SudokuGrid[column, row] = sudokuCell;
-                }
-            }
-
-            SudokuPlaceholder?.Children.Add(sudokuGrid);
-        }
-
-        private Border CreateBorder(int column, int row)
-        {
-            int thick = 3, thin = 1;
-            var top = row % BoxSize == 0 ? thick : thin;
-            var left = column % BoxSize == 0 ? thick : thin;
-            var bottom = row == Height - 1 ? thick : 0;
-            var right = column == Width - 1 ? thick : 0;
-
-            return new Border
-            {
-                BorderThickness = new Thickness(left, top, right, bottom),
-                BorderBrush = Brushes.Black
-            };
         }
     }
 }

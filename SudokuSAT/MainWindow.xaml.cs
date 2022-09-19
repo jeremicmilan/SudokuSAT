@@ -20,7 +20,7 @@ namespace SudokuSAT
 
         private readonly SudokuSolver SudokuSolver;
 
-        private Sudoku Sudoku;
+        private SudokuVisual Sudoku;
 
         public MainWindow()
         {
@@ -70,7 +70,7 @@ namespace SudokuSAT
         {
             HandleClickFailure(() =>
             {
-                SudokuArrow sudokuArrow = new SudokuArrow(Sudoku, Sudoku.SelectedSudokuCells);
+                SudokuArrow sudokuArrow = new(Sudoku, Sudoku.SelectedSudokuCells);
                 Sudoku.SudokuElements.Add(sudokuArrow);
                 sudokuArrow.Visualize();
             });

@@ -12,13 +12,20 @@ namespace SudokuSAT
         public int SudokuElementId { get; set; }
 
         public Sudoku Sudoku { get; private set; }
-        public Grid Grid { get; private set; }
+#pragma warning disable CS8603 // Possible null reference return.
+        public SudokuVisual SudokuVisual => Sudoku as SudokuVisual;
+#pragma warning restore CS8603 // Possible null reference return.
+
+        public Grid? Grid { get; private set; } = null;
 
         protected SudokuElement(Sudoku sudoku)
         {
             Sudoku = sudoku;
             SudokuElementId = SudokuElementCount++;
-            Grid = new Grid() { Name = Name };
+            if (sudoku is SudokuVisual)
+            {
+                Grid = new Grid() { Name = Name };
+            }
         }
 
         public string Name => "_" + SudokuElementId + "_" + this.GetType().Name;

@@ -19,7 +19,7 @@ namespace SudokuSAT
             Window = window;
         }
 
-        public void Explore(Sudoku sudoku)
+        public void Explore(SudokuVisual sudoku)
         {
             Thread.CurrentThread.Name = "Explore";
 
@@ -27,7 +27,7 @@ namespace SudokuSAT
             {
                 MaxDegreeOfParallelism = sudoku.Width
             };
-            Parallel.ForEach(sudoku.SudokuCells, parallelOptions, (sudokuCell) =>
+            Parallel.ForEach(sudoku.SudokuCellsVisual, parallelOptions, (sudokuCell) =>
             {
                 Sudoku sudokuTemp = sudoku.Clone();
 
