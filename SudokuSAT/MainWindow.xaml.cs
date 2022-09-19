@@ -33,35 +33,65 @@ namespace SudokuSAT
 
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
-            GenerateGrid();
+            HandleClickFailure(GenerateGrid);
         }
 
         private void Solve_Click(object sender, RoutedEventArgs e)
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            SudokuSolver.Solve(Sudoku);
-            stopwatch.Stop();
-            solveTime.Content = stopwatch.Elapsed;
+            HandleClickFailure(() =>
+            {
+                Stopwatch stopwatch = Stopwatch.StartNew();
+                SudokuSolver.Solve(Sudoku);
+                stopwatch.Stop();
+                solveTime.Content = stopwatch.Elapsed;
+            });
         }
 
         private void Explore_Click(object sender, RoutedEventArgs e)
         {
-            new Thread(() => SudokuSolver.Explore(Sudoku)).Start();
+            new Thread(() => HandleClickFailure(() => SudokuSolver.Explore(Sudoku))).Start();
         }
 
         private void Load_Click(object sender, RoutedEventArgs e)
         {
-            Sudoku.Load();
+            HandleClickFailure(Sudoku.Load);
         }
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
-            Sudoku.Clear();
+            HandleClickFailure(Sudoku.Clear);
+        }
+
+        private void Arrow_Click(object sender, RoutedEventArgs e)
+        {
+            HandleClickFailure(() =>
+            {
+                SudokuArrow sudokuArrow = new SudokuArrow(Sudoku.SelectedSudokuCells);
+                Sudoku.SudokuElements.Add(sudokuArrow);
+                sudokuArrow.Visualize();
+            });
+        }
+
+        private void HandleClickFailure(Action action)
+        {
+            try
+            {
+                action();
+
+                StatusBox.Foreground = Brushes.Black;
+                StatusBox.Text = null;
+            }
+            catch (Exception exception)
+            {
+                StatusBox.Foreground = Brushes.Red;
+                StatusBox.Text = exception.Message;
+            }
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             double height = e.NewSize.Width - 200 /* sidebar */ + 30 /* top */;
+            height = Math.Max(800, height);
             MinHeight = height;
             MaxHeight = height;
         }
@@ -188,13 +218,6 @@ namespace SudokuSAT
                 BorderThickness = new Thickness(left, top, right, bottom),
                 BorderBrush = Brushes.Black
             };
-        }
-
-        private void Arrow_Click(object sender, RoutedEventArgs e)
-        {
-            SudokuArrow sudokuArrow = new SudokuArrow(Sudoku.SelectedSudokuCells);
-            Sudoku.SudokuElements.Add(sudokuArrow);
-            sudokuArrow.Visualize();
         }
     }
 }

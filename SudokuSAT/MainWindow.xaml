@@ -25,11 +25,12 @@
         <TextBox Text="{Binding Value, ElementName=gridHeight, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="79,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
         <Slider x:Name="boxSize" Grid.Column="1" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="64" Minimum="1" Maximum="9" SmallChange="1" Value="3" IsSnapToTickEnabled="True" TickFrequency="1"/>
         <TextBox Text="{Binding Value, ElementName=boxSize, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="79,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
-        <Label x:Name="solveTime" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="47,151,0,0" VerticalAlignment="Top" Width="100"/>
-        <Label x:Name="solutionCount" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="10,151,0,0" VerticalAlignment="Top" Width="32"/>
+        <Label x:Name="solveTime" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="56,151,0,0" VerticalAlignment="Top" Width="134"/>
+        <Label x:Name="solutionCount" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="10,151,0,0" VerticalAlignment="Top" Width="41"/>
         <Button x:Name="Load" Grid.Column="1" Content="Load" HorizontalAlignment="Left" Margin="95,126,0,0" VerticalAlignment="Top" Click="Load_Click"/>
         <Button x:Name="Clear" Grid.Column="1" Content="Clear" HorizontalAlignment="Left" Margin="130,126,0,0" VerticalAlignment="Top" Click="Clear_Click"/>
         <Button x:Name="Arrow" Grid.Column="1" Content="Arrow" HorizontalAlignment="Left" Margin="10,182,0,0" VerticalAlignment="Top" Click="Arrow_Click"/>
         <Label Grid.Column="1" Content="Label" HorizontalAlignment="Left" Margin="329,266,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="StatusBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="139" Width="180"/>
     </Grid>
 </Window>
