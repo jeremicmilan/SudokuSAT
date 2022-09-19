@@ -22,11 +22,11 @@ namespace SudokuSAT
         public override void OnSolutionCallback()
         {
             SolutionCount++;
-            SudokuSolver.Window.solutionCount.Content = SolutionCount;
+            SudokuSolver.Window.SolutionCount.Content = SolutionCount;
 
             if (SolutionCount > MaxSolutionCount)
             {
-                SudokuSolver.Window.solutionCount.Content = MaxSolutionCount + "+";
+                SudokuSolver.Window.SolutionCount.Content = MaxSolutionCount + "+";
                 Solver.StopSearch();
             }
         }

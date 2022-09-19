@@ -14,9 +14,9 @@ namespace SudokuSAT
     /// </summary>
     public partial class MainWindow : Window
     {
-        public int GridWidth => (int)gridWidth.Value;
-        public int GridHeight => (int)gridHeight.Value;
-        public int BoxSize => (int)boxSize.Value;
+        public int GridWidth => (int)GridWidthSlider.Value;
+        public int GridHeight => (int)GridHeightSlider.Value;
+        public int BoxSize => (int)BoxSizeSlider.Value;
 
         private readonly SudokuSolver SudokuSolver;
 
@@ -43,7 +43,7 @@ namespace SudokuSAT
                 Stopwatch stopwatch = Stopwatch.StartNew();
                 SudokuSolver.Solve(Sudoku);
                 stopwatch.Stop();
-                solveTime.Content = stopwatch.Elapsed;
+                SolveTime.Content = stopwatch.Elapsed;
             });
         }
 
@@ -171,7 +171,7 @@ namespace SudokuSAT
         private void GenerateGrid()
         {
             Sudoku = new(GridWidth, GridHeight, BoxSize);
-            UniformGrid mainGrid = new()
+            UniformGrid sudokuGrid = new()
             {
                 Rows = GridHeight,
                 Columns = GridWidth
@@ -182,7 +182,7 @@ namespace SudokuSAT
                 for (var column = 0; column < GridWidth; column++)
                 {
                     Border border = CreateBorder(column, row);
-                    mainGrid.Children.Add(border);
+                    sudokuGrid.Children.Add(border);
 
                     Grid grid = new();
                     border.Child = grid;
@@ -202,7 +202,7 @@ namespace SudokuSAT
                 }
             }
 
-            SudokuGridPlaceholder.Child = mainGrid;
+            SudokuPlaceholder.Children.Add(sudokuGrid);
         }
 
         private Border CreateBorder(int column, int row)

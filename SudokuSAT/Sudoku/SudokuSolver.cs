@@ -129,7 +129,7 @@ namespace SudokuSAT
                     throw new Exception("Solver status: " + solverStatus);
 
                 case CpSolverStatus.Infeasible:
-                    Window.solutionCount.Content = 0;
+                    Window.SolutionCount.Content = 0;
                     break;
 
                 case CpSolverStatus.Feasible:
