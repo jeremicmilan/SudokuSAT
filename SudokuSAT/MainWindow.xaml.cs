@@ -27,13 +27,17 @@ namespace SudokuSAT
             InitializeComponent();
 
             SudokuSolver = new(this);
-            Sudoku = new(GridWidth, GridHeight, BoxSize); // For compiler to shut up
-            GenerateGrid();
+            Sudoku = new(GridWidth, GridHeight, BoxSize, SudokuPlaceholder);
+            Sudoku.GenerateGrid();
         }
 
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
-            HandleClickFailure(GenerateGrid);
+            HandleClickFailure(() =>
+            {
+                Sudoku = new(GridWidth, GridHeight, BoxSize, SudokuPlaceholder);
+                Sudoku.GenerateGrid();
+            });
         }
 
         private void Solve_Click(object sender, RoutedEventArgs e)
@@ -66,7 +70,7 @@ namespace SudokuSAT
         {
             HandleClickFailure(() =>
             {
-                SudokuArrow sudokuArrow = new SudokuArrow(Sudoku.SelectedSudokuCells);
+                SudokuArrow sudokuArrow = new SudokuArrow(Sudoku, Sudoku.SelectedSudokuCells);
                 Sudoku.SudokuElements.Add(sudokuArrow);
                 sudokuArrow.Visualize();
             });
@@ -98,63 +102,8 @@ namespace SudokuSAT
 
         private void Keyboard_KeyDown(object sender, KeyEventArgs e)
         {
-            int? value = null;
-            bool shouldDelete = false;
-            switch (e.Key)
-            {
-                case Key.D0:
-                case Key.NumPad0:
-                case Key.Delete:
-                case Key.Back:
-                    shouldDelete = true;
-                    break;
-
-                case Key.D1:
-                case Key.NumPad1:
-                    value = 1;
-                    break;
-
-                case Key.D2:
-                case Key.NumPad2:
-                    value = 2;
-                    break;
-
-                case Key.D3:
-                case Key.NumPad3:
-                    value = 3;
-                    break;
-
-                case Key.D4:
-                case Key.NumPad4:
-                    value = 4;
-                    break;
-
-                case Key.D5:
-                case Key.NumPad5:
-                    value = 5;
-                    break;
-
-                case Key.D6:
-                case Key.NumPad6:
-                    value = 6;
-                    break;
-
-                case Key.D7:
-                case Key.NumPad7:
-                    value = 7;
-                    break;
-
-                case Key.D8:
-                case Key.NumPad8:
-                    value = 8;
-                    break;
-
-                case Key.D9:
-                case Key.NumPad9:
-                    value = 9;
-                    break;
-            }
-
+            int? value = Helpers.KeyToValue(e.Key);
+            bool shouldDelete = e.Key == Key.D0 || e.Key == Key.NumPad0 || e.Key == Key.Delete || e.Key == Key.Back;
             foreach (SudokuCell sudokuCell in Sudoku.SelectedSudokuCells)
             {
                 if (shouldDelete)
@@ -166,58 +115,6 @@ namespace SudokuSAT
                     sudokuCell.SetValue(value.Value, ValueType.User);
                 }
             }
-        }
-
-        private void GenerateGrid()
-        {
-            Sudoku = new(GridWidth, GridHeight, BoxSize);
-            UniformGrid sudokuGrid = new()
-            {
-                Rows = GridHeight,
-                Columns = GridWidth
-            };
-
-            for (var row = 0; row < GridHeight; row++)
-            {
-                for (var column = 0; column < GridWidth; column++)
-                {
-                    Border border = CreateBorder(column, row);
-                    sudokuGrid.Children.Add(border);
-
-                    Grid grid = new();
-                    border.Child = grid;
-                    grid.Children.Add(new Label()); // for clicking
-                    SudokuCell sudokuCell = new(column, row, grid);
-                    grid.AddHandler(MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
-                    {
-                        bool isSelected = sudokuCell.IsSelected;
-                        if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
-                        {
-                            Sudoku.ClearSelection();
-                        }
-
-                        sudokuCell.SetIsSelected(!isSelected);
-                    }));
-                    Sudoku.SudokuGrid[column, row] = sudokuCell;
-                }
-            }
-
-            SudokuPlaceholder.Children.Add(sudokuGrid);
-        }
-
-        private Border CreateBorder(int column, int row)
-        {
-            int thick = 3, thin = 1;
-            var top = row % BoxSize == 0 ? thick : thin;
-            var left = column % BoxSize == 0 ? thick : thin;
-            var bottom = row == GridHeight - 1 ? thick : 0;
-            var right = column == GridWidth - 1 ? thick : 0;
-
-            return new Border
-            {
-                BorderThickness = new Thickness(left, top, right, bottom),
-                BorderBrush = Brushes.Black
-            };
         }
     }
 }

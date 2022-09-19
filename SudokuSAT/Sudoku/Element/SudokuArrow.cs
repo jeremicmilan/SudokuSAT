@@ -12,7 +12,8 @@ namespace SudokuSAT
     {
         public List<SudokuCell> SudokuCells { get; set; }
 
-        public SudokuArrow(List<SudokuCell> sudokuCells)
+        public SudokuArrow(Sudoku sudoku, List<SudokuCell> sudokuCells)
+            : base(sudoku)
         {
             if (sudokuCells.Count < 2)
             {
@@ -43,7 +44,7 @@ namespace SudokuSAT
                 sudokuCells.Add(sudoku.SudokuGrid[sudokuCell.Column, sudokuCell.Row]);
             }
 
-            return new SudokuArrow(sudokuCells);
+            return new SudokuArrow(sudoku, sudokuCells);
         }
 
         public override void AddConstraints(CpModel model)

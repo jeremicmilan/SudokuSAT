@@ -14,6 +14,8 @@ namespace SudokuSAT
         public const int MinValue = 1;
         public const int MaxValue = 9;
 
+        public Sudoku Sudoku { get; private set; }
+
         public int Column { get; set; }
         public int Row { get; set; }
 
@@ -26,17 +28,18 @@ namespace SudokuSAT
         public Grid Grid;
         public bool IsSelected { get; set; } = false;
 
-        public SudokuCell(int column, int row, Grid grid, int? value = null)
+        public SudokuCell(Sudoku sudoku, int column, int row, Grid grid, int? value = null)
         {
+            Sudoku = sudoku; 
             Column = column;
             Row = row;
             Grid = grid;
             Value = value;
         }
 
-        public SudokuCell Clone()
+        public SudokuCell Clone(Sudoku sudoku)
         {
-            return new(Column, Row, Grid, Value);
+            return new(sudoku, Column, Row, Grid, Value);
         }
 
         public static int GlobalSelectionCount = 0;
