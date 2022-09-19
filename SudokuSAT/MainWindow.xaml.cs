@@ -87,8 +87,11 @@ namespace SudokuSAT
             }
             catch (Exception exception)
             {
-                StatusBox.Foreground = Brushes.Red;
-                StatusBox.Text = exception.Message;
+                Dispatcher.Invoke(() =>
+                {
+                    StatusBox.Foreground = Brushes.Red;
+                    StatusBox.Text = exception.Message;
+                });
             }
         }
 

@@ -42,7 +42,9 @@ namespace SudokuSAT
             return new(sudoku, Column, Row, Grid, Value);
         }
 
+#pragma warning disable CA2211 // Non-constant fields should not be visible
         public static int GlobalSelectionCount = 0;
+#pragma warning restore CA2211 // Non-constant fields should not be visible
         public int? SelectionOrderId = null;
         public void SetIsSelected(bool isSelected)
         {
@@ -120,5 +122,10 @@ namespace SudokuSAT
             return Math.Abs(Column - sudokuCell.Column) == 1 && Row == sudokuCell.Row
                 || Math.Abs(Row - sudokuCell.Row) == 1 && Column == sudokuCell.Column;
         }
+
+        public Point CenterPosition => Grid.TranslatePoint(
+            new Point(.5 * Grid.ActualWidth, .5 * Grid.ActualHeight),
+            Sudoku.SudokuPlaceholder);
+        public Point TopLeftPosition => Grid.TranslatePoint(new Point(0, 0), Sudoku.SudokuPlaceholder);
     }
 }

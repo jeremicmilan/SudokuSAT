@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -59,38 +60,34 @@ namespace SudokuSAT
         {
             for (int i = 0; i < SudokuCells.Count; i++)
             {
-                Grid grid = SudokuCells[i].Grid;
-
                 if (i == 0)
                 {
-                    grid.Children.Add(new Ellipse()
+                    Point topLeftPosition = SudokuCells[i].TopLeftPosition;
+                    double scalingFactor = .7;
+                    Grid.Children.Add(new Ellipse()
                     {
-                        Height = grid.ActualHeight / 1.5,
-                        Width = grid.ActualWidth / 1.5,
+                        Width = SudokuCells[i].Grid.ActualWidth * scalingFactor,
+                        Height = SudokuCells[i].Grid.ActualHeight * scalingFactor,
+                        Margin = new Thickness(
+                            topLeftPosition.X + SudokuCells[i].Grid.ActualWidth * (1 - scalingFactor) / 2,
+                            topLeftPosition.Y + SudokuCells[i].Grid.ActualHeight * (1 - scalingFactor) / 2,
+                            0,
+                            0),
                         Stroke = Brushes.Black,
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        VerticalAlignment = VerticalAlignment.Top,
                     });
                 }
-
-                if (i < SudokuCells.Count - 1)
+                else
                 {
-                    grid.Children.Add(new Line()
+                    Point centerPosition1 = SudokuCells[i].CenterPosition;
+                    Point centerPosition2 = SudokuCells[i - 1].CenterPosition;
+                    Grid.Children.Add(new Line()
                     {
-                        X1 = grid.ActualWidth / 2,
-                        Y1 = grid.ActualHeight / 2,
-                        X2 = grid.ActualWidth / 2 + grid.ActualWidth / 2 * (SudokuCells[i + 1].Column - SudokuCells[i].Column),
-                        Y2 = grid.ActualHeight / 2 + grid.ActualHeight / 2 * (SudokuCells[i + 1].Row - SudokuCells[i].Row),
-                        Stroke = Brushes.Black,
-                    });
-                }
-
-                if (i > 0)
-                {
-                    grid.Children.Add(new Line()
-                    {
-                        X1 = grid.ActualWidth / 2,
-                        Y1 = grid.ActualHeight / 2,
-                        X2 = grid.ActualWidth / 2 + grid.ActualWidth / 2 * (SudokuCells[i - 1].Column - SudokuCells[i].Column),
-                        Y2 = grid.ActualHeight / 2 + grid.ActualHeight / 2 * (SudokuCells[i - 1].Row - SudokuCells[i].Row),
+                        X1 = centerPosition1.X,
+                        Y1 = centerPosition1.Y,
+                        X2 = centerPosition2.X,
+                        Y2 = centerPosition2.Y,
                         Stroke = Brushes.Black,
                     });
                 }
@@ -100,6 +97,8 @@ namespace SudokuSAT
                     // TODO: add arrow tip
                 }
             }
+
+            Sudoku.SudokuPlaceholder.Children.Add(Grid);
         }
     }
 }
