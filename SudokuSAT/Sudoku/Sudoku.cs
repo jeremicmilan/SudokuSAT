@@ -10,13 +10,15 @@ using System.Windows.Input;
 
 namespace SudokuSAT
 {
-    public class Sudoku
+    public class Sudoku : IVisualizable<Sudoku>
     {
         public int Width { get; private set; }
         public int Height { get; private set; }
         public int BoxSize { get; private set; }
 
         public SudokuCell[,] SudokuGrid { get; private set; }
+
+        public Visual<Sudoku>? Visual { get; set; }
 
         public Sudoku(int width, int height, int boxSize)
         {
@@ -184,6 +186,88 @@ namespace SudokuSAT
                     sudokuCell.ClearValue();
                 }
             }
+        }
+
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
+        public List<SudokuCellVisual> SudokuCellsVisual => SudokuCells.Select(cell => cell as SudokuCellVisual).ToList();
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
+
+        public List<SudokuCellVisual> SelectedSudokuCells => SudokuCellsVisual
+            .Where(cell => cell.IsSelected)
+            .OrderBy(cell => cell.SelectionOrderId)
+            .ToList();
+
+        public void ClearSelection()
+        {
+            foreach (SudokuCellVisual sudokuCell in SelectedSudokuCells)
+            {
+                sudokuCell.SetIsSelected(isSelected: false);
+            }
+
+            SudokuCellVisual.GlobalSelectionCount = 0;
+        }
+
+        public void GenerateGrid()
+        {
+            for (var row = 0; row < Height; row++)
+            {
+                for (var column = 0; column < Width; column++)
+                {
+                }
+            }
+        }
+
+        private Border CreateBorder(int column, int row)
+        {
+            int thick = 3, thin = 1;
+            var top = row % BoxSize == 0 ? thick : thin;
+            var left = column % BoxSize == 0 ? thick : thin;
+            var bottom = row == Height - 1 ? thick : 0;
+            var right = column == Width - 1 ? thick : 0;
+
+            return new Border
+            {
+                BorderThickness = new Thickness(left, top, right, bottom),
+                BorderBrush = Brushes.Black
+            };
+        }
+
+        public UIElement Visualize()
+        {
+            UniformGrid sudokuGrid = new()
+            {
+                Rows = Height,
+                Columns = Width
+            };
+
+            for (var row = 0; row < Height; row++)
+            {
+                for (var column = 0; column < Width; column++)
+                {
+                    Border border = CreateBorder(column, row);
+                    sudokuGrid.Children.Add(border);
+
+                    Grid grid = new();
+                    border.Child = grid;
+                    grid.Children.Add(new Label()); // for clicking
+
+                    Visual<SudokuCell> sudokuCellVisual = new(new(this, column, row), grid);
+                    grid.AddHandler(UIElement.MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
+                    {
+                        bool isSelected = sudokuCell.IsSelected;
+                        if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
+                        {
+                            ClearSelection();
+                        }
+
+                        sudokuCell.SetIsSelected(!isSelected);
+                    }));
+
+                    SudokuGrid[column, row] = sudokuCellVisual;
+                }
+            }
+
+            return sudokuGrid;
         }
     }
 }

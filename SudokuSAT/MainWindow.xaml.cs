@@ -20,15 +20,17 @@ namespace SudokuSAT
 
         private readonly SudokuSolver SudokuSolver;
 
-        private SudokuVisual Sudoku;
+        private Visual<Sudoku> Visual;
+        private Sudoku Sudoku { get; private set };
 
         public MainWindow()
         {
             InitializeComponent();
 
             SudokuSolver = new(this);
-            Sudoku = new(GridWidth, GridHeight, BoxSize, SudokuPlaceholder);
-            Sudoku.GenerateGrid();
+            Sudoku = new(GridWidth, GridHeight, BoxSize)
+            new Visual<Sudoku>(, SudokuPlaceholder);
+            Sudoku.GenerateGrid(SudokuVisual);
         }
 
         private void Generate_Click(object sender, RoutedEventArgs e)
