@@ -21,11 +21,6 @@ namespace SudokuSAT
                 throw new Exception("Arrow must be of at least of length 2.");
             }
 
-            if (sudokuCells.Count > 4)
-            {
-                throw new Exception("Arrow must be of at most of length 4.");
-            }
-
             for (int i = 1; i < sudokuCells.Count; i++)
             {
                 if (!sudokuCells[i - 1].Adjacent(sudokuCells[i]))
