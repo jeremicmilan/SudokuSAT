@@ -19,7 +19,7 @@ namespace SudokuSAT
             Window = window;
         }
 
-        public void Explore(SudokuVisual sudoku)
+        public void Explore(Sudoku sudoku)
         {
             Thread.CurrentThread.Name = "Explore";
 
@@ -27,7 +27,7 @@ namespace SudokuSAT
             {
                 MaxDegreeOfParallelism = sudoku.Width
             };
-            Parallel.ForEach(sudoku.SudokuCellsVisual, parallelOptions, (sudokuCell) =>
+            Parallel.ForEach(sudoku.SudokuCells, parallelOptions, (sudokuCell) =>
             {
                 Sudoku sudokuTemp = sudoku.Clone();
 
@@ -61,7 +61,7 @@ namespace SudokuSAT
 
                     Window.Dispatcher.Invoke(() =>
                     {
-
+#pragma warning disable CS8602 // Using Grid should be safe during visualization
                         switch (sudokuCell.PossibleValues.Count)
                         {
                             case 0:
@@ -106,7 +106,7 @@ namespace SudokuSAT
                                 sudokuCell.Grid.Children.Add(cellGrid);
                                 break;
                         }
-
+#pragma warning restore CS8602 // Using Grid should be safe during visualization
                     });
                 }
             });

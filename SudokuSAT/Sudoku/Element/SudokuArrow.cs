@@ -12,16 +12,9 @@ namespace SudokuSAT
     public class SudokuArrow : SudokuElement
     {
         public List<SudokuCell> SudokuCells { get; set; }
-#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
-        public List<SudokuCellVisual> SudokuCellsVisual => SudokuCells.Select(cell => cell as SudokuCellVisual).ToList();
-#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
 
-        public SudokuArrow(Sudoku sudoku, List<SudokuCellVisual> sudokuCells)
-            : this(sudoku, sudokuCells.Select(cell => (SudokuCell)cell).ToList())
-        { }
-
-        public SudokuArrow(Sudoku sudoku, List<SudokuCell> sudokuCells)
-            : base(sudoku)
+        public SudokuArrow(Sudoku sudoku, List<SudokuCell> sudokuCells, Grid? grid = null)
+            : base(sudoku, grid)
         {
             if (sudokuCells.Count < 2)
             {
@@ -63,23 +56,22 @@ namespace SudokuSAT
             model.Add(boundedLinearExpression);
         }
 
+#pragma warning disable CS8602 // Using Grid should be safe during visualization
         public override void Visualize()
         {
-            List<SudokuCellVisual> sudokuCells = SudokuCellsVisual;
-
-            for (int i = 0; i < sudokuCells.Count; i++)
+            for (int i = 0; i < SudokuCells.Count; i++)
             {
                 if (i == 0)
                 {
-                    Point topLeftPosition = sudokuCells[i].TopLeftPosition;
+                    Point topLeftPosition = SudokuCells[i].TopLeftPosition;
                     double scalingFactor = .7;
                     Grid.Children.Add(new Ellipse()
                     {
-                        Width = sudokuCells[i].Grid.ActualWidth * scalingFactor,
-                        Height = sudokuCells[i].Grid.ActualHeight * scalingFactor,
+                        Width = SudokuCells[i].Grid.ActualWidth * scalingFactor,
+                        Height = SudokuCells[i].Grid.ActualHeight * scalingFactor,
                         Margin = new Thickness(
-                            topLeftPosition.X + sudokuCells[i].Grid.ActualWidth * (1 - scalingFactor) / 2,
-                            topLeftPosition.Y + sudokuCells[i].Grid.ActualHeight * (1 - scalingFactor) / 2,
+                            topLeftPosition.X + SudokuCells[i].Grid.ActualWidth * (1 - scalingFactor) / 2,
+                            topLeftPosition.Y + SudokuCells[i].Grid.ActualHeight * (1 - scalingFactor) / 2,
                             0,
                             0),
                         Stroke = Brushes.Black,
@@ -89,8 +81,8 @@ namespace SudokuSAT
                 }
                 else
                 {
-                    Point centerPosition1 = sudokuCells[i].CenterPosition;
-                    Point centerPosition2 = sudokuCells[i - 1].CenterPosition;
+                    Point centerPosition1 = SudokuCells[i].CenterPosition;
+                    Point centerPosition2 = SudokuCells[i - 1].CenterPosition;
                     Grid.Children.Add(new Line()
                     {
                         X1 = centerPosition1.X,
@@ -101,13 +93,14 @@ namespace SudokuSAT
                     });
                 }
 
-                if (i == sudokuCells.Count - 1)
+                if (i == SudokuCells.Count - 1)
                 {
                     // TODO: add arrow tip
                 }
             }
 
-            SudokuVisual.SudokuPlaceholder.Children.Add(Grid);
+            Sudoku.Grid.Children.Add(Grid);
         }
+#pragma warning restore CS8602 // Using Grid should be safe during visualization
     }
 }

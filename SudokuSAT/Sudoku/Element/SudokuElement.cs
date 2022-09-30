@@ -3,6 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
+using System.Xml.Linq;
 
 namespace SudokuSAT
 {
@@ -12,19 +13,18 @@ namespace SudokuSAT
         public int SudokuElementId { get; set; }
 
         public Sudoku Sudoku { get; private set; }
-#pragma warning disable CS8603 // Possible null reference return.
-        public SudokuVisual SudokuVisual => Sudoku as SudokuVisual;
-#pragma warning restore CS8603 // Possible null reference return.
 
-        public Grid? Grid { get; private set; } = null;
+        public Grid? Grid { get; private set; }
 
-        protected SudokuElement(Sudoku sudoku)
+        protected SudokuElement(Sudoku sudoku, Grid? grid = null)
         {
             Sudoku = sudoku;
             SudokuElementId = SudokuElementCount++;
-            if (sudoku is SudokuVisual)
+
+            Grid = grid;
+            if (Grid != null)
             {
-                Grid = new Grid() { Name = Name };
+                Grid.Name = Name;
             }
         }
 

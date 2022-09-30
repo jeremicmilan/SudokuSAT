@@ -19,26 +19,28 @@ namespace SudokuSAT
         public int BoxSize => (int)BoxSizeSlider.Value;
 
         private readonly SudokuSolver SudokuSolver;
+        private Sudoku Sudoku { get; set; }
 
-        private Visual<Sudoku> Visual;
-        private Sudoku Sudoku { get; private set };
+        private Sudoku CreateSudoku()
+        {
+            Sudoku = new(GridWidth, GridHeight, BoxSize, SudokuPlaceholder);
+            Sudoku.GenerateAndVisualize();
+            return Sudoku;
+        }
 
         public MainWindow()
         {
             InitializeComponent();
 
             SudokuSolver = new(this);
-            Sudoku = new(GridWidth, GridHeight, BoxSize)
-            new Visual<Sudoku>(, SudokuPlaceholder);
-            Sudoku.GenerateGrid(SudokuVisual);
+            Sudoku = CreateSudoku(); // Assigning to make the compiler happy
         }
 
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
             HandleClickFailure(() =>
             {
-                Sudoku = new(GridWidth, GridHeight, BoxSize, SudokuPlaceholder);
-                Sudoku.GenerateGrid();
+                CreateSudoku();
             });
         }
 
@@ -72,7 +74,7 @@ namespace SudokuSAT
         {
             HandleClickFailure(() =>
             {
-                SudokuArrow sudokuArrow = new(Sudoku, Sudoku.SelectedSudokuCells);
+                SudokuArrow sudokuArrow = new(Sudoku, Sudoku.SelectedSudokuCells, new Grid());
                 Sudoku.SudokuElements.Add(sudokuArrow);
                 sudokuArrow.Visualize();
             });
@@ -84,8 +86,11 @@ namespace SudokuSAT
             {
                 action();
 
-                StatusBox.Foreground = Brushes.Black;
-                StatusBox.Text = null;
+                Dispatcher.Invoke(() =>
+                {
+                    StatusBox.Foreground = Brushes.Black;
+                    StatusBox.Text = null;
+                });
             }
             catch (Exception exception)
             {

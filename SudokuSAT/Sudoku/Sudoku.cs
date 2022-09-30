@@ -10,22 +10,22 @@ using System.Windows.Input;
 
 namespace SudokuSAT
 {
-    public class Sudoku : IVisualizable<Sudoku>
+    public class Sudoku
     {
         public int Width { get; private set; }
         public int Height { get; private set; }
         public int BoxSize { get; private set; }
 
         public SudokuCell[,] SudokuGrid { get; private set; }
+        public Grid? Grid { get; private set; }
 
-        public Visual<Sudoku>? Visual { get; set; }
-
-        public Sudoku(int width, int height, int boxSize)
+        public Sudoku(int width, int height, int boxSize, Grid? grid = null)
         {
             Width = width;
             Height = height;
             SudokuGrid = new SudokuCell[Width, Height];
             BoxSize = boxSize;
+            Grid = grid;
         }
 
         public Sudoku Clone()
@@ -188,33 +188,19 @@ namespace SudokuSAT
             }
         }
 
-#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
-        public List<SudokuCellVisual> SudokuCellsVisual => SudokuCells.Select(cell => cell as SudokuCellVisual).ToList();
-#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
-
-        public List<SudokuCellVisual> SelectedSudokuCells => SudokuCellsVisual
+        public List<SudokuCell> SelectedSudokuCells => SudokuCells
             .Where(cell => cell.IsSelected)
             .OrderBy(cell => cell.SelectionOrderId)
             .ToList();
 
         public void ClearSelection()
         {
-            foreach (SudokuCellVisual sudokuCell in SelectedSudokuCells)
+            foreach (SudokuCell sudokuCell in SelectedSudokuCells)
             {
                 sudokuCell.SetIsSelected(isSelected: false);
             }
 
-            SudokuCellVisual.GlobalSelectionCount = 0;
-        }
-
-        public void GenerateGrid()
-        {
-            for (var row = 0; row < Height; row++)
-            {
-                for (var column = 0; column < Width; column++)
-                {
-                }
-            }
+            SudokuCell.ClearGlobalSelectionCount();
         }
 
         private Border CreateBorder(int column, int row)
@@ -232,7 +218,8 @@ namespace SudokuSAT
             };
         }
 
-        public UIElement Visualize()
+#pragma warning disable CS8602 // Using Grid should be safe during visualization
+        public void GenerateAndVisualize()
         {
             UniformGrid sudokuGrid = new()
             {
@@ -249,25 +236,14 @@ namespace SudokuSAT
 
                     Grid grid = new();
                     border.Child = grid;
-                    grid.Children.Add(new Label()); // for clicking
 
-                    Visual<SudokuCell> sudokuCellVisual = new(new(this, column, row), grid);
-                    grid.AddHandler(UIElement.MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
-                    {
-                        bool isSelected = sudokuCell.IsSelected;
-                        if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
-                        {
-                            ClearSelection();
-                        }
-
-                        sudokuCell.SetIsSelected(!isSelected);
-                    }));
-
-                    SudokuGrid[column, row] = sudokuCellVisual;
+                    SudokuGrid[column, row] = new SudokuCell(this, column, row, grid: grid);
+                    SudokuGrid[column, row].Visualize();
                 }
             }
 
-            return sudokuGrid;
+            Grid.Children.Add(sudokuGrid);
         }
+#pragma warning restore CS8602 // Using Grid should be safe during visualization
     }
 }
