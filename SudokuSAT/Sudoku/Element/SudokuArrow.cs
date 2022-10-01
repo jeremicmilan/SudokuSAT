@@ -60,6 +60,8 @@ namespace SudokuSAT
 
                 if (i == 0)
                 {
+                    // Arrow circle beginning
+                    //
                     Point topLeftPosition = SudokuCells[i].TopLeftPosition;
                     Grid.Children.Add(new Ellipse()
                     {
@@ -82,11 +84,13 @@ namespace SudokuSAT
                     Point position1 = sudokuCell1.CenterPosition;
                     Point position2 = sudokuCell2.CenterPosition;
 
+                    int columnDirection = sudokuCell2.Column - sudokuCell1.Column;
+                    int rowDirection = sudokuCell2.Row - sudokuCell1.Row;
+                    double coeficient = (sudokuCell1.OrthoAdjacent(sudokuCell2) ? 1 : (Math.Sqrt(2) / 2)) * circleScalingFactor / 2;
                     if (i == 1)
                     {
-                        int columnDirection = sudokuCell2.Column - sudokuCell1.Column;
-                        int rowDirection = sudokuCell2.Row - sudokuCell1.Row;
-                        double coeficient = (sudokuCell1.OrthoAdjacent(sudokuCell2) ? 1 : (Math.Sqrt(2) / 2)) * circleScalingFactor / 2;
+                        // First line should start from circle edge and not the center
+                        //
                         position1.X += coeficient * columnDirection * sudokuCell1.Grid.ActualWidth;
                         position1.Y += coeficient * rowDirection * sudokuCell1.Grid.ActualHeight;
                     }
@@ -99,11 +103,32 @@ namespace SudokuSAT
                         Y2 = position2.Y,
                         Stroke = Brushes.Black,
                     });
-                }
 
-                if (i == SudokuCells.Count - 1)
-                {
-                    // TODO: add arrow tip
+                    if (i == SudokuCells.Count - 1)
+                    {
+                        // Arrow tip
+                        //
+                        position1 = sudokuCell1.CenterPosition;
+                        position2 = sudokuCell1.CenterPosition;
+                        foreach (int rotationDirection in new[] { -1, 1 })
+                        {
+                            coeficient = (sudokuCell1.OrthoAdjacent(sudokuCell2) ? 1 : (Math.Sqrt(2) / 2)) * circleScalingFactor / 2;
+                            Line line = new Line()
+                            {
+                                X1 = position2.X - (position2.X - position1.X) * coeficient,
+                                Y1 = position2.Y - (position2.Y - position1.Y) * coeficient,
+                                X2 = position2.X,
+                                Y2 = position2.Y,
+                                Stroke = Brushes.Black,
+                            };
+                            line.RenderTransform = new RotateTransform(rotationDirection * 30)
+                            {
+                                CenterX = position2.X,
+                                CenterY = position2.Y
+                            };
+                            Grid.Children.Add(line);
+                        }
+                    }
                 }
             }
 
