@@ -26,23 +26,13 @@ namespace SudokuSAT
 #pragma warning disable CS8602 // Using Grid should be safe during visualization
         public override void Visualize()
         {
-            for (int i = 1; i < SudokuCells.Count; i++)
+            Grid.Children.Add(new Polyline
             {
-                SudokuCell sudokuCell1 = SudokuCells[i - 1];
-                SudokuCell sudokuCell2 = SudokuCells[i];
-                Point position1 = sudokuCell1.CenterPosition;
-                Point position2 = sudokuCell2.CenterPosition;
-                Grid.Children.Add(new Line()
-                {
-                    X1 = position1.X,
-                    Y1 = position1.Y,
-                    X2 = position2.X,
-                    Y2 = position2.Y,
-                    Stroke = Brushes.Orange,
-                    StrokeThickness = 15,
-                    Opacity = 50,
-                });
-            }
+                Points = new PointCollection(SudokuCells.Select(cell => cell.CenterPosition)),
+                Stroke = Brushes.Orange,
+                StrokeThickness = 15,
+                Opacity = .5
+            });
 
             Sudoku.Grid.Children.Add(Grid);
         }
