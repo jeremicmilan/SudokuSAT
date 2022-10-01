@@ -9,39 +9,11 @@ using System.Windows.Shapes;
 
 namespace SudokuSAT
 {
-    public class SudokuArrow : SudokuElement
+    public class SudokuArrow : SudokuElementWithCellListAdjacent
     {
-        public List<SudokuCell> SudokuCells { get; set; }
-
         public SudokuArrow(Sudoku sudoku, List<SudokuCell> sudokuCells, Grid? grid = null)
-            : base(sudoku, grid)
-        {
-            if (sudokuCells.Count < 2)
-            {
-                throw new Exception("Arrow must be of at least of length 2.");
-            }
-
-            for (int i = 1; i < sudokuCells.Count; i++)
-            {
-                if (!sudokuCells[i - 1].Adjacent(sudokuCells[i]))
-                {
-                    throw new Exception("Invalid arrow.");
-                }
-            }
-
-            SudokuCells = sudokuCells;
-        }
-
-        public override SudokuElement Clone(Sudoku sudoku)
-        {
-            List<SudokuCell> sudokuCells = new();
-            foreach (SudokuCell sudokuCell in SudokuCells)
-            {
-                sudokuCells.Add(sudoku.SudokuGrid[sudokuCell.Column, sudokuCell.Row]);
-            }
-
-            return new SudokuArrow(sudoku, sudokuCells);
-        }
+            : base(sudoku, sudokuCells, grid)
+        { }
 
         public override void AddConstraints(CpModel model)
         {

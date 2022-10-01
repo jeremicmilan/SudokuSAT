@@ -28,7 +28,7 @@ namespace SudokuSAT
             }
         }
 
-        public string Name => "_" + SudokuElementId + "_" + this.GetType().Name;
+        public string Name => "_" + SudokuElementId + "_" + GetType().Name;
 
         public abstract SudokuElement Clone(Sudoku sudoku);
 

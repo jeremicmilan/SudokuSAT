@@ -81,6 +81,16 @@ namespace SudokuSAT
             });
         }
 
+        private void Palindrome_Click(object sender, RoutedEventArgs e)
+        {
+            HandleClickFailure(() =>
+            {
+                SudokuPalindrome sudokuPalindrome = new(Sudoku, Sudoku.SelectedSudokuCells, new Grid());
+                Sudoku.SudokuElements.Add(sudokuPalindrome);
+                sudokuPalindrome.Visualize();
+            });
+        }
+
         private void HandleClickFailure(Action action)
         {
             try
