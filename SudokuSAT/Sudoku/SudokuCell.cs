@@ -49,7 +49,7 @@ namespace SudokuSAT
 
         public void AddValueConstrainct(CpModel model)
         {
-            ValueVar = model.NewIntVar(MinValue, MaxValue, "cell_c" + Column + "_r" + Row);
+            ValueVar = model.NewIntVar(MinValue, MaxValue, "cell_c" + (Column + 1) + "_r" + (Row + 1));
 
             if (Value.HasValue)
             {
@@ -87,7 +87,17 @@ namespace SudokuSAT
             if (Grid != null)
             {
                 Grid.Children.Clear();
-                Grid.Children.Add(new Label()); // dummy label for selecting
+                CreateDummyLabelForSelecting();
+            }
+        }
+
+        private void CreateDummyLabelForSelecting()
+        {
+            if (Grid != null)
+            {
+                Label selectingLabel = new Label();
+                Canvas.SetZIndex(selectingLabel, 100);
+                Grid.Children.Add(selectingLabel);
             }
         }
 
@@ -144,7 +154,8 @@ namespace SudokuSAT
 
         public void Visualize()
         {
-            Grid.Children.Add(new Label()); // for clicking
+            CreateDummyLabelForSelecting();
+
             Grid.AddHandler(UIElement.MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
             {
                 bool isSelected = IsSelected;
