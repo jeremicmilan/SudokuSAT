@@ -15,6 +15,11 @@ namespace SudokuSAT
             : base(sudoku, sudokuCells, grid)
         { }
 
+        protected override SudokuElementWithCellList Instantiate(Sudoku sudoku, List<SudokuCell> sudokuCells)
+        {
+            return new SudokuPalindrome(sudoku, sudokuCells);
+        }
+
         public override void AddConstraints(CpModel model)
         {
             for (int i = 0; i < SudokuCells.Count / 2; i++)

@@ -24,6 +24,8 @@ namespace SudokuSAT
             SudokuCells = sudokuCells;
         }
 
+        protected abstract SudokuElementWithCellList Instantiate(Sudoku sudoku, List<SudokuCell> sudokuCells);
+
         public override SudokuElement Clone(Sudoku sudoku)
         {
             List<SudokuCell> sudokuCells = new();
@@ -32,7 +34,7 @@ namespace SudokuSAT
                 sudokuCells.Add(sudoku.SudokuGrid[sudokuCell.Column, sudokuCell.Row]);
             }
 
-            return new SudokuArrow(sudoku, sudokuCells);
+            return Instantiate(sudoku, sudokuCells);
         }
     }
 }

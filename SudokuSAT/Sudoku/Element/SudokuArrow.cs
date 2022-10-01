@@ -15,6 +15,11 @@ namespace SudokuSAT
             : base(sudoku, sudokuCells, grid)
         { }
 
+        protected override SudokuElementWithCellList Instantiate(Sudoku sudoku, List<SudokuCell> sudokuCells)
+        {
+            return new SudokuArrow(sudoku, sudokuCells);
+        }
+
         public override void AddConstraints(CpModel model)
         {
             BoundedLinearExpression boundedLinearExpression = SudokuCells[0].ValueVar ==
