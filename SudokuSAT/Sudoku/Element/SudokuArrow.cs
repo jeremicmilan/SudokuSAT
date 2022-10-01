@@ -52,6 +52,7 @@ namespace SudokuSAT
                         Stroke = Brushes.Black,
                         HorizontalAlignment = HorizontalAlignment.Left,
                         VerticalAlignment = VerticalAlignment.Top,
+                        IsHitTestVisible = false,
                     });
                 }
                 else
@@ -79,6 +80,7 @@ namespace SudokuSAT
                         X2 = position2.X,
                         Y2 = position2.Y,
                         Stroke = Brushes.Black,
+                        IsHitTestVisible = false,
                     });
 
                     if (i == SudokuCells.Count - 1)
@@ -100,7 +102,8 @@ namespace SudokuSAT
                                 {
                                     CenterX = position2.X,
                                     CenterY = position2.Y
-                                }
+                                },
+                                IsHitTestVisible = false,\
                             });
                         }
                     }

@@ -36,7 +36,8 @@ namespace SudokuSAT
                 Points = new PointCollection(SudokuCells.Select(cell => cell.CenterPosition)),
                 Stroke = Brushes.Orange,
                 StrokeThickness = 15,
-                Opacity = .5
+                Opacity = .5,
+                IsHitTestVisible = false,
             });
 
             Sudoku.Grid.Children.Add(Grid);
