@@ -109,24 +109,22 @@ namespace SudokuSAT
                         // Arrow tip
                         //
                         position1 = sudokuCell1.CenterPosition;
-                        position2 = sudokuCell1.CenterPosition;
+                        position2 = sudokuCell2.CenterPosition;
                         foreach (int rotationDirection in new[] { -1, 1 })
                         {
-                            coeficient = (sudokuCell1.OrthoAdjacent(sudokuCell2) ? 1 : (Math.Sqrt(2) / 2)) * circleScalingFactor / 2;
-                            Line line = new Line()
+                            Grid.Children.Add(new Line()
                             {
                                 X1 = position2.X - (position2.X - position1.X) * coeficient,
                                 Y1 = position2.Y - (position2.Y - position1.Y) * coeficient,
                                 X2 = position2.X,
                                 Y2 = position2.Y,
                                 Stroke = Brushes.Black,
-                            };
-                            line.RenderTransform = new RotateTransform(rotationDirection * 30)
-                            {
-                                CenterX = position2.X,
-                                CenterY = position2.Y
-                            };
-                            Grid.Children.Add(line);
+                                RenderTransform = new RotateTransform(rotationDirection * 10)
+                                {
+                                    CenterX = position2.X,
+                                    CenterY = position2.Y
+                                }
+                            });
                         }
                     }
                 }
