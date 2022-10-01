@@ -23,6 +23,7 @@ namespace SudokuSAT
 
         private Sudoku CreateSudoku()
         {
+            SudokuPlaceholder.Children.Clear();
             Sudoku = new(GridWidth, GridHeight, BoxSize, SudokuPlaceholder);
             Sudoku.GenerateAndVisualize();
             return Sudoku;

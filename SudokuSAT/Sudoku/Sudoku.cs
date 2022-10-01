@@ -224,7 +224,8 @@ namespace SudokuSAT
             UniformGrid sudokuGrid = new()
             {
                 Rows = Height,
-                Columns = Width
+                Columns = Width,
+                Name = "SudokuCells"
             };
 
             for (var row = 0; row < Height; row++)
