@@ -64,6 +64,7 @@ namespace SudokuSAT
 
             if (Grid != null)
             {
+                Grid.Children.Clear();
                 Grid.Children.Add(new Label()
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
