@@ -103,7 +103,7 @@ namespace SudokuSAT
                                     CenterX = position2.X,
                                     CenterY = position2.Y
                                 },
-                                IsHitTestVisible = false,\
+                                IsHitTestVisible = false,
                             });
                         }
                     }

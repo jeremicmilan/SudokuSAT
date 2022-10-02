@@ -91,6 +91,16 @@ namespace SudokuSAT
             });
         }
 
+        private void Renban_Click(object sender, RoutedEventArgs e)
+        {
+            HandleClickFailure(() =>
+            {
+                SudokuRenban sudokuRenban = new(Sudoku, Sudoku.SelectedSudokuCells, new Grid());
+                Sudoku.SudokuElements.Add(sudokuRenban);
+                sudokuRenban.Visualize();
+            });
+        }
+
         private void HandleClickFailure(Action action)
         {
             try
