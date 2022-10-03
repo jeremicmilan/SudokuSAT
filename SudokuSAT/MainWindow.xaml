@@ -36,5 +36,6 @@
         <TextBlock x:Name="StatusBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="139" Width="180"/>
         <Button x:Name="Palindrome" Grid.Column="1" Content="Palindrome" HorizontalAlignment="Left" Margin="51,182,0,0" VerticalAlignment="Top" Click="Palindrome_Click"/>
         <Button x:Name="Renban" Grid.Column="1" Content="Renban" HorizontalAlignment="Left" Margin="120,182,0,0" VerticalAlignment="Top" Click="Renban_Click"/>
+        <Button x:Name="GermanWhispers" Grid.Column="1" Content="German Whispers" HorizontalAlignment="Left" Margin="10,207,0,0" VerticalAlignment="Top" Click="GermanWhispers_Click"/>
     </Grid>
 </Window>
