@@ -8,7 +8,7 @@ using System.Windows.Shapes;
 
 namespace SudokuSAT
 {
-    public class SudokuRenban : SudokuElementWithCellListAdjacent
+    public class SudokuRenban : SudokuElementLine
     {
         public SudokuRenban(Sudoku sudoku, List<SudokuCell> sudokuCells, Grid? grid = null)
             : base(sudoku, sudokuCells, grid)

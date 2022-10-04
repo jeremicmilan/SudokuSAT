@@ -91,7 +91,50 @@ namespace SudokuSAT
                 || Math.Abs(Row - sudokuCell.Row) == 1 && Column == sudokuCell.Column;
         }
 
-#pragma warning disable CS8602,CS8629 // Using Grid should be safe during visualization
+        public SudokuCell? Top    => Row - 1    > 0                 ? Sudoku.SudokuGrid[Column    , Row - 1] : null;
+        public SudokuCell? Bottom => Row + 1    < Sudoku.Height - 1 ? Sudoku.SudokuGrid[Column    , Row + 1] : null;
+        public SudokuCell? Left   => Column - 1 > 0                 ? Sudoku.SudokuGrid[Column - 1, Row    ] : null;
+        public SudokuCell? Right  => Column + 1 < Sudoku.Width - 1  ? Sudoku.SudokuGrid[Column + 1, Row    ] : null;
+
+        public IEnumerable<SudokuCell> AdjacentSudokuCells()
+        {
+            HashSet<SudokuCell> sudokuCells = new HashSet<SudokuCell>();
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    if (!(
+                        i < 0 && Column == 0 || i > 0 && Column == Sudoku.Width - 1 ||
+                        j < 0 && Row == 0 || j > 0 && Row == Sudoku.Height - 1))
+                    {
+                        sudokuCells.Add(Sudoku.SudokuGrid[Column + i, Row + j]);
+                    }
+                }
+            }
+
+            return sudokuCells;
+        }
+
+        public IEnumerable<SudokuCell> OrthoAdjacentSudokuCells()
+        {
+            HashSet<SudokuCell> sudokuCells = new HashSet<SudokuCell>();
+            for (int i = -1; i <= 1; i++)
+            {
+                if (!(i < 0 && Column == 0 || i > 0 && Column == Sudoku.Width - 1))
+                {
+                    sudokuCells.Add(Sudoku.SudokuGrid[Column + i, Row]);
+                }
+
+                if (!(i < 0 && Row == 0 || i > 0 && Row == Sudoku.Height - 1))
+                {
+                    sudokuCells.Add(Sudoku.SudokuGrid[Column, Row + i]);
+                }
+            }
+
+            return sudokuCells;
+        }
+
+#pragma warning disable CS8602, CS8629 // Using Grid should be safe during visualization
         public bool IsSelected { get; set; } = false;
         private static bool IsHoldingDownMouseSelecting = true;
         public static void ClearGlobalSelectionCount() => GlobalSelectionCount = 1;
@@ -129,10 +172,16 @@ namespace SudokuSAT
             { ValueType.User,   Brushes.Blue  }
         };
 
-        public Point CenterPosition => Grid.TranslatePoint(
-            new Point(.5 * Grid.ActualWidth, .5 * Grid.ActualHeight),
-            Sudoku.Grid);
-        public Point TopLeftPosition => Grid.TranslatePoint(new Point(0, 0), Sudoku.Grid);
+        private Point TranslatePoint(Point point) => Grid.TranslatePoint(point, Sudoku.Grid);
+        public Point CenterPosition      => TranslatePoint(new Point(.5 * Grid.ActualWidth, .5 * Grid.ActualHeight));
+        public Point TopPosition         => TranslatePoint(new Point(.5 * Grid.ActualWidth, 0                     ));
+        public Point BottomPosition      => TranslatePoint(new Point(.5 * Grid.ActualWidth, Grid.ActualHeight     ));
+        public Point LeftPosition        => TranslatePoint(new Point(0                    , .5 * Grid.ActualHeight));
+        public Point RightPosition       => TranslatePoint(new Point(Grid.ActualWidth     , .5 * Grid.ActualHeight));
+        public Point TopLeftPosition     => TranslatePoint(new Point(0                    , 0                     ));
+        public Point TopRightPosition    => TranslatePoint(new Point(Grid.ActualWidth     , 0                     ));
+        public Point BottomLeftPosition  => TranslatePoint(new Point(0                    , Grid.ActualHeight     ));
+        public Point BottomRightPosition => TranslatePoint(new Point(Grid.ActualWidth     , Grid.ActualHeight     ));
 
         private void UpdateGrid()
         {
@@ -185,6 +234,6 @@ namespace SudokuSAT
                 }
             }));
         }
-#pragma warning restore CS8602,CS8629 // Using Grid should be safe during visualization
+#pragma warning restore CS8602, CS8629 // Using Grid should be safe during visualization
     }
 }

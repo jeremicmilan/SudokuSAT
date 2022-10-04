@@ -8,7 +8,7 @@ using System.Windows.Shapes;
 
 namespace SudokuSAT
 {
-    public class SudokuWhispers : SudokuElementWithCellListAdjacent
+    public class SudokuWhispers : SudokuElementLine
     {
         public int ValueDiff { get; private set; }
 

@@ -9,7 +9,7 @@ using System.Windows.Shapes;
 
 namespace SudokuSAT
 {
-    public class SudokuArrow : SudokuElementWithCellListAdjacent
+    public class SudokuArrow : SudokuElementLine
     {
         public SudokuArrow(Sudoku sudoku, List<SudokuCell> sudokuCells, Grid? grid = null)
             : base(sudoku, sudokuCells, grid)
@@ -22,10 +22,7 @@ namespace SudokuSAT
 
         public override void AddConstraints(CpModel model)
         {
-            BoundedLinearExpression boundedLinearExpression = SudokuCells[0].ValueVar ==
-                LinearExpr.Sum(SudokuCells.Skip(1).Select(cell => cell.ValueVar));
-
-            model.Add(boundedLinearExpression);
+            model.Add(SudokuCells[0].ValueVar == LinearExpr.Sum(SudokuCells.Skip(1).Select(cell => cell.ValueVar)));
         }
 
 #pragma warning disable CS8602 // Using Grid should be safe during visualization

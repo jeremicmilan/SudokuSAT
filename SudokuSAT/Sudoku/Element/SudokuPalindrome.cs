@@ -9,7 +9,7 @@ using System.Windows.Shapes;
 
 namespace SudokuSAT
 {
-    public class SudokuPalindrome : SudokuElementWithCellListAdjacent
+    public class SudokuPalindrome : SudokuElementLine
     {
         public SudokuPalindrome(Sudoku sudoku, List<SudokuCell> sudokuCells, Grid? grid = null)
             : base(sudoku, sudokuCells, grid)

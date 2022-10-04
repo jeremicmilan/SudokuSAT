@@ -9,9 +9,9 @@ using System.Windows.Shapes;
 
 namespace SudokuSAT
 {
-    public abstract class SudokuElementWithCellListAdjacent : SudokuElementWithCellList
+    public abstract class SudokuElementLine : SudokuElementWithCellList
     {
-        public SudokuElementWithCellListAdjacent(Sudoku sudoku, List<SudokuCell> sudokuCells, Grid? grid = null)
+        public SudokuElementLine(Sudoku sudoku, List<SudokuCell> sudokuCells, Grid? grid = null)
             : base(sudoku, sudokuCells, grid)
         {
             for (int i = 1; i < sudokuCells.Count; i++)
