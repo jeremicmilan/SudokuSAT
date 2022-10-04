@@ -81,13 +81,13 @@ namespace SudokuSAT
             });
         }
 
-        private void GermanWhispers_Click(object sender, RoutedEventArgs e)
+        private void Whispers_Click(object sender, RoutedEventArgs e)
         {
             HandleClickFailure(() =>
             {
-                SudokuGermanWhispers sudokuGermanWhispers = new(Sudoku, Sudoku.SelectedSudokuCells, new Grid());
-                Sudoku.SudokuElements.Add(sudokuGermanWhispers);
-                sudokuGermanWhispers.Visualize();
+                SudokuWhispers sudokuWhispers = new(Sudoku, Sudoku.SelectedSudokuCells, (int)WhisperValueDiff.Value, new Grid());
+                Sudoku.SudokuElements.Add(sudokuWhispers);
+                sudokuWhispers.Visualize();
             });
         }
 
