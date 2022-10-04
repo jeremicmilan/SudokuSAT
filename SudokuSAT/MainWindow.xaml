@@ -33,11 +33,14 @@
         <Button x:Name="Clear" Grid.Column="1" Content="Clear" HorizontalAlignment="Left" Margin="130,126,0,0" VerticalAlignment="Top" Click="Clear_Click"/>
         <Button x:Name="Arrow" Grid.Column="1" Content="Arrow" HorizontalAlignment="Left" Margin="10,182,0,0" VerticalAlignment="Top" Click="Arrow_Click"/>
         <Label Grid.Column="1" Content="Label" HorizontalAlignment="Left" Margin="329,266,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="StatusBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="139" Width="180"/>
+        <TextBlock x:Name="StatusBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,324,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="68" Width="180"/>
         <Button x:Name="Palindrome" Grid.Column="1" Content="Palindrome" HorizontalAlignment="Left" Margin="51,182,0,0" VerticalAlignment="Top" Click="Palindrome_Click"/>
         <Button x:Name="Renban" Grid.Column="1" Content="Renban" HorizontalAlignment="Left" Margin="120,182,0,0" VerticalAlignment="Top" Click="Renban_Click"/>
         <Slider x:Name="WhisperValueDiff" Grid.Column="1" HorizontalAlignment="Left" Margin="10,209,0,0" VerticalAlignment="Top" Width="64" Minimum="2" Maximum="8" SmallChange="1" Value="5" IsSnapToTickEnabled="True" TickFrequency="1"/>
         <TextBox Text="{Binding Value, ElementName=WhisperValueDiff, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="79,209,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
         <Button x:Name="Whispers" Grid.Column="1" Content="Whispers" HorizontalAlignment="Left" Margin="111,208,0,0" VerticalAlignment="Top" Click="Whispers_Click"/>
+        <Button x:Name="KillerCage" Grid.Column="1" Content="Killer Cage" HorizontalAlignment="Left" Margin="103,236,0,0" VerticalAlignment="Top" Click="KillerCage_Click"/>
+        <TextBox x:Name="KillerCageSum" Text="" Grid.Column="1" HorizontalAlignment="Left" Margin="47,237,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" TextAlignment="Center" PreviewTextInput="KillerCageSum_Validation"/>
+        <Label Grid.Column="1" Content="Sum:" HorizontalAlignment="Left" Margin="10,233,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

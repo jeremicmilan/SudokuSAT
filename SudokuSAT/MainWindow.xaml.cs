@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -108,6 +107,16 @@ namespace SudokuSAT
                 SudokuRenban sudokuRenban = new(Sudoku, Sudoku.SelectedSudokuCells, new Grid());
                 Sudoku.SudokuElements.Add(sudokuRenban);
                 sudokuRenban.Visualize();
+            });
+        }
+
+        private void KillerCage_Click(object sender, RoutedEventArgs e)
+        {
+            HandleClickFailure(() =>
+            {
+                SudokuKillerCage sudokuKillerCage = new(Sudoku, Sudoku.SelectedSudokuCells, (int)WhisperValueDiff.Value, new Grid());
+                Sudoku.SudokuElements.Add(sudokuKillerCage);
+                sudokuKillerCage.Visualize();
             });
         }
 

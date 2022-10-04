@@ -34,6 +34,13 @@ namespace SudokuSAT
 
         public abstract void AddConstraints(CpModel model);
 
-        public abstract void Visualize();
+#pragma warning disable CS8602 // Using Grid should be safe during visualization
+        protected abstract void VisualizeInternal();
+        public void Visualize()
+        {
+            VisualizeInternal();
+            Sudoku.Grid.Children.Add(Grid);
+        }
+#pragma warning restore CS8602 // Using Grid should be safe during visualization
     }
 }

@@ -26,7 +26,7 @@ namespace SudokuSAT
         }
 
 #pragma warning disable CS8602 // Using Grid should be safe during visualization
-        public override void Visualize()
+        protected override void VisualizeInternal()
         {
             for (int i = 0; i < SudokuCells.Count; i++)
             {
@@ -106,8 +106,6 @@ namespace SudokuSAT
                     }
                 }
             }
-
-            Sudoku.Grid.Children.Add(Grid);
         }
 #pragma warning restore CS8602 // Using Grid should be safe during visualization
     }

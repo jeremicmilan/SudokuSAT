@@ -38,7 +38,7 @@ namespace SudokuSAT
         }
 
 #pragma warning disable CS8602 // Using Grid should be safe during visualization
-        public override void Visualize()
+        protected override void VisualizeInternal()
         {
             Grid.Children.Add(new Polyline
             {
@@ -48,8 +48,6 @@ namespace SudokuSAT
                 Opacity = .5,
                 IsHitTestVisible = false,
             });
-
-            Sudoku.Grid.Children.Add(Grid);
         }
 #pragma warning restore CS8602 // Using Grid should be safe during visualization
     }
