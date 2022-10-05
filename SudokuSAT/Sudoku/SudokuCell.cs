@@ -135,11 +135,15 @@ namespace SudokuSAT
         }
 
 #pragma warning disable CS8602, CS8629 // Using Grid should be safe during visualization
+        public Border? Border => (Border)Grid.Parent;
+
         public bool IsSelected { get; set; } = false;
         private static bool IsHoldingDownMouseSelecting = true;
         public static void ClearGlobalSelectionCount() => GlobalSelectionCount = 1;
         private static int GlobalSelectionCount = 1;
         public int? SelectionOrderId = null;
+        public static void ClearIsSudokuCellClicked() => IsSudokuCellClicked = false;
+        public static bool IsSudokuCellClicked { get; private set; } = false;
 
         public void SetIsSelected(bool isSelected)
         {
@@ -215,18 +219,25 @@ namespace SudokuSAT
         {
             UpdateGrid();
 
-            Grid.AddHandler(UIElement.MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
+            Border.AddHandler(UIElement.MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
             {
-                bool isSelected = IsSelected;
+                IsSudokuCellClicked = true;
+
+                bool newIsSelected = !IsSelected;
                 if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
                 {
+                    if (Sudoku.SelectedSudokuCells.Count > 1)
+                    {
+                        newIsSelected = IsSelected;
+                    }
+
                     Sudoku.ClearSelection();
                 }
 
-                SetIsSelected(!isSelected);
-                IsHoldingDownMouseSelecting = !isSelected;
+                SetIsSelected(newIsSelected);
+                IsHoldingDownMouseSelecting = newIsSelected;
             }));
-            Grid.AddHandler(UIElement.MouseEnterEvent, new RoutedEventHandler((_, _) =>
+            Border.AddHandler(UIElement.MouseEnterEvent, new RoutedEventHandler((_, _) =>
             {
                 if (Mouse.LeftButton == MouseButtonState.Pressed && IsSelected != IsHoldingDownMouseSelecting)
                 {

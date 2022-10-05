@@ -10,11 +10,12 @@
         Width="1000"
         SizeChanged="Window_SizeChanged"
         KeyDown="Keyboard_KeyDown">
-    <Grid>
+    <Grid MouseLeftButtonDown="MainGrid_Click">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="800*"/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
+        <Label x:Name="DummyLabelForClicking" Grid.ColumnSpan="2" />
         <Button x:Name="Generate" Grid.Column="1" Content="Generate" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top" Click="Generate_Click"/>
         <Button x:Name="Solve" Grid.Column="1" Content="Solve" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Click="Solve_Click"/>
         <Button x:Name="Explore" Grid.Column="1" Content="Explore" HorizontalAlignment="Left" Margin="47,126,0,0" VerticalAlignment="Top" Click="Explore_Click"/>

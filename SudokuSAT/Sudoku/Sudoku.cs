@@ -203,6 +203,7 @@ namespace SudokuSAT
             SudokuCell.ClearGlobalSelectionCount();
         }
 
+#pragma warning disable CS8602 // Using Grid should be safe during visualization
         private Border CreateBorder(int column, int row)
         {
             int thick = 3, thin = 1;
@@ -214,11 +215,10 @@ namespace SudokuSAT
             return new Border
             {
                 BorderThickness = new Thickness(left, top, right, bottom),
-                BorderBrush = Brushes.Black
+                BorderBrush = Brushes.Black,
             };
         }
 
-#pragma warning disable CS8602 // Using Grid should be safe during visualization
         public void GenerateAndVisualize()
         {
             UniformGrid sudokuGrid = new()
