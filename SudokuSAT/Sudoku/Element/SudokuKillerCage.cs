@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -42,21 +43,88 @@ namespace SudokuSAT
         {
             foreach (SudokuCell sudokuCell in SudokuCells)
             {
-                double offsetFactor = 0.05;
+                double offsetFactor = 0.08;
                 double widthOffset  = sudokuCell.Grid.ActualWidth  * offsetFactor;
                 double heightOffset = sudokuCell.Grid.ActualHeight * offsetFactor;
+                double strokeDashLength = (sudokuCell.Grid.ActualWidth + sudokuCell.Grid.ActualHeight) / 30;
 
                 if (sudokuCell.Top == null || !SudokuCells.Contains(sudokuCell.Top))
                 {
+                    int leftOffsetDirection =
+                        sudokuCell.Left != null && SudokuCells.Contains(sudokuCell.Left) &&
+                        sudokuCell.Left.Top != null && SudokuCells.Contains(sudokuCell.Left.Top)
+                        ? -1 : 1;
+                    int rightOffsetDirection = sudokuCell.Right != null && SudokuCells.Contains(sudokuCell.Right) ? 1 : -1;
                     Grid.Children.Add(new Line()
                     {
-                        X1 = sudokuCell.TopLeftPosition.X + heightOffset,
-                        Y1 = sudokuCell.TopLeftPosition.Y + widthOffset * (sudokuCell.Left != null ? -1 : 1),
-                        X2 = sudokuCell.TopRightPosition.X + heightOffset,
-                        Y2 = sudokuCell.TopRightPosition.Y + widthOffset * (sudokuCell.Right != null ? -1 : 1),
-                        StrokeDashArray = new DoubleCollection(new [] { 5.0, 5.0 }),
+                        X1 = sudokuCell.TopLeftPosition.X + widthOffset * leftOffsetDirection,
+                        Y1 = sudokuCell.TopLeftPosition.Y + heightOffset,
+                        X2 = sudokuCell.TopRightPosition.X + widthOffset * rightOffsetDirection,
+                        Y2 = sudokuCell.TopRightPosition.Y + heightOffset,
+                        StrokeDashArray = new DoubleCollection(new[] { strokeDashLength, strokeDashLength }),
                         StrokeThickness = 1,
                         Stroke = Brushes.Black,
+                        IsHitTestVisible = false,
+                    });
+                }
+
+                if (sudokuCell.Right == null || !SudokuCells.Contains(sudokuCell.Right))
+                {
+                    int topOffsetDirection =
+                        sudokuCell.Top != null && SudokuCells.Contains(sudokuCell.Top) &&
+                        sudokuCell.Top.Right != null && SudokuCells.Contains(sudokuCell.Top.Right)
+                        ? -1 : 1;
+                    int bottomOffsetDirection = sudokuCell.Bottom != null && SudokuCells.Contains(sudokuCell.Bottom) ? 1 : -1;
+                    Grid.Children.Add(new Line()
+                    {
+                        X1 = sudokuCell.TopRightPosition.X - widthOffset,
+                        Y1 = sudokuCell.TopRightPosition.Y + heightOffset * topOffsetDirection,
+                        X2 = sudokuCell.BottomRightPosition.X - widthOffset,
+                        Y2 = sudokuCell.BottomRightPosition.Y + heightOffset * bottomOffsetDirection,
+                        StrokeDashArray = new DoubleCollection(new[] { strokeDashLength, strokeDashLength }),
+                        StrokeThickness = 1,
+                        Stroke = Brushes.Black,
+                        IsHitTestVisible = false,
+                    });
+                }
+
+                if (sudokuCell.Bottom == null || !SudokuCells.Contains(sudokuCell.Bottom))
+                {
+                    int rightOffsetDirection =
+                        sudokuCell.Right != null && SudokuCells.Contains(sudokuCell.Right) &&
+                        sudokuCell.Right.Bottom != null && SudokuCells.Contains(sudokuCell.Right.Bottom)
+                        ? 1 : -1;
+                    int leftOffsetDirection = sudokuCell.Left != null && SudokuCells.Contains(sudokuCell.Left) ? -1 : 1;
+                    Grid.Children.Add(new Line()
+                    {
+                        X1 = sudokuCell.BottomRightPosition.X + widthOffset * rightOffsetDirection,
+                        Y1 = sudokuCell.BottomRightPosition.Y - heightOffset,
+                        X2 = sudokuCell.BottomLeftPosition.X + widthOffset * leftOffsetDirection,
+                        Y2 = sudokuCell.BottomLeftPosition.Y - heightOffset,
+                        StrokeDashArray = new DoubleCollection(new[] { strokeDashLength, strokeDashLength }),
+                        StrokeThickness = 1,
+                        Stroke = Brushes.Black,
+                        IsHitTestVisible = false,
+                    });
+                }
+
+                if (sudokuCell.Left == null || !SudokuCells.Contains(sudokuCell.Left))
+                {
+                    int bottomOffsetDirection =
+                        sudokuCell.Bottom != null && SudokuCells.Contains(sudokuCell.Bottom) &&
+                        sudokuCell.Bottom.Left != null && SudokuCells.Contains(sudokuCell.Bottom.Left)
+                        ? 1 : -1;
+                    int topOffsetDirection = sudokuCell.Top != null && SudokuCells.Contains(sudokuCell.Top) ? -1 : 1;
+                    Grid.Children.Add(new Line()
+                    {
+                        X1 = sudokuCell.BottomLeftPosition.X + widthOffset,
+                        Y1 = sudokuCell.BottomLeftPosition.Y + heightOffset * bottomOffsetDirection,
+                        X2 = sudokuCell.TopLeftPosition.X + widthOffset,
+                        Y2 = sudokuCell.TopLeftPosition.Y + heightOffset * topOffsetDirection,
+                        StrokeDashArray = new DoubleCollection(new[] { strokeDashLength, strokeDashLength }),
+                        StrokeThickness = 1,
+                        Stroke = Brushes.Black,
+                        IsHitTestVisible = false,
                     });
                 }
             }

@@ -91,10 +91,10 @@ namespace SudokuSAT
                 || Math.Abs(Row - sudokuCell.Row) == 1 && Column == sudokuCell.Column;
         }
 
-        public SudokuCell? Top    => Row - 1    > 0                 ? Sudoku.SudokuGrid[Column    , Row - 1] : null;
-        public SudokuCell? Bottom => Row + 1    < Sudoku.Height - 1 ? Sudoku.SudokuGrid[Column    , Row + 1] : null;
-        public SudokuCell? Left   => Column - 1 > 0                 ? Sudoku.SudokuGrid[Column - 1, Row    ] : null;
-        public SudokuCell? Right  => Column + 1 < Sudoku.Width - 1  ? Sudoku.SudokuGrid[Column + 1, Row    ] : null;
+        public SudokuCell? Top    => Row - 1    >= 0             ? Sudoku.SudokuGrid[Column    , Row - 1] : null;
+        public SudokuCell? Bottom => Row + 1    <  Sudoku.Height ? Sudoku.SudokuGrid[Column    , Row + 1] : null;
+        public SudokuCell? Left   => Column - 1 >= 0             ? Sudoku.SudokuGrid[Column - 1, Row    ] : null;
+        public SudokuCell? Right  => Column + 1 <  Sudoku.Width  ? Sudoku.SudokuGrid[Column + 1, Row    ] : null;
 
         public IEnumerable<SudokuCell> AdjacentSudokuCells()
         {
