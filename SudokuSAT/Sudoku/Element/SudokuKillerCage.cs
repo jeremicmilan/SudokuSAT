@@ -1,8 +1,11 @@
 ﻿using Google.OrTools.Sat;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -17,9 +20,9 @@ namespace SudokuSAT
             : base(sudoku, sudokuCells, grid)
         {
             Sum = sum > 0 ? sum : null;
-            if (Sum < 1 || Sum > 45)
+            if (Sum < 0 || Sum > 45)
             {
-                throw new Exception("Killer cage sum must be between 1 and 45 or non-existant.");
+                throw new Exception("Killer cage sum must be between 0 and 45 or non-existant.");
             }
         }
 
@@ -41,12 +44,33 @@ namespace SudokuSAT
 #pragma warning disable CS8602 // Using Grid should be safe during visualization
         protected override void VisualizeInternal()
         {
+            int minimumDistance = SudokuCells.Min(cell => cell.Column + cell.Row);
+            SudokuCell? topLeftmostSudokuCell = SudokuCells.Where(cell => cell.Column + cell.Row == minimumDistance).MinBy(cell => cell.Column);
+
             foreach (SudokuCell sudokuCell in SudokuCells)
             {
                 double offsetFactor = 0.08;
                 double widthOffset  = sudokuCell.Grid.ActualWidth  * offsetFactor;
                 double heightOffset = sudokuCell.Grid.ActualHeight * offsetFactor;
                 double strokeDashLength = (sudokuCell.Grid.ActualWidth + sudokuCell.Grid.ActualHeight) / 30;
+                double offsetForSum = 0;
+                if (topLeftmostSudokuCell != null && sudokuCell == topLeftmostSudokuCell && Sum != null)
+                {
+                    offsetForSum = sudokuCell.Grid.ActualHeight * 0.18;
+
+                    Grid.Children.Add(new Label()
+                    {
+                        Content = Sum,
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        VerticalAlignment = VerticalAlignment.Top,
+                        RenderTransform = new TranslateTransform(
+                            topLeftmostSudokuCell.TopLeftPosition.X,
+                            topLeftmostSudokuCell.TopLeftPosition.Y),
+                        FontSize = offsetForSum * 0.8,
+                        Foreground = Brushes.Black,
+                        IsHitTestVisible = false,
+                    });
+                }
 
                 if (sudokuCell.Top == null || !SudokuCells.Contains(sudokuCell.Top))
                 {
@@ -57,7 +81,7 @@ namespace SudokuSAT
                     int rightOffsetDirection = sudokuCell.Right != null && SudokuCells.Contains(sudokuCell.Right) ? 1 : -1;
                     Grid.Children.Add(new Line()
                     {
-                        X1 = sudokuCell.TopLeftPosition.X + widthOffset * leftOffsetDirection,
+                        X1 = sudokuCell.TopLeftPosition.X + widthOffset * leftOffsetDirection + offsetForSum,
                         Y1 = sudokuCell.TopLeftPosition.Y + heightOffset,
                         X2 = sudokuCell.TopRightPosition.X + widthOffset * rightOffsetDirection,
                         Y2 = sudokuCell.TopRightPosition.Y + heightOffset,
@@ -120,7 +144,7 @@ namespace SudokuSAT
                         X1 = sudokuCell.BottomLeftPosition.X + widthOffset,
                         Y1 = sudokuCell.BottomLeftPosition.Y + heightOffset * bottomOffsetDirection,
                         X2 = sudokuCell.TopLeftPosition.X + widthOffset,
-                        Y2 = sudokuCell.TopLeftPosition.Y + heightOffset * topOffsetDirection,
+                        Y2 = sudokuCell.TopLeftPosition.Y + heightOffset * topOffsetDirection + offsetForSum,
                         StrokeDashArray = new DoubleCollection(new[] { strokeDashLength, strokeDashLength }),
                         StrokeThickness = 1,
                         Stroke = Brushes.Black,
