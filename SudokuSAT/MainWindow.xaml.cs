@@ -72,51 +72,53 @@ namespace SudokuSAT
 
         private void Arrow_Click(object sender, RoutedEventArgs e)
         {
-            HandleClickFailure(() =>
-            {
-                SudokuArrow sudokuArrow = new(Sudoku, Sudoku.SelectedSudokuCells, new Grid());
-                Sudoku.SudokuElements.Add(sudokuArrow);
-                sudokuArrow.Visualize();
-            });
+            AddSudokuElement(() => new SudokuArrow(
+                Sudoku,
+                Sudoku.SelectedSudokuCells,
+                new Grid()));
         }
 
         private void Whispers_Click(object sender, RoutedEventArgs e)
         {
-            HandleClickFailure(() =>
-            {
-                SudokuWhispers sudokuWhispers = new(Sudoku, Sudoku.SelectedSudokuCells, (int)WhisperValueDiff.Value, new Grid());
-                Sudoku.SudokuElements.Add(sudokuWhispers);
-                sudokuWhispers.Visualize();
-            });
+            AddSudokuElement(() => new SudokuWhispers(
+                Sudoku,
+                Sudoku.SelectedSudokuCells,
+                (int)WhisperValueDiff.Value,
+                new Grid()));
         }
 
         private void Palindrome_Click(object sender, RoutedEventArgs e)
         {
-            HandleClickFailure(() =>
-            {
-                SudokuPalindrome sudokuPalindrome = new(Sudoku, Sudoku.SelectedSudokuCells, new Grid());
-                Sudoku.SudokuElements.Add(sudokuPalindrome);
-                sudokuPalindrome.Visualize();
-            });
+            AddSudokuElement(() => new SudokuPalindrome(
+                Sudoku,
+                Sudoku.SelectedSudokuCells,
+                new Grid()));
         }
 
         private void Renban_Click(object sender, RoutedEventArgs e)
         {
-            HandleClickFailure(() =>
-            {
-                SudokuRenban sudokuRenban = new(Sudoku, Sudoku.SelectedSudokuCells, new Grid());
-                Sudoku.SudokuElements.Add(sudokuRenban);
-                sudokuRenban.Visualize();
-            });
+            AddSudokuElement(() => new SudokuRenban(
+                Sudoku,
+                Sudoku.SelectedSudokuCells,
+                new Grid()));
         }
 
         private void KillerCage_Click(object sender, RoutedEventArgs e)
         {
+            AddSudokuElement(() => new SudokuKillerCage(
+                Sudoku,
+                Sudoku.SelectedSudokuCells,
+                (int)KillerCageSumSlider.Value,
+                new Grid()));
+        }
+
+        private void AddSudokuElement(Func<SudokuElement> instantiateSudokuElement)
+        {
             HandleClickFailure(() =>
             {
-                SudokuKillerCage sudokuKillerCage = new(Sudoku, Sudoku.SelectedSudokuCells, (int)WhisperValueDiff.Value, new Grid());
-                Sudoku.SudokuElements.Add(sudokuKillerCage);
-                sudokuKillerCage.Visualize();
+                SudokuElement sudokuElement = instantiateSudokuElement();
+                Sudoku.SudokuElements.Add(sudokuElement);
+                sudokuElement.Visualize();
             });
         }
 

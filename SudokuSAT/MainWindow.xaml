@@ -40,7 +40,7 @@
         <TextBox Text="{Binding Value, ElementName=WhisperValueDiff, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="79,209,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
         <Button x:Name="Whispers" Grid.Column="1" Content="Whispers" HorizontalAlignment="Left" Margin="111,208,0,0" VerticalAlignment="Top" Click="Whispers_Click"/>
         <Button x:Name="KillerCage" Grid.Column="1" Content="Killer Cage" HorizontalAlignment="Left" Margin="103,236,0,0" VerticalAlignment="Top" Click="KillerCage_Click"/>
-        <TextBox x:Name="KillerCageSum" Text="" Grid.Column="1" HorizontalAlignment="Left" Margin="47,237,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" TextAlignment="Center" PreviewTextInput="KillerCageSum_Validation"/>
-        <Label Grid.Column="1" Content="Sum:" HorizontalAlignment="Left" Margin="10,233,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="KillerCageSumTextBox" Text="{Binding Value, ElementName=KillerCageSumSlider, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="79,237,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
+        <Slider x:Name="KillerCageSumSlider" Grid.Column="1" HorizontalAlignment="Left" Margin="10,236,0,0" VerticalAlignment="Top" Width="64" Maximum="45" SmallChange="1" IsSnapToTickEnabled="True" TickFrequency="1"/>
     </Grid>
 </Window>
