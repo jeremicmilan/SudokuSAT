@@ -113,6 +113,14 @@ namespace SudokuSAT
                 new Grid()));
         }
 
+        private void Thermometer_Click(object sender, RoutedEventArgs e)
+        {
+            AddSudokuElement(() => new SudokuThermometer(
+                Sudoku,
+                Sudoku.SelectedSudokuCells,
+                new Grid()));
+        }
+
         private void AddSudokuElement(Func<SudokuElement> instantiateSudokuElement)
         {
             HandleClickFailure(() =>

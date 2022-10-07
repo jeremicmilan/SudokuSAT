@@ -28,81 +28,75 @@ namespace SudokuSAT
 #pragma warning disable CS8602 // Using Grid should be safe during visualization
         protected override void VisualizeInternal()
         {
-            for (int i = 0; i < SudokuCells.Count; i++)
+            // Arrow circle
+            //
+            double circleScalingFactor = .7;
+            Point topLeftPosition = SudokuCells[0].TopLeftPosition;
+            Grid.Children.Add(new Ellipse()
             {
-                double circleScalingFactor = .7;
+                Width = SudokuCells[0].Grid.ActualWidth * circleScalingFactor,
+                Height = SudokuCells[0].Grid.ActualHeight * circleScalingFactor,
+                Margin = new Thickness(
+                    topLeftPosition.X + SudokuCells[0].Grid.ActualWidth * (1 - circleScalingFactor) / 2,
+                    topLeftPosition.Y + SudokuCells[0].Grid.ActualHeight * (1 - circleScalingFactor) / 2,
+                    0,
+                    0),
+                Stroke = Brushes.Black,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+                IsHitTestVisible = false,
+            });
 
-                if (i == 0)
+            for (int i = 1; i < SudokuCells.Count; i++)
+            {
+                SudokuCell sudokuCell1 = SudokuCells[i - 1];
+                SudokuCell sudokuCell2 = SudokuCells[i];
+                Point position1 = sudokuCell1.CenterPosition;
+                Point position2 = sudokuCell2.CenterPosition;
+
+                int columnDirection = sudokuCell2.Column - sudokuCell1.Column;
+                int rowDirection = sudokuCell2.Row - sudokuCell1.Row;
+                double coeficient = (sudokuCell1.OrthoAdjacent(sudokuCell2) ? 1 : (Math.Sqrt(2) / 2)) * circleScalingFactor / 2;
+                if (i == 1)
                 {
-                    // Arrow circle beginning
+                    // First line should start from circle edge and not the center
                     //
-                    Point topLeftPosition = SudokuCells[i].TopLeftPosition;
-                    Grid.Children.Add(new Ellipse()
-                    {
-                        Width = SudokuCells[i].Grid.ActualWidth * circleScalingFactor,
-                        Height = SudokuCells[i].Grid.ActualHeight * circleScalingFactor,
-                        Margin = new Thickness(
-                            topLeftPosition.X + SudokuCells[i].Grid.ActualWidth  * (1 - circleScalingFactor) / 2,
-                            topLeftPosition.Y + SudokuCells[i].Grid.ActualHeight * (1 - circleScalingFactor) / 2,
-                            0,
-                            0),
-                        Stroke = Brushes.Black,
-                        HorizontalAlignment = HorizontalAlignment.Left,
-                        VerticalAlignment = VerticalAlignment.Top,
-                        IsHitTestVisible = false,
-                    });
+                    position1.X += coeficient * columnDirection * sudokuCell1.Grid.ActualWidth;
+                    position1.Y += coeficient * rowDirection * sudokuCell1.Grid.ActualHeight;
                 }
-                else
+
+                Grid.Children.Add(new Line()
                 {
-                    SudokuCell sudokuCell1 = SudokuCells[i - 1];
-                    SudokuCell sudokuCell2 = SudokuCells[i];
-                    Point position1 = sudokuCell1.CenterPosition;
-                    Point position2 = sudokuCell2.CenterPosition;
+                    X1 = position1.X,
+                    Y1 = position1.Y,
+                    X2 = position2.X,
+                    Y2 = position2.Y,
+                    Stroke = Brushes.Black,
+                    IsHitTestVisible = false,
+                });
 
-                    int columnDirection = sudokuCell2.Column - sudokuCell1.Column;
-                    int rowDirection = sudokuCell2.Row - sudokuCell1.Row;
-                    double coeficient = (sudokuCell1.OrthoAdjacent(sudokuCell2) ? 1 : (Math.Sqrt(2) / 2)) * circleScalingFactor / 2;
-                    if (i == 1)
+                if (i == SudokuCells.Count - 1)
+                {
+                    // Arrow tip
+                    //
+                    position1 = sudokuCell1.CenterPosition;
+                    position2 = sudokuCell2.CenterPosition;
+                    foreach (int rotationDirection in new[] { -1, 1 })
                     {
-                        // First line should start from circle edge and not the center
-                        //
-                        position1.X += coeficient * columnDirection * sudokuCell1.Grid.ActualWidth;
-                        position1.Y += coeficient * rowDirection * sudokuCell1.Grid.ActualHeight;
-                    }
-
-                    Grid.Children.Add(new Line()
-                    {
-                        X1 = position1.X,
-                        Y1 = position1.Y,
-                        X2 = position2.X,
-                        Y2 = position2.Y,
-                        Stroke = Brushes.Black,
-                        IsHitTestVisible = false,
-                    });
-
-                    if (i == SudokuCells.Count - 1)
-                    {
-                        // Arrow tip
-                        //
-                        position1 = sudokuCell1.CenterPosition;
-                        position2 = sudokuCell2.CenterPosition;
-                        foreach (int rotationDirection in new[] { -1, 1 })
+                        Grid.Children.Add(new Line()
                         {
-                            Grid.Children.Add(new Line()
+                            X1 = position2.X - (position2.X - position1.X) * coeficient,
+                            Y1 = position2.Y - (position2.Y - position1.Y) * coeficient,
+                            X2 = position2.X,
+                            Y2 = position2.Y,
+                            Stroke = Brushes.Black,
+                            RenderTransform = new RotateTransform(rotationDirection * 10)
                             {
-                                X1 = position2.X - (position2.X - position1.X) * coeficient,
-                                Y1 = position2.Y - (position2.Y - position1.Y) * coeficient,
-                                X2 = position2.X,
-                                Y2 = position2.Y,
-                                Stroke = Brushes.Black,
-                                RenderTransform = new RotateTransform(rotationDirection * 10)
-                                {
-                                    CenterX = position2.X,
-                                    CenterY = position2.Y
-                                },
-                                IsHitTestVisible = false,
-                            });
-                        }
+                                CenterX = position2.X,
+                                CenterY = position2.Y
+                            },
+                            IsHitTestVisible = false,
+                        });
                     }
                 }
             }
