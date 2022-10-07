@@ -35,13 +35,13 @@
         <Button x:Name="Arrow" Grid.Column="1" Content="Arrow" HorizontalAlignment="Left" Margin="10,182,0,0" VerticalAlignment="Top" Click="Arrow_Click"/>
         <Label Grid.Column="1" Content="Label" HorizontalAlignment="Left" Margin="329,266,0,0" VerticalAlignment="Top"/>
         <TextBlock x:Name="StatusBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,324,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="68" Width="180"/>
-        <Button x:Name="Palindrome" Grid.Column="1" Content="Palindrome" HorizontalAlignment="Left" Margin="51,182,0,0" VerticalAlignment="Top" Click="Palindrome_Click"/>
-        <Button x:Name="Renban" Grid.Column="1" Content="Renban" HorizontalAlignment="Left" Margin="120,182,0,0" VerticalAlignment="Top" Click="Renban_Click"/>
-        <Slider x:Name="WhisperValueDiff" Grid.Column="1" HorizontalAlignment="Left" Margin="10,209,0,0" VerticalAlignment="Top" Width="64" Minimum="2" Maximum="8" SmallChange="1" Value="5" IsSnapToTickEnabled="True" TickFrequency="1"/>
-        <TextBox Text="{Binding Value, ElementName=WhisperValueDiff, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="79,209,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
-        <Button x:Name="Whispers" Grid.Column="1" Content="Whispers" HorizontalAlignment="Left" Margin="111,208,0,0" VerticalAlignment="Top" Click="Whispers_Click"/>
-        <Button x:Name="KillerCage" Grid.Column="1" Content="Killer Cage" HorizontalAlignment="Left" Margin="103,236,0,0" VerticalAlignment="Top" Click="KillerCage_Click"/>
-        <TextBox Text="{Binding Value, ElementName=KillerCageSumSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="79,237,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
-        <Slider x:Name="KillerCageSumSlider" Grid.Column="1" HorizontalAlignment="Left" Margin="10,236,0,0" VerticalAlignment="Top" Width="64" Maximum="45" SmallChange="1" IsSnapToTickEnabled="True" TickFrequency="1"/>
+        <Button x:Name="Palindrome" Grid.Column="1" Content="Palindrome" HorizontalAlignment="Left" Margin="58,182,0,0" VerticalAlignment="Top" Click="Palindrome_Click"/>
+        <Button x:Name="Renban" Grid.Column="1" Content="Renban" HorizontalAlignment="Left" Margin="130,182,0,0" VerticalAlignment="Top" Click="Renban_Click"/>
+        <Slider x:Name="WhisperValueDiff" Grid.Column="1" HorizontalAlignment="Left" Margin="10,209,0,0" VerticalAlignment="Top" Width="91" Minimum="2" Maximum="8" SmallChange="1" Value="5" IsSnapToTickEnabled="True" TickFrequency="1"/>
+        <TextBox Text="{Binding Value, ElementName=WhisperValueDiff, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="106,208,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
+        <Button x:Name="Whispers" Grid.Column="1" Content="Whispers" HorizontalAlignment="Left" Margin="130,207,0,0" VerticalAlignment="Top" Click="Whispers_Click"/>
+        <Button x:Name="KillerCage" Grid.Column="1" Content="Killer Cage" HorizontalAlignment="Left" Margin="130,236,0,0" VerticalAlignment="Top" Click="KillerCage_Click"/>
+        <TextBox Text="{Binding Value, ElementName=KillerCageSumSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="106,237,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
+        <Slider x:Name="KillerCageSumSlider" Grid.Column="1" HorizontalAlignment="Left" Margin="10,236,0,0" VerticalAlignment="Top" Width="91" Maximum="45" SmallChange="1" IsSnapToTickEnabled="True" TickFrequency="1"/>
     </Grid>
 </Window>
