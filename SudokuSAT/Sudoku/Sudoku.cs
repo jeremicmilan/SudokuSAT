@@ -66,7 +66,7 @@ namespace SudokuSAT
         {
             foreach (SudokuCell sudokuCell in SudokuCells)
             {
-                sudokuCell.ClearValue();
+                sudokuCell.ClearSolvedValue();
             }
         }
 

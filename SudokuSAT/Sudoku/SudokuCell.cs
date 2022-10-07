@@ -1,9 +1,11 @@
 ﻿using Google.OrTools.Sat;
+using MoreLinq;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using static SudokuSAT.SudokuCell;
@@ -22,7 +24,7 @@ namespace SudokuSAT
 
         public int? Value { get; set; }
         public ValueType? Type { get; set; }
-        public HashSet<int> PossibleValues { get; set; } = new();
+        private HashSet<int> PossibleValues { get; set; } = new();
         public IntVar? ValueVar { get; set; }
         public Grid? Grid { get; private set; }
 
@@ -57,15 +59,37 @@ namespace SudokuSAT
             }
         }
 
-        public virtual void SetValue(int value, ValueType valueType)
+        public void SetValue(int value, ValueType valueType)
         {
             Value = value;
             Type = valueType;
-
             UpdateGrid();
         }
 
-        public virtual void ClearValue()
+        public void AddPossibleValue(int value)
+        {
+            PossibleValues.Add(value);
+            UpdateGrid();
+        }
+
+        public void AddPossibleValues(HashSet<int> values)
+        {
+            values.ForEach(value => PossibleValues.Add(value));
+            UpdateGrid();
+        }
+
+        public void ClearSolvedValue()
+        {
+            if (Type == ValueType.Solver)
+            {
+                ClearValue();
+            }
+
+            PossibleValues.Clear();
+            UpdateGrid();
+        }
+
+        public void ClearValue()
         {
             Value = null;
             Type = null;
@@ -73,9 +97,12 @@ namespace SudokuSAT
             UpdateGrid();
         }
 
-        internal void UpdateSolvedValue(CpSolver solver)
+        public void UpdateSolvedValue(CpSolver solver)
         {
-            SetValue((int)solver.Value(ValueVar), ValueType.Solver);
+            if (!Value.HasValue)
+            {
+                SetValue((int)solver.Value(ValueVar), ValueType.Solver);
+            }
         }
 
         public bool Adjacent(SudokuCell sudokuCell)
@@ -151,22 +178,13 @@ namespace SudokuSAT
             if (isSelected)
             {
                 SelectionOrderId = GlobalSelectionCount++;
-                Grid.Background = Brushes.Yellow;
-                Grid.Children.Add(new Label()
-                {
-                    Content = SelectionOrderId,
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Bottom,
-                    FontSize = Grid.ActualHeight * 0.15,
-                    Foreground = Brushes.Orange,
-                });
             }
             else
             {
                 SelectionOrderId = null;
-                Grid.Background = null;
-                UpdateGrid();
             }
+
+            UpdateGrid();
         }
 
         private readonly Dictionary<ValueType, SolidColorBrush> digitToColor = new()
@@ -187,7 +205,7 @@ namespace SudokuSAT
         public Point BottomLeftPosition  => TranslatePoint(new Point(0                    , Grid.ActualHeight     ));
         public Point BottomRightPosition => TranslatePoint(new Point(Grid.ActualWidth     , Grid.ActualHeight     ));
 
-        private void UpdateGrid()
+        public void UpdateGrid()
         {
             if (Grid != null)
             {
@@ -211,6 +229,58 @@ namespace SudokuSAT
                         Foreground = digitToColor[Type.Value],
                         Content = Value > 0 ? Value : "X"
                     });
+                }
+
+                if (IsSelected)
+                {
+                    Grid.Background = Brushes.Yellow;
+                    Grid.Children.Add(new Label()
+                    {
+                        Content = SelectionOrderId,
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        FontSize = Grid.ActualHeight * 0.15,
+                        Foreground = Brushes.Orange,
+                    });
+                }
+                else
+                {
+                    Grid.Background = null;
+                }
+
+                if (PossibleValues != null && PossibleValues.Count > 0)
+                {
+                    UniformGrid cellGrid = new()
+                    {
+                        Rows = 3,
+                        Columns = 3
+                    };
+
+                    for (int i = 1; i <= cellGrid.Rows * cellGrid.Columns; i++)
+                    {
+                        if (PossibleValues.Contains(i))
+                        {
+                            Label label = new()
+                            {
+                                HorizontalAlignment = HorizontalAlignment.Center,
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalContentAlignment = HorizontalAlignment.Center,
+                                VerticalContentAlignment = VerticalAlignment.Center,
+                                MinWidth = Grid.ActualWidth / 3,
+                                MinHeight = Grid.ActualHeight / 3,
+                                FontSize = Grid.ActualHeight * 0.18,
+                                Foreground = Brushes.Green,
+                                Content = i
+                            };
+                            cellGrid.Children.Add(label);
+                        }
+                        else
+                        {
+                            cellGrid.Children.Add(new Label());
+                        }
+                    }
+
+                    Grid.Children.Add(cellGrid);
                 }
             }
         }

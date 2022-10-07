@@ -50,7 +50,7 @@ namespace SudokuSAT
             HandleClickFailure(() =>
             {
                 Stopwatch stopwatch = Stopwatch.StartNew();
-                SudokuSolver.Solve(Sudoku);
+                SudokuSolver.Solve(Sudoku, updateSolvedValue: true);
                 stopwatch.Stop();
                 SolveTime.Content = stopwatch.Elapsed;
             });
@@ -68,6 +68,7 @@ namespace SudokuSAT
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
+            SudokuSolver.IsExploreActive = false;
             HandleClickFailure(Sudoku.Clear);
         }
 
@@ -128,6 +129,8 @@ namespace SudokuSAT
                 SudokuElement sudokuElement = instantiateSudokuElement();
                 Sudoku.SudokuElements.Add(sudokuElement);
                 sudokuElement.Visualize();
+
+                SudokuSolver.Solve(Sudoku, updateSolvedValue: false);
             });
         }
 

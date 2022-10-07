@@ -7,6 +7,9 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Linq;
 using System;
+using System.Data;
+using System.Collections.Generic;
+using MoreLinq;
 
 namespace SudokuSAT
 {
@@ -19,22 +22,22 @@ namespace SudokuSAT
             Window = window;
         }
 
+        public bool IsExploreActive = false;
         public void Explore(Sudoku sudoku)
         {
-            Thread.CurrentThread.Name = "Explore";
-
-            ParallelOptions parallelOptions = new()
+            IsExploreActive = true;
+            Parallel.ForEach(
+                sudoku.SudokuCells,
+                new() { MaxDegreeOfParallelism = sudoku.Width },
+                (sudokuCell) =>
             {
-                MaxDegreeOfParallelism = sudoku.Width
-            };
-            Parallel.ForEach(sudoku.SudokuCells, parallelOptions, (sudokuCell) =>
-            {
+                Thread.CurrentThread.Name = "Explore";
                 Sudoku sudokuTemp = sudoku.Clone();
+
+                HashSet<int> possibleValues = new();
 
                 if (!sudokuCell.Value.HasValue)
                 {
-                    sudokuCell.PossibleValues = new();
-
                     for (int i = SudokuCell.MinValue; i <= SudokuCell.MaxValue; i++)
                     {
                         CpSolver solver = new();
@@ -43,6 +46,12 @@ namespace SudokuSAT
                         model.Add(sudokuTemp.SudokuGrid[sudokuCell.Column, sudokuCell.Row].ValueVar == i);
 
                         CpSolverStatus solverStatus = solver.Solve(model);
+
+                        if (!IsExploreActive)
+                        {
+                            return;
+                        }
+
                         switch (solverStatus)
                         {
                             case CpSolverStatus.Unknown:
@@ -54,65 +63,32 @@ namespace SudokuSAT
 
                             case CpSolverStatus.Feasible:
                             case CpSolverStatus.Optimal:
-                                sudokuCell.PossibleValues.Add(i);
+                                Window.Dispatcher.Invoke(() => sudokuCell.AddPossibleValue(i));
+                                possibleValues.Add(i);
                                 break;
                         }
                     }
 
                     Window.Dispatcher.Invoke(() =>
                     {
-#pragma warning disable CS8602 // Using Grid should be safe during visualization
-                        switch (sudokuCell.PossibleValues.Count)
+                        switch (possibleValues.Count)
                         {
                             case 0:
                                 sudokuCell.SetValue(0, ValueType.Solver);
                                 break;
 
                             case 1:
-                                sudokuCell.SetValue(sudokuCell.PossibleValues.First(), ValueType.Solver);
-                                break;
-
-                            default:
-                                UniformGrid cellGrid = new()
-                                {
-                                    Rows = 3,
-                                    Columns = 3
-                                };
-
-                                for (int i = 1; i <= cellGrid.Rows * cellGrid.Columns; i++)
-                                {
-                                    if (sudokuCell.PossibleValues.Contains(i))
-                                    {
-                                        Label label = new()
-                                        {
-                                            HorizontalAlignment = HorizontalAlignment.Center,
-                                            VerticalAlignment = VerticalAlignment.Center,
-                                            HorizontalContentAlignment = HorizontalAlignment.Center,
-                                            VerticalContentAlignment = VerticalAlignment.Center,
-                                            MinWidth = sudokuCell.Grid.ActualWidth / 3,
-                                            MinHeight = sudokuCell.Grid.ActualHeight / 3,
-                                            FontSize = sudokuCell.Grid.ActualHeight * 0.18,
-                                            Foreground = Brushes.Green,
-                                            Content = i
-                                        };
-                                        cellGrid.Children.Add(label);
-                                    }
-                                    else
-                                    {
-                                        cellGrid.Children.Add(new Label());
-                                    }
-                                }
-
-                                sudokuCell.Grid.Children.Add(cellGrid);
+                                sudokuCell.SetValue(possibleValues.First(), ValueType.Solver);
                                 break;
                         }
-#pragma warning restore CS8602 // Using Grid should be safe during visualization
                     });
                 }
             });
+
+            IsExploreActive = false;
         }
 
-        public void Solve(Sudoku sudoku)
+        public void Solve(Sudoku sudoku, bool updateSolvedValue)
         {
             CpSolver solver = new()
             {
@@ -134,9 +110,12 @@ namespace SudokuSAT
 
                 case CpSolverStatus.Feasible:
                 case CpSolverStatus.Optimal:
-                    foreach (var sudokuCell in sudoku.SudokuGrid)
+                    if (updateSolvedValue)
                     {
-                        sudokuCell.UpdateSolvedValue(solver);
+                        foreach (var sudokuCell in sudoku.SudokuGrid)
+                        {
+                            sudokuCell.UpdateSolvedValue(solver);
+                        }
                     }
                     break;
             }
