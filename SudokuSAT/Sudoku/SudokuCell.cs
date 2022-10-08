@@ -1,14 +1,13 @@
 ﻿using Google.OrTools.Sat;
 using MoreLinq;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using static SudokuSAT.SudokuCell;
 
 namespace SudokuSAT
 {
@@ -165,7 +164,6 @@ namespace SudokuSAT
         public Border? Border => (Border)Grid.Parent;
 
         public bool IsSelected { get; set; } = false;
-        private static bool IsHoldingDownMouseSelecting = true;
         public static void ClearGlobalSelectionCount() => GlobalSelectionCount = 1;
         private static int GlobalSelectionCount = 1;
         public int? SelectionOrderId = null;
@@ -298,18 +296,22 @@ namespace SudokuSAT
                 {
                     if (Sudoku.SelectedSudokuCells.Count > 1)
                     {
-                        newIsSelected = IsSelected;
+                        newIsSelected = true;
                     }
 
                     Sudoku.ClearSelection();
                 }
 
                 SetIsSelected(newIsSelected);
-                IsHoldingDownMouseSelecting = newIsSelected;
+
+                if (!Sudoku.SudokuCells.Any(cell => cell.IsSelected))
+                {
+                    Sudoku.ClearSelection();
+                }
             }));
             Border.AddHandler(UIElement.MouseEnterEvent, new RoutedEventHandler((_, _) =>
             {
-                if (Mouse.LeftButton == MouseButtonState.Pressed && IsSelected != IsHoldingDownMouseSelecting)
+                if (Mouse.LeftButton == MouseButtonState.Pressed && !IsSelected)
                 {
                     SetIsSelected(!IsSelected);
                 }
