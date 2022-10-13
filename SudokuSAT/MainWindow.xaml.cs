@@ -37,6 +37,19 @@ namespace SudokuSAT
             return Sudoku;
         }
 
+        private void ReplaceSudoku(Sudoku sudoku)
+        {
+            GridWidthSlider.Value = sudoku.Width;
+            GridHeightSlider.Value = sudoku.Height;
+            BoxSizeSlider.Value = sudoku.BoxSize;
+
+            SudokuPlaceholder.Children.Clear();
+
+            Sudoku = sudoku;
+            Sudoku.Grid = SudokuPlaceholder;
+            Sudoku.GenerateAndVisualize();
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -84,12 +97,7 @@ namespace SudokuSAT
                     throw new Exception("Failed to parse sudoku from file.");
                 }
 
-                GridWidthSlider.Value = sudoku.Width;
-                GridHeightSlider.Value = sudoku.Height;
-                BoxSizeSlider.Value = sudoku.BoxSize;
-                Sudoku = sudoku;
-                Sudoku.Grid = SudokuPlaceholder;
-                Sudoku.GenerateAndVisualize();
+                ReplaceSudoku(sudoku);
             });
         }
 
