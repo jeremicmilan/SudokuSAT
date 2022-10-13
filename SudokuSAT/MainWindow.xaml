@@ -10,39 +10,58 @@
         Width="1000"
         SizeChanged="Window_SizeChanged"
         KeyDown="Keyboard_KeyDown">
-    <Grid MouseLeftButtonDown="MainGrid_Click">
+    <Grid MouseLeftButtonDown="MainGrid_Click" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="800*"/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="DummyLabelForClicking" Grid.ColumnSpan="2" Margin="0,0,0,0" />
-        <Button x:Name="Generate" Grid.Column="1" Content="Generate" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top" Click="Generate_Click"/>
-        <Button x:Name="Solve" Grid.Column="1" Content="Solve" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Click="Solve_Click"/>
-        <Button x:Name="Explore" Grid.Column="1" Content="Explore" HorizontalAlignment="Left" Margin="47,126,0,0" VerticalAlignment="Top" Click="Explore_Click"/>
         <Border Margin="10,10,10,10" Width="Auto" Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}">
-            <Grid x:Name="SudokuPlaceholder"/>
+            <Grid x:Name="SudokuPlaceholder" />
         </Border>
-        <Slider x:Name="GridWidthSlider" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="64" Minimum="1" Maximum="9" SmallChange="1" Value="9" IsSnapToTickEnabled="True" TickFrequency="1"/>
-        <TextBox Text="{Binding Value, ElementName=GridWidthSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="79,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
-        <Slider x:Name="GridHeightSlider" Grid.Column="1" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="64" Minimum="1" Maximum="9" SmallChange="1" Value="9" IsSnapToTickEnabled="True" TickFrequency="1"/>
-        <TextBox Text="{Binding Value, ElementName=GridHeightSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="79,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
-        <Slider x:Name="BoxSizeSlider" Grid.Column="1" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="64" Minimum="1" Maximum="9" SmallChange="1" Value="3" IsSnapToTickEnabled="True" TickFrequency="1"/>
-        <TextBox Text="{Binding Value, ElementName=BoxSizeSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="79,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
-        <Label x:Name="SolveTime" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="56,151,0,0" VerticalAlignment="Top" Width="134"/>
-        <Label x:Name="SolutionCount" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="10,151,0,0" VerticalAlignment="Top" Width="41"/>
-        <Button x:Name="Load" Grid.Column="1" Content="Load" HorizontalAlignment="Left" Margin="95,126,0,0" VerticalAlignment="Top" Click="Load_Click"/>
-        <Button x:Name="Clear" Grid.Column="1" Content="Clear" HorizontalAlignment="Left" Margin="130,126,0,0" VerticalAlignment="Top" Click="Clear_Click"/>
-        <Button x:Name="Arrow" Grid.Column="1" Content="Arrow" HorizontalAlignment="Left" Margin="10,182,0,0" VerticalAlignment="Top" Click="Arrow_Click"/>
-        <Label Grid.Column="1" Content="Label" HorizontalAlignment="Left" Margin="329,266,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="StatusBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,324,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="68" Width="180"/>
-        <Button x:Name="Palindrome" Grid.Column="1" Content="Palindrome" HorizontalAlignment="Left" Margin="58,182,0,0" VerticalAlignment="Top" Click="Palindrome_Click"/>
-        <Button x:Name="Renban" Grid.Column="1" Content="Renban" HorizontalAlignment="Left" Margin="130,182,0,0" VerticalAlignment="Top" Click="Renban_Click"/>
-        <Slider x:Name="WhisperValueDiff" Grid.Column="1" HorizontalAlignment="Left" Margin="10,258,0,0" VerticalAlignment="Top" Width="91" Minimum="2" Maximum="8" SmallChange="1" Value="5" IsSnapToTickEnabled="True" TickFrequency="1"/>
-        <TextBox Text="{Binding Value, ElementName=WhisperValueDiff, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="106,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
-        <Button x:Name="Whispers" Grid.Column="1" Content="Whispers" HorizontalAlignment="Left" Margin="130,256,0,0" VerticalAlignment="Top" Click="Whispers_Click"/>
-        <Button x:Name="KillerCage" Grid.Column="1" Content="Killer Cage" HorizontalAlignment="Left" Margin="130,285,0,0" VerticalAlignment="Top" Click="KillerCage_Click"/>
-        <TextBox Text="{Binding Value, ElementName=KillerCageSumSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="106,286,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
-        <Slider x:Name="KillerCageSumSlider" Grid.Column="1" HorizontalAlignment="Left" Margin="10,285,0,0" VerticalAlignment="Top" Width="91" Maximum="45" SmallChange="1" IsSnapToTickEnabled="True" TickFrequency="1"/>
-        <Button x:Name="Thermometer" Grid.Column="1" Content="Thermometer" HorizontalAlignment="Left" Margin="10,212,0,0" VerticalAlignment="Top" Click="Thermometer_Click"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Grid.Column="1" Height="100" Width="100">
+            <Grid Height="102">
+                <Button x:Name="Generate" Content="Generate" HorizontalAlignment="Center" Margin="0,74,0,0" VerticalAlignment="Top" Click="Generate_Click" Width="88"/>
+                <Slider x:Name="GridWidthSlider" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="64" Minimum="1" Maximum="9" SmallChange="1" Value="9" IsSnapToTickEnabled="True" TickFrequency="1"/>
+                <TextBox Text="{Binding Value, ElementName=GridWidthSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="74,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
+                <Slider x:Name="GridHeightSlider" HorizontalAlignment="Left" Margin="5,28,0,0" VerticalAlignment="Top" Width="64" Minimum="1" Maximum="9" SmallChange="1" Value="9" IsSnapToTickEnabled="True" TickFrequency="1"/>
+                <TextBox Text="{Binding Value, ElementName=GridHeightSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="74,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
+                <Slider x:Name="BoxSizeSlider" HorizontalAlignment="Left" Margin="5,51,0,0" VerticalAlignment="Top" Width="64" Minimum="1" Maximum="9" SmallChange="1" Value="3" IsSnapToTickEnabled="True" TickFrequency="1"/>
+                <TextBox Text="{Binding Value, ElementName=BoxSizeSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="74,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center" RenderTransformOrigin="-0.079,-0.104"/>
+            </Grid>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="115,5,0,0" Grid.Column="1" Height="100" Width="80">
+            <Grid>
+                <Button x:Name="Solve" Content="Solve" Margin="5,5,5,0" VerticalAlignment="Top" Click="Solve_Click" Height="20"/>
+                <Button x:Name="Explore" Content="Explore" Margin="5,28,5,50" Click="Explore_Click" Height="20"/>
+                <Button x:Name="Clear" Content="Clear" HorizontalAlignment="Center" Margin="0,51,0,0" VerticalAlignment="Top" Click="Clear_Click" Width="68" Height="20"/>
+                <Label x:Name="SolutionCount" Content="" HorizontalAlignment="Center" Margin="0,71,0,0" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="68" Height="27"/>
+            </Grid>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" Margin="0,110,0,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="170" Width="180">
+            <Grid>
+                <Button x:Name="Load" Content="Load" HorizontalAlignment="Right" Margin="0,30,110,0" VerticalAlignment="Top" Click="Load_Click" />
+                <ListBox x:Name="SaveNames" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="5,55,5,5"/>
+                <TextBox x:Name="SaveNameTextbox" HorizontalAlignment="Center" Margin="0,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" Height="20" PreviewTextInput="NameValidationTextBox" />
+                <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="5,30,0,0" VerticalAlignment="Top" Click="Save_Click" />
+                <Button x:Name="Delete" Content="Delete" HorizontalAlignment="Right" Margin="0,30,67,0" VerticalAlignment="Top" Click="Delete_Click" />
+            </Grid>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" Margin="0,285,0,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="110" Width="180">
+            <Grid>
+                <Button x:Name="Arrow" Content="Arrow" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Click="Arrow_Click" Width="44"/>
+                <Button x:Name="Palindrome" Content="Palindrome" HorizontalAlignment="Left" Margin="55,5,0,0" VerticalAlignment="Top" Click="Palindrome_Click" Width="76"/>
+                <Button x:Name="Renban" Content="Renban" HorizontalAlignment="Left" Margin="5,30,0,0" VerticalAlignment="Top" Click="Renban_Click"/>
+                <Button x:Name="Thermometer" Content="Thermometer" HorizontalAlignment="Left" Margin="55,30,0,0" VerticalAlignment="Top" Click="Thermometer_Click"/>
+                <Slider x:Name="WhisperValueDiff" HorizontalAlignment="Left" Margin="5,55,0,0" VerticalAlignment="Top" Width="88" Minimum="2" Maximum="8" SmallChange="1" Value="5" IsSnapToTickEnabled="True" TickFrequency="1"/>
+                <TextBox Text="{Binding Value, ElementName=WhisperValueDiff, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="95,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center" Height="20"/>
+                <Button x:Name="Whispers" Content="Whispers" HorizontalAlignment="Left" Margin="116,54,0,0" VerticalAlignment="Top" Click="Whispers_Click" Width="60"/>
+                <Button x:Name="KillerCage" Content="Killer Cage" HorizontalAlignment="Left" Margin="116,77,0,0" VerticalAlignment="Top" Click="KillerCage_Click"/>
+                <TextBox Text="{Binding Value, ElementName=KillerCageSumSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="95,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center" Height="20"/>
+                <Slider x:Name="KillerCageSumSlider" HorizontalAlignment="Left" Margin="5,78,0,0" VerticalAlignment="Top" Width="88" Maximum="45" SmallChange="1" IsSnapToTickEnabled="True" TickFrequency="1"/>
+            </Grid>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" Margin="0,400,0,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180" Height="124">
+            <TextBlock x:Name="StatusBox" TextWrapping="Wrap" VerticalAlignment="Top" Height="62" HorizontalAlignment="Left"/>
+        </Border>
     </Grid>
 </Window>

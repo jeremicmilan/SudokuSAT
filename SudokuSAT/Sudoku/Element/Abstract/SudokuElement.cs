@@ -1,9 +1,6 @@
 ﻿using Google.OrTools.Sat;
-using System;
-using System.Windows;
+using Newtonsoft.Json;
 using System.Windows.Controls;
-using System.Windows.Markup;
-using System.Xml.Linq;
 
 namespace SudokuSAT
 {
@@ -12,9 +9,9 @@ namespace SudokuSAT
         private static int SudokuElementCount = 0;
         public int SudokuElementId { get; set; }
 
-        public Sudoku Sudoku { get; private set; }
+        protected Sudoku Sudoku { get; private set; }
 
-        public Grid? Grid { get; private set; }
+        [JsonIgnore] public Grid? Grid { get; private set; }
 
         protected SudokuElement(Sudoku sudoku, Grid? grid = null)
         {

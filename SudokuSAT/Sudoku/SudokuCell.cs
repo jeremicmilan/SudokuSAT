@@ -1,5 +1,6 @@
 ﻿using Google.OrTools.Sat;
 using MoreLinq;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,25 +17,31 @@ namespace SudokuSAT
         public const int MinValue = 1;
         public const int MaxValue = 9;
 
-        public virtual Sudoku Sudoku { get; private set; }
+        private Sudoku Sudoku { get; set; }
 
         public int Column { get; set; }
         public int Row { get; set; }
 
         public int? Value { get; set; }
         public ValueType? Type { get; set; }
-        private HashSet<int> PossibleValues { get; set; } = new();
-        public IntVar? ValueVar { get; set; }
-        public Grid? Grid { get; private set; }
+        public HashSet<int> PossibleValues { get; set; } = new();
+        [JsonIgnore] public IntVar? ValueVar { get; set; }
+
+        [JsonIgnore] public Grid? Grid { get; set; }
 
         public string Name => "_" + this.GetType().Name + "_R" + Row + "_C" + Column;
 
-        public SudokuCell(Sudoku sudoku, int column, int row, int? value = null, Grid? grid = null)
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public SudokuCell() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
+        public SudokuCell(Sudoku sudoku, int column, int row, int? value = null, ValueType? type = null, Grid? grid = null)
         {
             Sudoku = sudoku;
             Column = column;
             Row = row;
             Value = value;
+            Type = type;
 
             Grid = grid;
             if (Grid != null)
@@ -45,7 +52,7 @@ namespace SudokuSAT
 
         public SudokuCell Clone(Sudoku sudoku)
         {
-            return new(sudoku, Column, Row, Value);
+            return new(sudoku, Column, Row, Value, Type);
         }
 
         public void AddValueConstrainct(CpModel model)
@@ -117,10 +124,10 @@ namespace SudokuSAT
                 || Math.Abs(Row - sudokuCell.Row) == 1 && Column == sudokuCell.Column;
         }
 
-        public SudokuCell? Top    => Row - 1    >= 0             ? Sudoku.SudokuGrid[Column    , Row - 1] : null;
-        public SudokuCell? Bottom => Row + 1    <  Sudoku.Height ? Sudoku.SudokuGrid[Column    , Row + 1] : null;
-        public SudokuCell? Left   => Column - 1 >= 0             ? Sudoku.SudokuGrid[Column - 1, Row    ] : null;
-        public SudokuCell? Right  => Column + 1 <  Sudoku.Width  ? Sudoku.SudokuGrid[Column + 1, Row    ] : null;
+        [JsonIgnore] public SudokuCell? Top    => Row - 1    >= 0             ? Sudoku.SudokuGrid[Column    , Row - 1] : null;
+        [JsonIgnore] public SudokuCell? Bottom => Row + 1    <  Sudoku.Height ? Sudoku.SudokuGrid[Column    , Row + 1] : null;
+        [JsonIgnore] public SudokuCell? Left   => Column - 1 >= 0             ? Sudoku.SudokuGrid[Column - 1, Row    ] : null;
+        [JsonIgnore] public SudokuCell? Right  => Column + 1 <  Sudoku.Width  ? Sudoku.SudokuGrid[Column + 1, Row    ] : null;
 
         public IEnumerable<SudokuCell> AdjacentSudokuCells()
         {
@@ -161,7 +168,7 @@ namespace SudokuSAT
         }
 
 #pragma warning disable CS8602, CS8629 // Using Grid should be safe during visualization
-        public Border? Border => (Border)Grid.Parent;
+        [JsonIgnore] public Border? Border => (Border)Grid.Parent;
 
         public bool IsSelected { get; set; } = false;
         public static void ClearGlobalSelectionCount() => GlobalSelectionCount = 1;
@@ -193,19 +200,19 @@ namespace SudokuSAT
         };
 
         private Point TranslatePoint(Point point) => Grid.TranslatePoint(point, Sudoku.Grid);
-        public Point CenterPosition      => TranslatePoint(new Point(.5 * Grid.ActualWidth, .5 * Grid.ActualHeight));
-        public Point TopPosition         => TranslatePoint(new Point(.5 * Grid.ActualWidth, 0                     ));
-        public Point BottomPosition      => TranslatePoint(new Point(.5 * Grid.ActualWidth, Grid.ActualHeight     ));
-        public Point LeftPosition        => TranslatePoint(new Point(0                    , .5 * Grid.ActualHeight));
-        public Point RightPosition       => TranslatePoint(new Point(Grid.ActualWidth     , .5 * Grid.ActualHeight));
-        public Point TopLeftPosition     => TranslatePoint(new Point(0                    , 0                     ));
-        public Point TopRightPosition    => TranslatePoint(new Point(Grid.ActualWidth     , 0                     ));
-        public Point BottomLeftPosition  => TranslatePoint(new Point(0                    , Grid.ActualHeight     ));
-        public Point BottomRightPosition => TranslatePoint(new Point(Grid.ActualWidth     , Grid.ActualHeight     ));
+        [JsonIgnore] public Point CenterPosition      => TranslatePoint(new Point(.5 * Grid.ActualWidth, .5 * Grid.ActualHeight));
+        [JsonIgnore] public Point TopPosition         => TranslatePoint(new Point(.5 * Grid.ActualWidth, 0                     ));
+        [JsonIgnore] public Point BottomPosition      => TranslatePoint(new Point(.5 * Grid.ActualWidth, Grid.ActualHeight     ));
+        [JsonIgnore] public Point LeftPosition        => TranslatePoint(new Point(0                    , .5 * Grid.ActualHeight));
+        [JsonIgnore] public Point RightPosition       => TranslatePoint(new Point(Grid.ActualWidth     , .5 * Grid.ActualHeight));
+        [JsonIgnore] public Point TopLeftPosition     => TranslatePoint(new Point(0                    , 0                     ));
+        [JsonIgnore] public Point TopRightPosition    => TranslatePoint(new Point(Grid.ActualWidth     , 0                     ));
+        [JsonIgnore] public Point BottomLeftPosition  => TranslatePoint(new Point(0                    , Grid.ActualHeight     ));
+        [JsonIgnore] public Point BottomRightPosition => TranslatePoint(new Point(Grid.ActualWidth     , Grid.ActualHeight     ));
 
         public void UpdateGrid()
         {
-            if (Grid != null)
+            if (Grid != null && Grid.ActualHeight != 0)
             {
                 Grid.Children.Clear();
 
@@ -253,6 +260,7 @@ namespace SudokuSAT
                         Rows = 3,
                         Columns = 3
                     };
+                    Grid.Children.Add(cellGrid);
 
                     for (int i = 1; i <= cellGrid.Rows * cellGrid.Columns; i++)
                     {
@@ -277,8 +285,6 @@ namespace SudokuSAT
                             cellGrid.Children.Add(new Label());
                         }
                     }
-
-                    Grid.Children.Add(cellGrid);
                 }
             }
         }
@@ -286,6 +292,7 @@ namespace SudokuSAT
         public void Visualize()
         {
             UpdateGrid();
+            Grid.SizeChanged += (_, _) => UpdateGrid();
 
             Border.AddHandler(UIElement.MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
             {

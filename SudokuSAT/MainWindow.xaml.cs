@@ -1,5 +1,7 @@
-﻿using System;
-using System.Diagnostics;
+﻿using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
@@ -21,6 +23,12 @@ namespace SudokuSAT
         private readonly SudokuSolver SudokuSolver;
         private Sudoku Sudoku { get; set; }
 
+        public const string SavePath = "..\\..\\..\\Saves";
+        public string SelectedSaveName => (string)SaveNames.SelectedItem;
+        public static string SaveNameToFile(string saveName) => SavePath + "\\" + saveName + ".save";
+        public static string SaveFileToName(string fileName) => Path.GetFileNameWithoutExtension(fileName);
+        public static readonly JsonSerializerSettings JsonSerializerSettings = new() { TypeNameHandling = TypeNameHandling.All };
+
         private Sudoku CreateSudoku()
         {
             SudokuPlaceholder.Children.Clear();
@@ -35,6 +43,11 @@ namespace SudokuSAT
 
             SudokuSolver = new(this);
             Sudoku = CreateSudoku(); // Assigning to make the compiler happy
+
+            foreach (string fileName in Directory.GetFiles(SavePath))
+            {
+                SaveNames.Items.Add(SaveFileToName(fileName));
+            }
         }
 
         private void Generate_Click(object sender, RoutedEventArgs e)
@@ -47,13 +60,7 @@ namespace SudokuSAT
 
         private void Solve_Click(object sender, RoutedEventArgs e)
         {
-            HandleClickFailure(() =>
-            {
-                Stopwatch stopwatch = Stopwatch.StartNew();
-                SudokuSolver.Solve(Sudoku, updateSolvedValue: true);
-                stopwatch.Stop();
-                SolveTime.Content = stopwatch.Elapsed;
-            });
+            HandleClickFailure(() => SudokuSolver.Solve(Sudoku, updateSolvedValue: true));
         }
 
         private void Explore_Click(object sender, RoutedEventArgs e)
@@ -63,7 +70,59 @@ namespace SudokuSAT
 
         private void Load_Click(object sender, RoutedEventArgs e)
         {
-            HandleClickFailure(Sudoku.Load);
+            HandleClickFailure(() =>
+            {
+                if (SelectedSaveName == "")
+                {
+                    throw new Exception("Please select save name to load.");
+                }
+
+                string sudokuJson = File.ReadAllText(SaveNameToFile(SelectedSaveName));
+                Sudoku? sudoku = JsonConvert.DeserializeObject<Sudoku>(sudokuJson, JsonSerializerSettings);
+                if (sudoku == null)
+                {
+                    throw new Exception("Failed to parse sudoku from file.");
+                }
+
+                GridWidthSlider.Value = sudoku.Width;
+                GridHeightSlider.Value = sudoku.Height;
+                BoxSizeSlider.Value = sudoku.BoxSize;
+                Sudoku = sudoku;
+                Sudoku.Grid = SudokuPlaceholder;
+                Sudoku.GenerateAndVisualize();
+            });
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            HandleClickFailure(() =>
+            {
+                if (SaveNameTextbox.Text == "")
+                {
+                    throw new Exception("Please specify save name.");
+                }
+
+                string fileName = SaveNameToFile(SaveNameTextbox.Text);
+                string sudokuJson = JsonConvert.SerializeObject(Sudoku, JsonSerializerSettings);
+
+                if (File.Exists(fileName))
+                {
+                    throw new Exception("Save with the specified name already exists.");
+                }
+
+                File.Create(fileName).Close();
+                File.WriteAllText(fileName, sudokuJson);
+                SaveNames.Items.Add(SaveNameTextbox.Text);
+            });
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            HandleClickFailure(() =>
+            {
+                File.Delete(SaveNameToFile(SelectedSaveName));
+                SaveNames.Items.Remove(SelectedSaveName);
+            });
         }
 
         private void Clear_Click(object sender, RoutedEventArgs e)
@@ -170,7 +229,13 @@ namespace SudokuSAT
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+");
+            Regex regex = new("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void NameValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new("[^0-9a-zA-Z]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
