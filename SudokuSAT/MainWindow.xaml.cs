@@ -1,7 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
@@ -21,7 +22,7 @@ namespace SudokuSAT
         public int BoxSize => (int)BoxSizeSlider.Value;
 
         private readonly SudokuSolver SudokuSolver;
-        private Sudoku Sudoku { get; set; }
+        public Sudoku Sudoku { get; private set; }
 
         public const string SavePath = "..\\..\\..\\Saves";
         public string SelectedSaveName => (string)SaveNames.SelectedItem;
@@ -29,11 +30,40 @@ namespace SudokuSAT
         public static string SaveFileToName(string fileName) => Path.GetFileNameWithoutExtension(fileName);
         public static readonly JsonSerializerSettings JsonSerializerSettings = new() { TypeNameHandling = TypeNameHandling.All };
 
+        public Stack<Sudoku> Sudokus { get; private set; } = new();
+        public Stack<Sudoku> NextSudokus { get; private set; } = new();
+
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            SudokuSolver = new(this);
+            Sudoku = CreateSudoku(); // Assigning to make the compiler happy
+
+            foreach (string fileName in Directory.GetFiles(SavePath))
+            {
+                SaveNames.Items.Add(SaveFileToName(fileName));
+            }
+        }
+
+        private void AddSudoku(Sudoku sudoku)
+        {
+            Sudokus.Push(sudoku);
+            NextSudokus.Clear();
+
+            NextButton.IsEnabled = false;
+            if (Sudokus.Count > 1)
+            {
+                PreviousButton.IsEnabled = true;
+            }
+        }
+
         private Sudoku CreateSudoku()
         {
             SudokuPlaceholder.Children.Clear();
             Sudoku = new(GridWidth, GridHeight, BoxSize, SudokuPlaceholder);
             Sudoku.GenerateAndVisualize();
+            AddSudoku(Sudoku);
             return Sudoku;
         }
 
@@ -50,35 +80,41 @@ namespace SudokuSAT
             Sudoku.GenerateAndVisualize();
         }
 
-        public MainWindow()
+        private void Previous_Click(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
-
-            SudokuSolver = new(this);
-            Sudoku = CreateSudoku(); // Assigning to make the compiler happy
-
-            foreach (string fileName in Directory.GetFiles(SavePath))
+            if (Sudokus.Count > 1)
             {
-                SaveNames.Items.Add(SaveFileToName(fileName));
+                Sudoku sudoku = Sudokus.Pop();
+                NextSudokus.Push(sudoku);
+                ReplaceSudoku(Sudokus.Peek());
+            }
+
+            NextButton.IsEnabled = true;
+            if (Sudokus.Count == 1)
+            {
+                PreviousButton.IsEnabled = false;
+            }
+        }
+
+        private void Next_Click(object sender, RoutedEventArgs e)
+        {
+            if (NextSudokus.Any())
+            {
+                Sudoku sudoku = NextSudokus.Pop();
+                Sudokus.Push(sudoku);
+                ReplaceSudoku(sudoku);
+            }
+
+            PreviousButton.IsEnabled = true;
+            if (!NextSudokus.Any())
+            {
+                NextButton.IsEnabled = false;
             }
         }
 
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
-            HandleClickFailure(() =>
-            {
-                CreateSudoku();
-            });
-        }
-
-        private void Solve_Click(object sender, RoutedEventArgs e)
-        {
-            HandleClickFailure(() => SudokuSolver.Solve(Sudoku, updateSolvedValue: true));
-        }
-
-        private void Explore_Click(object sender, RoutedEventArgs e)
-        {
-            new Thread(() => HandleClickFailure(() => SudokuSolver.Explore(Sudoku))).Start();
+            HandleClickFailure(() => CreateSudoku());
         }
 
         private void Load_Click(object sender, RoutedEventArgs e)
@@ -98,6 +134,7 @@ namespace SudokuSAT
                 }
 
                 ReplaceSudoku(sudoku);
+                AddSudoku(sudoku);
             });
         }
 
@@ -131,6 +168,38 @@ namespace SudokuSAT
                 File.Delete(SaveNameToFile(SelectedSaveName));
                 SaveNames.Items.Remove(SelectedSaveName);
             });
+        }
+
+        private void Undo_Click(object sender, RoutedEventArgs e)
+        {
+            Sudoku.Undo();
+
+            RedoButton.IsEnabled = true;
+            if (!Sudoku.SudokuActions.Any())
+            {
+                NextButton.IsEnabled = false;
+            }
+        }
+
+        private void Redo_Click(object sender, RoutedEventArgs e)
+        {
+            Sudoku.Redo();
+
+            UndoButton.IsEnabled = true;
+            if (!Sudoku.NextSudokuActions.Any())
+            {
+                NextButton.IsEnabled = false;
+            }
+        }
+
+        private void Solve_Click(object sender, RoutedEventArgs e)
+        {
+            HandleClickFailure(() => SudokuSolver.Solve(Sudoku, updateSolvedValue: true));
+        }
+
+        private void Explore_Click(object sender, RoutedEventArgs e)
+        {
+            new Thread(() => HandleClickFailure(() => SudokuSolver.Explore(Sudoku))).Start();
         }
 
         private void Clear_Click(object sender, RoutedEventArgs e)

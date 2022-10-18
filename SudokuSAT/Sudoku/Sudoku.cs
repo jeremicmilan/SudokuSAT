@@ -19,6 +19,8 @@ namespace SudokuSAT
 
         public SudokuCell[,] SudokuGrid { get; set; }
         public List<SudokuElement> SudokuElements { get; set; }
+        public Stack<SudokuAction> SudokuActions { get; private set; } = new();
+        public Stack<SudokuAction> NextSudokuActions { get; private set; } = new();
 
         [JsonIgnore] public Grid? Grid { get; set; }
 
@@ -70,7 +72,27 @@ namespace SudokuSAT
             }
         }
 
-        internal void Clear()
+        public void Undo()
+        {
+            if (SudokuActions.Any())
+            {
+                SudokuAction sudokuAction = SudokuActions.Pop();
+                sudokuAction.Undo();
+                NextSudokuActions.Push(sudokuAction);
+            }
+        }
+
+        public void Redo()
+        {
+            if (NextSudokuActions.Any())
+            {
+                SudokuAction sudokuAction = NextSudokuActions.Pop();
+                sudokuAction.Redo();
+                SudokuActions.Push(sudokuAction);
+            }
+        }
+
+        public void Clear()
         {
             foreach (SudokuCell sudokuCell in SudokuCells)
             {

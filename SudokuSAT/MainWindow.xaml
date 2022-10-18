@@ -18,35 +18,39 @@
         <Border Margin="10,10,10,10" Width="Auto" Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}">
             <Grid x:Name="SudokuPlaceholder" />
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Grid.Column="1" Height="100" Width="100">
-            <Grid Height="102">
-                <Button x:Name="Generate" Content="Generate" HorizontalAlignment="Center" Margin="0,74,0,0" VerticalAlignment="Top" Click="Generate_Click" Width="88"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" Grid.Column="1" Height="215" Width="180">
+            <Grid>
+                <Button x:Name="Generate" Content="Generate" HorizontalAlignment="Left" Margin="98,4,0,0" VerticalAlignment="Top" Click="Generate_Click" Width="76"/>
                 <Slider x:Name="GridWidthSlider" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="64" Minimum="1" Maximum="9" SmallChange="1" Value="9" IsSnapToTickEnabled="True" TickFrequency="1"/>
                 <TextBox Text="{Binding Value, ElementName=GridWidthSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="74,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
                 <Slider x:Name="GridHeightSlider" HorizontalAlignment="Left" Margin="5,28,0,0" VerticalAlignment="Top" Width="64" Minimum="1" Maximum="9" SmallChange="1" Value="9" IsSnapToTickEnabled="True" TickFrequency="1"/>
                 <TextBox Text="{Binding Value, ElementName=GridHeightSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="74,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center"/>
                 <Slider x:Name="BoxSizeSlider" HorizontalAlignment="Left" Margin="5,51,0,0" VerticalAlignment="Top" Width="64" Minimum="1" Maximum="9" SmallChange="1" Value="3" IsSnapToTickEnabled="True" TickFrequency="1"/>
                 <TextBox Text="{Binding Value, ElementName=BoxSizeSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="74,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center" RenderTransformOrigin="-0.079,-0.104"/>
+                <Button x:Name="PreviousButton" Content="Previous" HorizontalAlignment="Left" Margin="98,27,0,0" VerticalAlignment="Top" Width="76" Click="Previous_Click" IsEnabled="False"/>
+                <Button x:Name="NextButton" Content="Next" HorizontalAlignment="Left" Margin="98,50,0,0" VerticalAlignment="Top" Width="76" Click="Next_Click" IsEnabled="False"/>
+                <Border BorderBrush="Black" BorderThickness="1" Margin="0,74,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="134" Width="170" Grid.RowSpan="2">
+                    <Grid>
+                        <Button x:Name="Load" Content="Load" HorizontalAlignment="Left" Margin="53,30,0,0" VerticalAlignment="Top" Click="Load_Click" Width="40" />
+                        <ListBox x:Name="SaveNames" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="5,55,5,5"/>
+                        <TextBox x:Name="SaveNameTextbox" HorizontalAlignment="Center" Margin="0,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" Height="20" PreviewTextInput="NameValidationTextBox" />
+                        <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="5,30,0,0" VerticalAlignment="Top" Click="Save_Click" Width="40" />
+                        <Button x:Name="Delete" Content="Delete" HorizontalAlignment="Left" Margin="123,30,0,0" VerticalAlignment="Top" Click="Delete_Click" Width="40" />
+                    </Grid>
+                </Border>
             </Grid>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="115,5,0,0" Grid.Column="1" Height="100" Width="80">
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Height="82" Width="180" Margin="0,392,0,0">
             <Grid>
-                <Button x:Name="Solve" Content="Solve" Margin="5,5,5,0" VerticalAlignment="Top" Click="Solve_Click" Height="20"/>
-                <Button x:Name="Explore" Content="Explore" Margin="5,28,5,50" Click="Explore_Click" Height="20"/>
-                <Button x:Name="Clear" Content="Clear" HorizontalAlignment="Center" Margin="0,51,0,0" VerticalAlignment="Top" Click="Clear_Click" Width="68" Height="20"/>
-                <Label x:Name="SolutionCount" Content="" HorizontalAlignment="Center" Margin="0,71,0,0" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="68" Height="27"/>
+                <Button x:Name="Solve" Content="Solve" Margin="5,5,0,0" VerticalAlignment="Top" Click="Solve_Click" Height="20" HorizontalAlignment="Left" Width="66"/>
+                <Button x:Name="Explore" Content="Explore" Margin="5,30,0,30" Click="Explore_Click" Height="20" HorizontalAlignment="Left" Width="66"/>
+                <Button x:Name="Clear" Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Clear_Click" Width="66" Height="20" Margin="102,53,0,0"/>
+                <Label x:Name="SolutionCount" Content="" HorizontalAlignment="Left" Margin="5,50,0,3" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="66" Height="27"/>
+                <Button x:Name="UndoButton" Content="Undo" HorizontalAlignment="Left" Margin="89,5,0,0" VerticalAlignment="Top" Click="Undo_Click"/>
+                <Button x:Name="RedoButton" Content="Redo" HorizontalAlignment="Left" Margin="137,5,0,0" VerticalAlignment="Top" Click="Redo_Click"/>
             </Grid>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" Margin="0,110,0,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="170" Width="180">
-            <Grid>
-                <Button x:Name="Load" Content="Load" HorizontalAlignment="Right" Margin="0,30,110,0" VerticalAlignment="Top" Click="Load_Click" />
-                <ListBox x:Name="SaveNames" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="5,55,5,5"/>
-                <TextBox x:Name="SaveNameTextbox" HorizontalAlignment="Center" Margin="0,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" Height="20" PreviewTextInput="NameValidationTextBox" />
-                <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="5,30,0,0" VerticalAlignment="Top" Click="Save_Click" />
-                <Button x:Name="Delete" Content="Delete" HorizontalAlignment="Right" Margin="0,30,67,0" VerticalAlignment="Top" Click="Delete_Click" />
-            </Grid>
-        </Border>
-        <Border BorderBrush="Black" BorderThickness="1" Margin="0,285,0,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="110" Width="180">
+        <Border BorderBrush="Black" BorderThickness="1" Margin="0,225,0,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="162" Width="180">
             <Grid>
                 <Button x:Name="Arrow" Content="Arrow" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Click="Arrow_Click" Width="44"/>
                 <Button x:Name="Palindrome" Content="Palindrome" HorizontalAlignment="Left" Margin="55,5,0,0" VerticalAlignment="Top" Click="Palindrome_Click" Width="76"/>
@@ -60,7 +64,7 @@
                 <Slider x:Name="KillerCageSumSlider" HorizontalAlignment="Left" Margin="5,78,0,0" VerticalAlignment="Top" Width="88" Maximum="45" SmallChange="1" IsSnapToTickEnabled="True" TickFrequency="1"/>
             </Grid>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" Margin="0,400,0,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180" Height="124">
+        <Border BorderBrush="Black" BorderThickness="1" Margin="0,479,0,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180" Height="124">
             <TextBlock x:Name="StatusBox" TextWrapping="Wrap" VerticalAlignment="Top" Height="62" HorizontalAlignment="Left"/>
         </Border>
     </Grid>
