@@ -179,6 +179,13 @@ namespace SudokuSAT
             model.AddAllDifferent(cells.Select(cell => cell.ValueVar));
         }
 
+        public void AddElement(SudokuElement sudokuElement)
+        {
+            SudokuElements.Add(sudokuElement);
+            SudokuActions.Push(new SudokuActionElement(this, sudokuElement));
+            sudokuElement.Visualize();
+        }
+
         private void AddElementConstraints(CpModel model)
         {
             foreach (SudokuElement sudokuElement in SudokuElements)

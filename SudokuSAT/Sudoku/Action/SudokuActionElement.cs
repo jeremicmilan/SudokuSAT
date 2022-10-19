@@ -12,10 +12,12 @@
 
         public override void Undo()
         {
+            Sudoku.SudokuElements.Remove(SudokuElement);
         }
 
         public override void Redo()
         {
+            Sudoku.SudokuElements.Add(SudokuElement);
         }
     }
 }
