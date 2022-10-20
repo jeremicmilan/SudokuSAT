@@ -185,21 +185,26 @@ namespace SudokuSAT
             model.AddAllDifferent(cells.Select(cell => cell.ValueVar));
         }
 
-        private void SudokuActionPerformed(SudokuAction sudokuAction)
+        private void AddElementConstraints(CpModel model)
+        {
+            foreach (SudokuElement sudokuElement in SudokuElements)
+            {
+                sudokuElement.AddConstraints(model);
+            }
+        }
+
+        private void PerformSudokuAction(SudokuAction sudokuAction)
         {
             SudokuActions.Push(sudokuAction);
             NextSudokuActions.Clear();
+
+            sudokuAction.Redo();
+            Visualize();
         }
 
         public void AddElement(SudokuElement sudokuElement, bool redo = false)
         {
-            SudokuElements.Add(sudokuElement);
-            Visualize();
-
-            if (!redo)
-            {
-                SudokuActionPerformed(new SudokuActionElement(this, sudokuElement));
-            }
+            PerformSudokuAction(new SudokuActionElement(this, sudokuElement));
         }
 
         public void RemoveElement(SudokuElement sudokuElement)
@@ -207,12 +212,9 @@ namespace SudokuSAT
             SudokuElements.Remove(sudokuElement);
         }
 
-        private void AddElementConstraints(CpModel model)
+        public void SetValues(int? value, List<SudokuCell> sudokuCells)
         {
-            foreach (SudokuElement sudokuElement in SudokuElements)
-            {
-                sudokuElement.AddConstraints(model);
-            }
+            PerformSudokuAction(new SudokuActionValues(this, value, ValueType.Given, sudokuCells));
         }
 
         public List<SudokuCell> SelectedSudokuCells => SudokuCells

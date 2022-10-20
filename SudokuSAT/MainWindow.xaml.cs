@@ -321,16 +321,13 @@ namespace SudokuSAT
         {
             int? value = Helpers.KeyToValue(e.Key);
             bool shouldDelete = e.Key == Key.D0 || e.Key == Key.NumPad0 || e.Key == Key.Delete || e.Key == Key.Back;
-            foreach (SudokuCell sudokuCell in Sudoku.SelectedSudokuCells)
+            if (value != null)
             {
-                if (shouldDelete)
-                {
-                    sudokuCell.ClearValue();
-                }
-                else if (value.HasValue)
-                {
-                    sudokuCell.SetValue(value.Value, ValueType.User);
-                }
+                Sudoku.SetValues(value.Value, Sudoku.SelectedSudokuCells);
+            }
+            else if (shouldDelete)
+            {
+                Sudoku.SetValues(null, Sudoku.SelectedSudokuCells);
             }
         }
     }
