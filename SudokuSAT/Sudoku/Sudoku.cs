@@ -25,6 +25,7 @@ namespace SudokuSAT
 
         [JsonIgnore] public Grid? Grid { get; set; }
         [JsonIgnore] private UniformGrid? SudokuUniformGrid { get; set; }
+        [JsonIgnore] public MainWindow MainWindow => (MainWindow)Window.GetWindow(Grid);
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public Sudoku() { }
@@ -95,14 +96,6 @@ namespace SudokuSAT
                 SudokuActions.Push(sudokuAction);
 
                 Visualize();
-            }
-        }
-
-        public void Clear()
-        {
-            foreach (SudokuCell sudokuCell in SudokuCells)
-            {
-                sudokuCell.ClearSolvedValue();
             }
         }
 
@@ -193,16 +186,17 @@ namespace SudokuSAT
             }
         }
 
-        private void PerformSudokuAction(SudokuAction sudokuAction)
+        public void PerformSudokuAction(SudokuAction sudokuAction)
         {
             SudokuActions.Push(sudokuAction);
             NextSudokuActions.Clear();
+            MainWindow.UpdateUndoRedoButtons();
 
             sudokuAction.Redo();
             Visualize();
         }
 
-        public void AddElement(SudokuElement sudokuElement, bool redo = false)
+        public void AddElement(SudokuElement sudokuElement)
         {
             PerformSudokuAction(new SudokuActionElement(this, sudokuElement));
         }
@@ -214,7 +208,7 @@ namespace SudokuSAT
 
         public void SetValues(int? value, List<SudokuCell> sudokuCells)
         {
-            PerformSudokuAction(new SudokuActionValues(this, value, ValueType.Given, sudokuCells));
+            PerformSudokuAction(new SudokuActionValues(this, sudokuCells, value, ValueType.Given));
         }
 
         public List<SudokuCell> SelectedSudokuCells => SudokuCells

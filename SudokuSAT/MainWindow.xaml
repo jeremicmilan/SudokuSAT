@@ -44,7 +44,6 @@
             <Grid>
                 <Button x:Name="Solve" Content="Solve" Margin="5,5,0,0" VerticalAlignment="Top" Click="Solve_Click" Height="20" HorizontalAlignment="Left" Width="66"/>
                 <Button x:Name="Explore" Content="Explore" Margin="5,30,0,30" Click="Explore_Click" Height="20" HorizontalAlignment="Left" Width="66"/>
-                <Button x:Name="Clear" Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Clear_Click" Width="66" Height="20" Margin="102,53,0,0"/>
                 <Label x:Name="SolutionCount" Content="" HorizontalAlignment="Left" Margin="5,50,0,3" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="66" Height="27"/>
                 <Button x:Name="UndoButton" Content="Undo" HorizontalAlignment="Left" Margin="89,5,0,0" VerticalAlignment="Top" Click="Undo_Click" IsEnabled="False"/>
                 <Button x:Name="RedoButton" Content="Redo" HorizontalAlignment="Left" Margin="137,5,0,0" VerticalAlignment="Top" Click="Redo_Click" IsEnabled="False"/>

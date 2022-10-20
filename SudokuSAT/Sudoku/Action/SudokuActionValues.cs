@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Google.OrTools.Sat;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace SudokuSAT
@@ -7,7 +8,7 @@ namespace SudokuSAT
     {
         List<SudokuActionValue> ActionValues;
 
-        public SudokuActionValues(Sudoku sudoku, int? value, ValueType? type, List<SudokuCell> sudokuCells)
+        public SudokuActionValues(Sudoku sudoku, List<SudokuCell> sudokuCells, int? value, ValueType? type)
             : base(sudoku)
         {
             ActionValues = new();
@@ -17,6 +18,22 @@ namespace SudokuSAT
                     Sudoku, sudokuCell,
                     value, type,
                     sudokuCell.Value, sudokuCell.Type));
+            }
+        }
+
+        public SudokuActionValues(Sudoku sudoku, CpSolver solver)
+            : base(sudoku)
+        {
+            ActionValues = new();
+            foreach (SudokuCell sudokuCell in sudoku.SudokuCells)
+            {
+                if (!sudokuCell.Value.HasValue)
+                {
+                    ActionValues.Add(new SudokuActionValue(
+                        Sudoku, sudokuCell,
+                        (int)solver.Value(sudokuCell.ValueVar), ValueType.Solver,
+                        sudokuCell.Value, sudokuCell.Type));
+                }
             }
         }
 

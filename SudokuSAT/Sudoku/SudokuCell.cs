@@ -85,31 +85,12 @@ namespace SudokuSAT
             Visualize();
         }
 
-        public void ClearSolvedValue()
-        {
-            if (Type == ValueType.Solver)
-            {
-                ClearValue();
-            }
-
-            PossibleValues.Clear();
-            Visualize();
-        }
-
         public void ClearValue()
         {
             Value = null;
             Type = null;
 
             Visualize();
-        }
-
-        public void UpdateSolvedValue(CpSolver solver)
-        {
-            if (!Value.HasValue)
-            {
-                SetValue((int)solver.Value(ValueVar), ValueType.Solver);
-            }
         }
 
         public bool Adjacent(SudokuCell sudokuCell)
@@ -221,7 +202,7 @@ namespace SudokuSAT
 
         public void Visualize()
         {
-            if (Grid != null && Grid.ActualHeight != 0)
+            if (Grid != null)
             {
                 Grid.Children.Clear();
                 Grid.SizeChanged += (_, _) => Visualize();
@@ -260,70 +241,73 @@ namespace SudokuSAT
                     }
                 }));
 
-                if (Value != null)
+                if (Grid.ActualHeight > 0)
                 {
-                    Debug.Assert(Type != null);
-                    Grid.Children.Add(new Label()
+                    if (Value != null)
                     {
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        HorizontalContentAlignment = HorizontalAlignment.Center,
-                        VerticalContentAlignment = VerticalAlignment.Center,
-                        MinWidth = Grid.ActualWidth,
-                        MinHeight = Grid.ActualHeight,
-                        FontSize = Grid.ActualHeight * 0.65,
-                        Foreground = digitToColor[Type.Value],
-                        Content = Value > 0 ? Value : "X"
-                    });
-                }
-
-                if (IsSelected)
-                {
-                    Grid.Background = Brushes.Yellow;
-                    Grid.Children.Add(new Label()
-                    {
-                        Content = SelectionOrderId,
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        VerticalAlignment = VerticalAlignment.Bottom,
-                        FontSize = Grid.ActualHeight * 0.15,
-                        Foreground = Brushes.Orange,
-                    });
-                }
-                else
-                {
-                    Grid.Background = null;
-                }
-
-                if (PossibleValues != null && PossibleValues.Count > 0)
-                {
-                    UniformGrid cellGrid = new()
-                    {
-                        Rows = 3,
-                        Columns = 3
-                    };
-                    Grid.Children.Add(cellGrid);
-
-                    for (int i = 1; i <= cellGrid.Rows * cellGrid.Columns; i++)
-                    {
-                        if (PossibleValues.Contains(i))
+                        Debug.Assert(Type != null);
+                        Grid.Children.Add(new Label()
                         {
-                            Label label = new()
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalContentAlignment = HorizontalAlignment.Center,
+                            VerticalContentAlignment = VerticalAlignment.Center,
+                            MinWidth = Grid.ActualWidth,
+                            MinHeight = Grid.ActualHeight,
+                            FontSize = Grid.ActualHeight * 0.65,
+                            Foreground = digitToColor[Type.Value],
+                            Content = Value > 0 ? Value : "X"
+                        });
+                    }
+
+                    if (IsSelected)
+                    {
+                        Grid.Background = Brushes.Yellow;
+                        Grid.Children.Add(new Label()
+                        {
+                            Content = SelectionOrderId,
+                            HorizontalAlignment = HorizontalAlignment.Right,
+                            VerticalAlignment = VerticalAlignment.Bottom,
+                            FontSize = Grid.ActualHeight * 0.15,
+                            Foreground = Brushes.Orange,
+                        });
+                    }
+                    else
+                    {
+                        Grid.Background = null;
+                    }
+
+                    if (PossibleValues != null && PossibleValues.Count > 0)
+                    {
+                        UniformGrid cellGrid = new()
+                        {
+                            Rows = 3,
+                            Columns = 3
+                        };
+                        Grid.Children.Add(cellGrid);
+
+                        for (int i = 1; i <= cellGrid.Rows * cellGrid.Columns; i++)
+                        {
+                            if (PossibleValues.Contains(i))
                             {
-                                HorizontalAlignment = HorizontalAlignment.Center,
-                                VerticalAlignment = VerticalAlignment.Center,
-                                HorizontalContentAlignment = HorizontalAlignment.Center,
-                                VerticalContentAlignment = VerticalAlignment.Center,
-                                MinWidth = Grid.ActualWidth / 3,
-                                MinHeight = Grid.ActualHeight / 3,
-                                FontSize = Grid.ActualHeight * 0.18,
-                                Foreground = Brushes.Green,
-                                Content = i
-                            };
-                            cellGrid.Children.Add(label);
-                        }
-                        else
-                        {
-                            cellGrid.Children.Add(new Label());
+                                Label label = new()
+                                {
+                                    HorizontalAlignment = HorizontalAlignment.Center,
+                                    VerticalAlignment = VerticalAlignment.Center,
+                                    HorizontalContentAlignment = HorizontalAlignment.Center,
+                                    VerticalContentAlignment = VerticalAlignment.Center,
+                                    MinWidth = Grid.ActualWidth / 3,
+                                    MinHeight = Grid.ActualHeight / 3,
+                                    FontSize = Grid.ActualHeight * 0.18,
+                                    Foreground = Brushes.Green,
+                                    Content = i
+                                };
+                                cellGrid.Children.Add(label);
+                            }
+                            else
+                            {
+                                cellGrid.Children.Add(new Label());
+                            }
                         }
                     }
                 }

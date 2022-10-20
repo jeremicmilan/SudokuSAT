@@ -167,16 +167,16 @@ namespace SudokuSAT
             });
         }
 
+        public void UpdateUndoRedoButtons()
+        {
+            UndoButton.IsEnabled = Sudoku.SudokuActions.Any();
+            RedoButton.IsEnabled = Sudoku.NextSudokuActions.Any();
+        }
+
         private void Undo_Click(object sender, RoutedEventArgs e)
         {
             Sudoku.Undo();
             UpdateUndoRedoButtons();
-        }
-
-        private void UpdateUndoRedoButtons()
-        {
-            UndoButton.IsEnabled = Sudoku.SudokuActions.Any();
-            RedoButton.IsEnabled = Sudoku.NextSudokuActions.Any();
         }
 
         private void Redo_Click(object sender, RoutedEventArgs e)
@@ -193,12 +193,6 @@ namespace SudokuSAT
         private void Explore_Click(object sender, RoutedEventArgs e)
         {
             new Thread(() => HandleClickFailure(() => SudokuSolver.Explore(Sudoku))).Start();
-        }
-
-        private void Clear_Click(object sender, RoutedEventArgs e)
-        {
-            SudokuSolver.IsExploreActive = false;
-            HandleClickFailure(Sudoku.Clear);
         }
 
         private void Arrow_Click(object sender, RoutedEventArgs e)

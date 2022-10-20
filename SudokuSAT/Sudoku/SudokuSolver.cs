@@ -112,10 +112,7 @@ namespace SudokuSAT
                 case CpSolverStatus.Optimal:
                     if (updateSolvedValue)
                     {
-                        foreach (var sudokuCell in sudoku.SudokuGrid)
-                        {
-                            sudokuCell.UpdateSolvedValue(solver);
-                        }
+                        sudoku.PerformSudokuAction(new SudokuActionValues(sudoku, solver));
                     }
                     break;
             }
