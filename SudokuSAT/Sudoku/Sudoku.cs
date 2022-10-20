@@ -208,7 +208,7 @@ namespace SudokuSAT
 
         public void SetValues(int? value, List<SudokuCell> sudokuCells)
         {
-            PerformSudokuAction(new SudokuActionValues(this, sudokuCells, value, ValueType.Given));
+            PerformSudokuAction(new SudokuActionsValue(this, sudokuCells, value, ValueType.Given));
         }
 
         public List<SudokuCell> SelectedSudokuCells => SudokuCells

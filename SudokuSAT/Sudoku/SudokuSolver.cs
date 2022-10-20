@@ -10,6 +10,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using MoreLinq;
+using System.Windows.Threading;
 
 namespace SudokuSAT
 {
@@ -85,6 +86,8 @@ namespace SudokuSAT
                 }
             });
 
+            Window.Dispatcher.Invoke(() => sudoku.PerformSudokuAction(new SudokuActionsPossibleValues(sudoku)));
+
             IsExploreActive = false;
         }
 
@@ -112,7 +115,7 @@ namespace SudokuSAT
                 case CpSolverStatus.Optimal:
                     if (updateSolvedValue)
                     {
-                        sudoku.PerformSudokuAction(new SudokuActionValues(sudoku, solver));
+                        sudoku.PerformSudokuAction(new SudokuActionsValue(sudoku, solver));
                     }
                     break;
             }

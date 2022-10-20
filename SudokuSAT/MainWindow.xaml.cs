@@ -249,6 +249,11 @@ namespace SudokuSAT
         {
             HandleClickFailure(() =>
             {
+                if (SudokuSolver.IsExploreActive)
+                {
+                    return;
+                }
+
                 Sudoku.AddElement(instantiateSudokuElement());
                 UpdateUndoRedoButtons();
                 SudokuSolver.Solve(Sudoku, updateSolvedValue: false);
@@ -313,6 +318,11 @@ namespace SudokuSAT
 
         private void Keyboard_KeyDown(object sender, KeyEventArgs e)
         {
+            if (SudokuSolver.IsExploreActive)
+            {
+                return;
+            }
+
             int? value = Helpers.KeyToValue(e.Key);
             bool shouldDelete = e.Key == Key.D0 || e.Key == Key.NumPad0 || e.Key == Key.Delete || e.Key == Key.Back;
             if (value != null)

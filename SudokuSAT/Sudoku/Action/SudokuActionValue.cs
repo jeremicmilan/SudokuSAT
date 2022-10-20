@@ -3,22 +3,19 @@ using System.Diagnostics;
 
 namespace SudokuSAT
 {
-    public class SudokuActionValue : SudokuAction
+    public class SudokuActionValue : SudokuActionCell
     {
-        SudokuCell SudokuCell;
-
-        int? Value;
-        ValueType? Type;
-        int? ValueOld;
-        ValueType? TypeOld;
+        public int? Value { get; private set; }
+        public ValueType? Type { get; private set; }
+        public int? ValueOld { get; private set; }
+        public ValueType? TypeOld { get; private set; }
 
         public SudokuActionValue(
             Sudoku sudoku, SudokuCell sudokuCell,
             int? value, ValueType? type,
             int? valueOld, ValueType? typeOld)
-            : base(sudoku)
+            : base(sudoku, sudokuCell)
         {
-            SudokuCell = sudokuCell;
             Value = value;
             Type = type;
             ValueOld = valueOld;
