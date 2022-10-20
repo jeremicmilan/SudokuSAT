@@ -1,6 +1,7 @@
 ﻿using Google.OrTools.Sat;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,20 +26,23 @@ namespace SudokuSAT
             model.Add(SudokuCells[0].ValueVar == LinearExpr.Sum(SudokuCells.Skip(1).Select(cell => cell.ValueVar)));
         }
 
-#pragma warning disable CS8602 // Using Grid should be safe during visualization
         protected override void VisualizeInternal()
         {
+            Debug.Assert(Grid != null);
+
             // Arrow circle
             //
             double circleScalingFactor = .7;
-            Point topLeftPosition = SudokuCells[0].TopLeftPosition;
+            SudokuCell firstSudokuCell = SudokuCells[0];
+            Debug.Assert(firstSudokuCell.Grid != null);
+            Point topLeftPosition = firstSudokuCell.TopLeftPosition;
             Grid.Children.Add(new Ellipse()
             {
-                Width = SudokuCells[0].Grid.ActualWidth * circleScalingFactor,
-                Height = SudokuCells[0].Grid.ActualHeight * circleScalingFactor,
+                Width = firstSudokuCell.Grid.ActualWidth * circleScalingFactor,
+                Height = firstSudokuCell.Grid.ActualHeight * circleScalingFactor,
                 Margin = new Thickness(
-                    topLeftPosition.X + SudokuCells[0].Grid.ActualWidth * (1 - circleScalingFactor) / 2,
-                    topLeftPosition.Y + SudokuCells[0].Grid.ActualHeight * (1 - circleScalingFactor) / 2,
+                    topLeftPosition.X + firstSudokuCell.Grid.ActualWidth * (1 - circleScalingFactor) / 2,
+                    topLeftPosition.Y + firstSudokuCell.Grid.ActualHeight * (1 - circleScalingFactor) / 2,
                     0,
                     0),
                 Stroke = Brushes.Black,
@@ -59,6 +63,8 @@ namespace SudokuSAT
                 double coeficient = (sudokuCell1.OrthoAdjacent(sudokuCell2) ? 1 : (Math.Sqrt(2) / 2)) * circleScalingFactor / 2;
                 if (i == 1)
                 {
+                    Debug.Assert(sudokuCell1.Grid != null);
+
                     // First line should start from circle edge and not the center
                     //
                     position1.X += coeficient * columnDirection * sudokuCell1.Grid.ActualWidth;
@@ -101,6 +107,5 @@ namespace SudokuSAT
                 }
             }
         }
-#pragma warning restore CS8602 // Using Grid should be safe during visualization
     }
 }

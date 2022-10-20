@@ -3,6 +3,7 @@ using MoreLinq;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -131,7 +132,7 @@ namespace SudokuSAT
 
         public IEnumerable<SudokuCell> AdjacentSudokuCells()
         {
-            HashSet<SudokuCell> sudokuCells = new HashSet<SudokuCell>();
+            HashSet<SudokuCell> sudokuCells = new();
             for (int i = -1; i <= 1; i++)
             {
                 for (int j = -1; j <= 1; j++)
@@ -150,7 +151,7 @@ namespace SudokuSAT
 
         public IEnumerable<SudokuCell> OrthoAdjacentSudokuCells()
         {
-            HashSet<SudokuCell> sudokuCells = new HashSet<SudokuCell>();
+            HashSet<SudokuCell> sudokuCells = new();
             for (int i = -1; i <= 1; i++)
             {
                 if (!(i < 0 && Column == 0 || i > 0 && Column == Sudoku.Width - 1))
@@ -167,8 +168,14 @@ namespace SudokuSAT
             return sudokuCells;
         }
 
-#pragma warning disable CS8602, CS8629 // Using Grid should be safe during visualization
-        [JsonIgnore] public Border? Border => (Border)Grid.Parent;
+        [JsonIgnore] public Border Border
+        {
+            get
+            {
+                Debug.Assert(Grid != null);
+                return (Border)Grid.Parent;
+            }
+        }
 
         public bool IsSelected { get; set; } = false;
         public static void ClearGlobalSelectionCount() => GlobalSelectionCount = 1;
@@ -199,6 +206,7 @@ namespace SudokuSAT
             { ValueType.User,   Brushes.Blue  }
         };
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         private Point TranslatePoint(Point point) => Grid.TranslatePoint(point, Sudoku.Grid);
         [JsonIgnore] public Point CenterPosition      => TranslatePoint(new Point(.5 * Grid.ActualWidth, .5 * Grid.ActualHeight));
         [JsonIgnore] public Point TopPosition         => TranslatePoint(new Point(.5 * Grid.ActualWidth, 0                     ));
@@ -209,6 +217,7 @@ namespace SudokuSAT
         [JsonIgnore] public Point TopRightPosition    => TranslatePoint(new Point(Grid.ActualWidth     , 0                     ));
         [JsonIgnore] public Point BottomLeftPosition  => TranslatePoint(new Point(0                    , Grid.ActualHeight     ));
         [JsonIgnore] public Point BottomRightPosition => TranslatePoint(new Point(Grid.ActualWidth     , Grid.ActualHeight     ));
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
         public void UpdateGrid()
         {
@@ -222,6 +231,8 @@ namespace SudokuSAT
 
                 if (Value != null)
                 {
+                    Debug.Assert(Type != null);
+
                     Grid.Children.Add(new Label()
                     {
                         HorizontalAlignment = HorizontalAlignment.Center,
@@ -291,6 +302,8 @@ namespace SudokuSAT
 
         public void Visualize()
         {
+            Debug.Assert(Grid != null);
+
             UpdateGrid();
             Grid.SizeChanged += (_, _) => UpdateGrid();
 
@@ -324,6 +337,5 @@ namespace SudokuSAT
                 }
             }));
         }
-#pragma warning restore CS8602, CS8629 // Using Grid should be safe during visualization
     }
 }

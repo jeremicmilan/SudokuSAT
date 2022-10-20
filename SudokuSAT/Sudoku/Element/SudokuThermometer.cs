@@ -1,6 +1,7 @@
 ﻿using Google.OrTools.Sat;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,18 +29,20 @@ namespace SudokuSAT
             }
         }
 
-#pragma warning disable CS8602 // Using Grid should be safe during visualization
         protected override void VisualizeInternal()
         {
+            Debug.Assert(Grid != null);
+            SudokuCell firstSudokuCell = SudokuCells[0];
+            Debug.Assert(firstSudokuCell.Grid != null);
             double circleScalingFactor = .7;
-            Point topLeftPosition = SudokuCells[0].TopLeftPosition;
+            Point topLeftPosition = firstSudokuCell.TopLeftPosition;
             Grid.Children.Add(new Ellipse()
             {
-                Width = SudokuCells[0].Grid.ActualWidth * circleScalingFactor,
-                Height = SudokuCells[0].Grid.ActualHeight * circleScalingFactor,
+                Width = firstSudokuCell.Grid.ActualWidth * circleScalingFactor,
+                Height = firstSudokuCell.Grid.ActualHeight * circleScalingFactor,
                 Margin = new Thickness(
-                    topLeftPosition.X + SudokuCells[0].Grid.ActualWidth * (1 - circleScalingFactor) / 2,
-                    topLeftPosition.Y + SudokuCells[0].Grid.ActualHeight * (1 - circleScalingFactor) / 2,
+                    topLeftPosition.X + firstSudokuCell.Grid.ActualWidth * (1 - circleScalingFactor) / 2,
+                    topLeftPosition.Y + firstSudokuCell.Grid.ActualHeight * (1 - circleScalingFactor) / 2,
                     0,
                     0),
                 Fill = Brushes.Gray,
@@ -58,6 +61,5 @@ namespace SudokuSAT
                 IsHitTestVisible = false,
             });
         }
-#pragma warning restore CS8602 // Using Grid should be safe during visualization
     }
 }

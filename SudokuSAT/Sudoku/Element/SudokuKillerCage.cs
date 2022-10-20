@@ -1,6 +1,7 @@
 ﻿using Google.OrTools.Sat;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -41,14 +42,15 @@ namespace SudokuSAT
             }
         }
 
-#pragma warning disable CS8602 // Using Grid should be safe during visualization
         protected override void VisualizeInternal()
         {
+            Debug.Assert(Grid != null);
             int minimumDistance = SudokuCells.Min(cell => cell.Column + cell.Row);
             SudokuCell? topLeftmostSudokuCell = SudokuCells.Where(cell => cell.Column + cell.Row == minimumDistance).MinBy(cell => cell.Column);
 
             foreach (SudokuCell sudokuCell in SudokuCells)
             {
+                Debug.Assert(sudokuCell.Grid != null);
                 double offsetFactor = 0.08;
                 double widthOffset  = sudokuCell.Grid.ActualWidth  * offsetFactor;
                 double heightOffset = sudokuCell.Grid.ActualHeight * offsetFactor;
@@ -153,6 +155,5 @@ namespace SudokuSAT
                 }
             }
         }
-#pragma warning restore CS8602 // Using Grid should be safe during visualization
     }
 }

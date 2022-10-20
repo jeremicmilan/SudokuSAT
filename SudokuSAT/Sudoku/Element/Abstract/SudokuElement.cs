@@ -1,5 +1,6 @@
 ﻿using Google.OrTools.Sat;
 using Newtonsoft.Json;
+using System.Diagnostics;
 using System.Windows.Controls;
 
 namespace SudokuSAT
@@ -31,13 +32,15 @@ namespace SudokuSAT
 
         public abstract void AddConstraints(CpModel model);
 
-#pragma warning disable CS8602 // Using Grid should be safe during visualization
         protected abstract void VisualizeInternal();
         public void Visualize()
         {
+            Debug.Assert(Grid != null);
+            Debug.Assert(Sudoku.Grid != null);
+
+            Grid.Children.Clear();
             VisualizeInternal();
             Sudoku.Grid.Children.Add(Grid);
         }
-#pragma warning restore CS8602 // Using Grid should be safe during visualization
     }
 }

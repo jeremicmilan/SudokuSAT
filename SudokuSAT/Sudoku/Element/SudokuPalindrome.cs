@@ -1,6 +1,7 @@
 ﻿using Google.OrTools.Sat;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,9 +29,9 @@ namespace SudokuSAT
             }
         }
 
-#pragma warning disable CS8602 // Using Grid should be safe during visualization
         protected override void VisualizeInternal()
         {
+            Debug.Assert(Grid != null);
             Grid.Children.Add(new Polyline
             {
                 Points = new PointCollection(SudokuCells.Select(cell => cell.CenterPosition)),
@@ -40,6 +41,5 @@ namespace SudokuSAT
                 IsHitTestVisible = false,
             });
         }
-#pragma warning restore CS8602 // Using Grid should be safe during visualization
     }
 }

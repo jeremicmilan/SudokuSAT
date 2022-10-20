@@ -8,6 +8,7 @@ using System.Windows;
 using Google.OrTools.Sat;
 using System.Windows.Input;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace SudokuSAT
 {
@@ -23,6 +24,7 @@ namespace SudokuSAT
         public Stack<SudokuAction> NextSudokuActions { get; private set; } = new();
 
         [JsonIgnore] public Grid? Grid { get; set; }
+        [JsonIgnore] private UniformGrid? SudokuUniformGrid { get; set; }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public Sudoku() { }
@@ -79,6 +81,8 @@ namespace SudokuSAT
                 SudokuAction sudokuAction = SudokuActions.Pop();
                 sudokuAction.Undo();
                 NextSudokuActions.Push(sudokuAction);
+
+                Visualize();
             }
         }
 
@@ -89,6 +93,8 @@ namespace SudokuSAT
                 SudokuAction sudokuAction = NextSudokuActions.Pop();
                 sudokuAction.Redo();
                 SudokuActions.Push(sudokuAction);
+
+                Visualize();
             }
         }
 
@@ -179,11 +185,26 @@ namespace SudokuSAT
             model.AddAllDifferent(cells.Select(cell => cell.ValueVar));
         }
 
-        public void AddElement(SudokuElement sudokuElement)
+        private void SudokuActionPerformed(SudokuAction sudokuAction)
+        {
+            SudokuActions.Push(sudokuAction);
+            NextSudokuActions.Clear();
+        }
+
+        public void AddElement(SudokuElement sudokuElement, bool redo = false)
         {
             SudokuElements.Add(sudokuElement);
-            SudokuActions.Push(new SudokuActionElement(this, sudokuElement));
-            sudokuElement.Visualize();
+            Visualize();
+
+            if (!redo)
+            {
+                SudokuActionPerformed(new SudokuActionElement(this, sudokuElement));
+            }
+        }
+
+        public void RemoveElement(SudokuElement sudokuElement)
+        {
+            SudokuElements.Remove(sudokuElement);
         }
 
         private void AddElementConstraints(CpModel model)
@@ -209,7 +230,6 @@ namespace SudokuSAT
             SudokuCell.ClearGlobalSelectionCount();
         }
 
-#pragma warning disable CS8602 // Using Grid should be safe during visualization
         public void UpdateGrid()
         {
             foreach (SudokuCell sudokuCell in SudokuGrid)
@@ -233,38 +253,50 @@ namespace SudokuSAT
             };
         }
 
-        public void GenerateAndVisualize()
+        public void Visualize(bool clearGrid = false)
         {
-            UniformGrid sudokuGrid = new()
+            Debug.Assert(Grid != null);
+
+            if (clearGrid || SudokuUniformGrid == null)
             {
-                Rows = Height,
-                Columns = Width,
-                Name = "SudokuCells"
-            };
-            Grid.Children.Add(sudokuGrid);
+                SudokuUniformGrid = new()
+                {
+                    Rows = Height,
+                    Columns = Width,
+                    Name = "SudokuCells"
+                };
+            }
+
+            Grid.Children.Clear();
+            Grid.Children.Add(SudokuUniformGrid);
 
             for (var row = 0; row < Height; row++)
             {
                 for (var column = 0; column < Width; column++)
                 {
-                    Border border = CreateBorder(column, row);
-                    sudokuGrid.Children.Add(border);
+                    if (clearGrid || SudokuGrid[column, row] == null)
+                    {
+                        Border border = CreateBorder(column, row);
+                        SudokuUniformGrid.Children.Add(border);
 
-                    Grid grid = new();
-                    border.Child = grid;
+                        Grid grid = new();
+                        border.Child = grid;
 
-                    SudokuGrid[column, row] = new SudokuCell(
-                        sudoku: this,
-                        column: column,
-                        row: row,
-                        value: SudokuGrid[column, row]?.Value,
-                        type: SudokuGrid[column, row]?.Type,
-                        grid: grid);
+                        SudokuGrid[column, row] = new SudokuCell(
+                            sudoku: this,
+                            column: column,
+                            row: row,
+                            grid: grid);
+                    }
 
                     SudokuGrid[column, row].Visualize();
                 }
             }
+
+            foreach (SudokuElement sudokuElement in SudokuElements)
+            {
+                sudokuElement.Visualize();
+            }
         }
-#pragma warning restore CS8602 // Using Grid should be safe during visualization
     }
 }

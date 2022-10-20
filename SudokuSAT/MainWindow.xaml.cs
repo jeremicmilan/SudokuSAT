@@ -60,9 +60,8 @@ namespace SudokuSAT
 
         private Sudoku CreateSudoku()
         {
-            SudokuPlaceholder.Children.Clear();
             Sudoku = new(GridWidth, GridHeight, BoxSize, SudokuPlaceholder);
-            Sudoku.GenerateAndVisualize();
+            Sudoku.Visualize();
             AddSudoku(Sudoku);
             return Sudoku;
         }
@@ -73,11 +72,9 @@ namespace SudokuSAT
             GridHeightSlider.Value = sudoku.Height;
             BoxSizeSlider.Value = sudoku.BoxSize;
 
-            SudokuPlaceholder.Children.Clear();
-
             Sudoku = sudoku;
             Sudoku.Grid = SudokuPlaceholder;
-            Sudoku.GenerateAndVisualize();
+            Sudoku.Visualize(clearGrid: true);
         }
 
         private void Previous_Click(object sender, RoutedEventArgs e)
@@ -173,23 +170,19 @@ namespace SudokuSAT
         private void Undo_Click(object sender, RoutedEventArgs e)
         {
             Sudoku.Undo();
+            UpdateUndoRedoButtons();
         }
 
         private void UpdateUndoRedoButtons()
         {
             UndoButton.IsEnabled = Sudoku.SudokuActions.Any();
-            RedoButton.IsEnabled = Sudoku.SudokuActions.Any();
+            RedoButton.IsEnabled = Sudoku.NextSudokuActions.Any();
         }
 
         private void Redo_Click(object sender, RoutedEventArgs e)
         {
             Sudoku.Redo();
-
-            UndoButton.IsEnabled = true;
-            if (!Sudoku.NextSudokuActions.Any())
-            {
-                RedoButton.IsEnabled = false;
-            }
+            UpdateUndoRedoButtons();
         }
 
         private void Solve_Click(object sender, RoutedEventArgs e)
@@ -263,7 +256,7 @@ namespace SudokuSAT
             HandleClickFailure(() =>
             {
                 Sudoku.AddElement(instantiateSudokuElement());
-                UndoButton.IsEnabled = true;
+                UpdateUndoRedoButtons();
                 SudokuSolver.Solve(Sudoku, updateSolvedValue: false);
             });
         }
@@ -320,6 +313,8 @@ namespace SudokuSAT
             height = Math.Max(800, height);
             MinHeight = height;
             MaxHeight = height;
+
+            Sudoku.Visualize();
         }
 
         private void Keyboard_KeyDown(object sender, KeyEventArgs e)
