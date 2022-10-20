@@ -232,14 +232,6 @@ namespace SudokuSAT
             SudokuCell.ClearGlobalSelectionCount();
         }
 
-        public void UpdateGrid()
-        {
-            foreach (SudokuCell sudokuCell in SudokuGrid)
-            {
-                sudokuCell.UpdateGrid();
-            }
-        }
-
         private Border CreateBorder(int column, int row)
         {
             int thick = 3, thin = 1;

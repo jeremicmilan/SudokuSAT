@@ -70,19 +70,19 @@ namespace SudokuSAT
         {
             Value = value;
             Type = valueType;
-            UpdateGrid();
+            Visualize();
         }
 
         public void AddPossibleValue(int value)
         {
             PossibleValues.Add(value);
-            UpdateGrid();
+            Visualize();
         }
 
         public void AddPossibleValues(HashSet<int> values)
         {
             values.ForEach(value => PossibleValues.Add(value));
-            UpdateGrid();
+            Visualize();
         }
 
         public void ClearSolvedValue()
@@ -93,7 +93,7 @@ namespace SudokuSAT
             }
 
             PossibleValues.Clear();
-            UpdateGrid();
+            Visualize();
         }
 
         public void ClearValue()
@@ -101,7 +101,7 @@ namespace SudokuSAT
             Value = null;
             Type = null;
 
-            UpdateGrid();
+            Visualize();
         }
 
         public void UpdateSolvedValue(CpSolver solver)
@@ -196,7 +196,7 @@ namespace SudokuSAT
                 SelectionOrderId = null;
             }
 
-            UpdateGrid();
+            Visualize();
         }
 
         private readonly Dictionary<ValueType, SolidColorBrush> digitToColor = new()
@@ -219,20 +219,50 @@ namespace SudokuSAT
         [JsonIgnore] public Point BottomRightPosition => TranslatePoint(new Point(Grid.ActualWidth     , Grid.ActualHeight     ));
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
-        public void UpdateGrid()
+        public void Visualize()
         {
             if (Grid != null && Grid.ActualHeight != 0)
             {
                 Grid.Children.Clear();
+                Grid.SizeChanged += (_, _) => Visualize();
 
                 // Create dummy label for selecting
                 //
-                Grid.Children.Add(new Label());
+                Label selectLabel = new Label();
+                Grid.Children.Add(selectLabel);
+                selectLabel.AddHandler(UIElement.MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
+                {
+                    IsSudokuCellClicked = true;
+
+                    bool newIsSelected = !IsSelected;
+                    if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
+                    {
+                        if (Sudoku.SelectedSudokuCells.Count > 1)
+                        {
+                            newIsSelected = true;
+                        }
+
+                        Sudoku.ClearSelection();
+                    }
+
+                    SetIsSelected(newIsSelected);
+
+                    if (!Sudoku.SelectedSudokuCells.Any())
+                    {
+                        Sudoku.ClearSelection();
+                    }
+                }));
+                selectLabel.AddHandler(UIElement.MouseEnterEvent, new RoutedEventHandler((_, _) =>
+                {
+                    if (Mouse.LeftButton == MouseButtonState.Pressed && !IsSelected)
+                    {
+                        SetIsSelected(!IsSelected);
+                    }
+                }));
 
                 if (Value != null)
                 {
                     Debug.Assert(Type != null);
-
                     Grid.Children.Add(new Label()
                     {
                         HorizontalAlignment = HorizontalAlignment.Center,
@@ -298,44 +328,6 @@ namespace SudokuSAT
                     }
                 }
             }
-        }
-
-        public void Visualize()
-        {
-            Debug.Assert(Grid != null);
-
-            UpdateGrid();
-            Grid.SizeChanged += (_, _) => UpdateGrid();
-
-            Border.AddHandler(UIElement.MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
-            {
-                IsSudokuCellClicked = true;
-
-                bool newIsSelected = !IsSelected;
-                if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
-                {
-                    if (Sudoku.SelectedSudokuCells.Count > 1)
-                    {
-                        newIsSelected = true;
-                    }
-
-                    Sudoku.ClearSelection();
-                }
-
-                SetIsSelected(newIsSelected);
-
-                if (!Sudoku.SudokuCells.Any(cell => cell.IsSelected))
-                {
-                    Sudoku.ClearSelection();
-                }
-            }));
-            Border.AddHandler(UIElement.MouseEnterEvent, new RoutedEventHandler((_, _) =>
-            {
-                if (Mouse.LeftButton == MouseButtonState.Pressed && !IsSelected)
-                {
-                    SetIsSelected(!IsSelected);
-                }
-            }));
         }
     }
 }
