@@ -32,13 +32,15 @@ namespace SudokuSAT
             return new SudokuKillerCage(sudoku, sudokuCells, Sum);
         }
 
-        public override void AddConstraints(CpModel model)
+        public override void AddConstraints(CpModel model, BoolVar boolVar)
         {
-            model.AddAllDifferent(SudokuCells.Select(cell => cell.ValueVar));
+            model.AddAllDifferent(SudokuCells.Select(cell => cell.ValueVar))
+                .OnlyEnforceIf(boolVar);
 
             if (Sum != null)
             {
-                model.Add(LinearExpr.Sum(SudokuCells.Select(cell => cell.ValueVar)) == Sum.Value);
+                model.Add(LinearExpr.Sum(SudokuCells.Select(cell => cell.ValueVar)) == Sum.Value)
+                    .OnlyEnforceIf(boolVar);
             }
         }
 

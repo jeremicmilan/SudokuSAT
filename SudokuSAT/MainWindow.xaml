@@ -43,7 +43,7 @@
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Height="82" Width="180" Margin="0,392,0,0">
             <Grid>
                 <Button x:Name="Solve" Content="Solve" Margin="5,5,0,0" VerticalAlignment="Top" Click="Solve_Click" Height="20" HorizontalAlignment="Left" Width="66"/>
-                <Button x:Name="Explore" Content="Explore" Margin="5,30,0,30" Click="Explore_Click" Height="20" HorizontalAlignment="Left" Width="66"/>
+                <Button x:Name="ExploreButton" Content="Explore" Margin="5,30,0,30" Click="Explore_Click" Height="20" HorizontalAlignment="Left" Width="66"/>
                 <Label x:Name="SolutionCount" Content="" HorizontalAlignment="Left" Margin="5,50,0,3" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="66" Height="27"/>
                 <Button x:Name="UndoButton" Content="Undo" HorizontalAlignment="Left" Margin="89,5,0,0" VerticalAlignment="Top" Click="Undo_Click" IsEnabled="False"/>
                 <Button x:Name="RedoButton" Content="Redo" HorizontalAlignment="Left" Margin="137,5,0,0" VerticalAlignment="Top" Click="Redo_Click" IsEnabled="False"/>
@@ -61,6 +61,9 @@
                 <Button x:Name="KillerCage" Content="Killer Cage" HorizontalAlignment="Left" Margin="116,77,0,0" VerticalAlignment="Top" Click="KillerCage_Click"/>
                 <TextBox Text="{Binding Value, ElementName=KillerCageSumSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="95,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center" Height="20"/>
                 <Slider x:Name="KillerCageSumSlider" HorizontalAlignment="Left" Margin="5,78,0,0" VerticalAlignment="Top" Width="88" Maximum="45" SmallChange="1" IsSnapToTickEnabled="True" TickFrequency="1"/>
+                <CheckBox x:Name="MultiElementCheckbox" Content="Multi" Margin="0,0,5,5" HorizontalAlignment="Right" Width="49" Height="15" VerticalAlignment="Bottom"/>
+                <Slider x:Name="MultipleElementCountSlider" HorizontalAlignment="Left" Margin="5,140,0,0" VerticalAlignment="Top" Width="88" SmallChange="1" IsSnapToTickEnabled="True" TickFrequency="1" Minimum="1" Value="2"/>
+                <TextBox Text="{Binding Value, ElementName=MultipleElementCountSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="95,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center" Height="20"/>
             </Grid>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" Margin="0,479,0,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180" Height="124">

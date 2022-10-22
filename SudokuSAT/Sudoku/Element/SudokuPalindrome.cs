@@ -21,11 +21,12 @@ namespace SudokuSAT
             return new SudokuPalindrome(sudoku, sudokuCells);
         }
 
-        public override void AddConstraints(CpModel model)
+        public override void AddConstraints(CpModel model, BoolVar boolVar)
         {
             for (int i = 0; i < SudokuCells.Count / 2; i++)
             {
-                model.Add(SudokuCells[i].ValueVar == SudokuCells[SudokuCells.Count - i - 1].ValueVar);
+                model.Add(SudokuCells[i].ValueVar == SudokuCells[SudokuCells.Count - i - 1].ValueVar)
+                    .OnlyEnforceIf(boolVar);
             }
         }
 

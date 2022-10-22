@@ -24,7 +24,7 @@ namespace SudokuSAT
             return new SudokuWhispers(sudoku, sudokuCells, ValueDiff);
         }
 
-        public override void AddConstraints(CpModel model)
+        public override void AddConstraints(CpModel model, BoolVar boolVar)
         {
             for (int i = 1; i < SudokuCells.Count; i++)
             {
@@ -34,7 +34,7 @@ namespace SudokuSAT
                 BoolVar boolVarNegative = model.NewBoolVar(Name + "_combination" + i + "_negative");
                 model.Add(SudokuCells[i - 1].ValueVar - SudokuCells[i].ValueVar >= ValueDiff).OnlyEnforceIf(boolVarNegative);
 
-                model.AddExactlyOne(new[] { boolVarPositive, boolVarNegative });
+                model.Add(LinearExpr.Sum(new[] { boolVarPositive, boolVarNegative }) == 1).OnlyEnforceIf(boolVar);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using Google.OrTools.Sat;
 using Newtonsoft.Json;
+using System;
 using System.Diagnostics;
 using System.Windows.Controls;
 
@@ -30,17 +31,38 @@ namespace SudokuSAT
 
         public abstract SudokuElement Clone(Sudoku sudoku);
 
-        public abstract void AddConstraints(CpModel model);
+        public abstract void AddConstraints(CpModel model, BoolVar boolVar);
+        public void AddConstraints(CpModel model)
+        {
+            BoolVar boolVar = model.NewBoolVar(Name + "_dummy_" + Random.Shared.Next());
+            model.Add(boolVar == 1);
+            AddConstraints(model, boolVar);
+        }
+
+        public virtual void AddNegativeConstraints(CpModel model, BoolVar boolVar) { }
+        public void AddNegativeConstraints(CpModel model)
+        {
+            BoolVar boolVar = model.NewBoolVar(Name + "_dummy_" + Random.Shared.Next());
+            model.Add(boolVar == 1);
+            AddNegativeConstraints(model, boolVar);
+        }
 
         protected abstract void VisualizeInternal();
-        public void Visualize()
+        public void Visualize(bool clearGrid = true)
         {
-            Debug.Assert(Grid != null);
-            Debug.Assert(Sudoku.Grid != null);
+            if (clearGrid)
+            {
+                if (Grid == null)
+                {
+                    Grid = new Grid();
+                }
 
-            Grid.Children.Clear();
+                Debug.Assert(Sudoku.Grid != null);
+                Grid.Children.Clear();
+                Sudoku.Grid.Children.Add(Grid);
+            }
+
             VisualizeInternal();
-            Sudoku.Grid.Children.Add(Grid);
         }
     }
 }

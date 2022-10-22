@@ -13,6 +13,8 @@ namespace SudokuSAT
     {
         public List<SudokuCell> SudokuCells { get; set; }
 
+        protected Dictionary<SudokuCell, int> SudokuCellsOrderDictionary { get; private set; }
+
         public SudokuElementWithCellList(Sudoku sudoku, List<SudokuCell> sudokuCells, Grid? grid = null)
             : base(sudoku, grid)
         {
@@ -22,6 +24,12 @@ namespace SudokuSAT
             }
 
             SudokuCells = sudokuCells;
+            SudokuCellsOrderDictionary = new();
+            int i = 0;
+            foreach (SudokuCell sudokuCell in SudokuCells)
+            {
+                SudokuCellsOrderDictionary[sudokuCell] = i++;
+            }
         }
 
         protected abstract SudokuElementWithCellList Instantiate(Sudoku sudoku, List<SudokuCell> sudokuCells);

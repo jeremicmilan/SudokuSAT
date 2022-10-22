@@ -84,6 +84,7 @@ namespace SudokuSAT
                 NextSudokuActions.Push(sudokuAction);
 
                 Visualize();
+                MainWindow.SudokuSolver.Solve(this, updateSolvedValue: false);
             }
         }
 
@@ -96,6 +97,7 @@ namespace SudokuSAT
                 SudokuActions.Push(sudokuAction);
 
                 Visualize();
+                MainWindow.SudokuSolver.Solve(this, updateSolvedValue: false);
             }
         }
 
@@ -190,10 +192,12 @@ namespace SudokuSAT
         {
             SudokuActions.Push(sudokuAction);
             NextSudokuActions.Clear();
-            MainWindow.UpdateUndoRedoButtons();
 
             sudokuAction.Redo();
             Visualize();
+
+            MainWindow.UpdateUndoRedoButtons();
+            MainWindow.SudokuSolver.Solve(this, updateSolvedValue: false);
         }
 
         public void AddElement(SudokuElement sudokuElement)

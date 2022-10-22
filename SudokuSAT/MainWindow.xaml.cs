@@ -21,11 +21,13 @@ namespace SudokuSAT
         public int GridHeight => (int)GridHeightSlider.Value;
         public int BoxSize => (int)BoxSizeSlider.Value;
 
-        private readonly SudokuSolver SudokuSolver;
+        public readonly SudokuSolver SudokuSolver;
         public Sudoku Sudoku { get; private set; }
 
         public const string SavePath = "..\\..\\..\\Saves";
         public string SelectedSaveName => (string)SaveNames.SelectedItem;
+        public bool MultiElement => MultiElementCheckbox.IsChecked != null && MultiElementCheckbox.IsChecked.Value;
+        public int MultiElementCount => (int)MultipleElementCountSlider.Value;
         public static string SaveNameToFile(string saveName) => SavePath + "\\" + saveName + ".save";
         public static string SaveFileToName(string fileName) => Path.GetFileNameWithoutExtension(fileName);
         public static readonly JsonSerializerSettings JsonSerializerSettings = new() { TypeNameHandling = TypeNameHandling.All };
@@ -197,10 +199,9 @@ namespace SudokuSAT
 
         private void Arrow_Click(object sender, RoutedEventArgs e)
         {
-            AddSudokuElement(() => new SudokuArrow(
-                Sudoku,
-                Sudoku.SelectedSudokuCells,
-                new Grid()));
+            AddSudokuElement(() => MultiElement ?
+                new SudokuArrowMulti(Sudoku, Sudoku.SelectedSudokuCells, MultiElementCount, new Grid()) :
+                new SudokuArrow(Sudoku, Sudoku.SelectedSudokuCells, new Grid()));
         }
 
         private void Whispers_Click(object sender, RoutedEventArgs e)
@@ -255,8 +256,6 @@ namespace SudokuSAT
                 }
 
                 Sudoku.AddElement(instantiateSudokuElement());
-                UpdateUndoRedoButtons();
-                SudokuSolver.Solve(Sudoku, updateSolvedValue: false);
             });
         }
 

@@ -20,23 +20,23 @@ namespace SudokuSAT
             return new SudokuRenban(sudoku, sudokuCells);
         }
 
-        public override void AddConstraints(CpModel model)
+        public override void AddConstraints(CpModel model, BoolVar boolVar)
         {
             int permutationNumber = 0;
             List<BoolVar> permutationBoolVars = new();
             foreach (IList<SudokuCell> sudokuCells in SudokuCells.Permutations())
             {
-                BoolVar boolVar = model.NewBoolVar(Name + "_permutation" + permutationNumber);
-                permutationBoolVars.Add(boolVar);
+                BoolVar permutationBoolVar = model.NewBoolVar(Name + "_permutation" + permutationNumber);
+                permutationBoolVars.Add(permutationBoolVar);
                 for (int i = 1; i < sudokuCells.Count; i++)
                 {
-                    model.Add(sudokuCells[i - 1].ValueVar - sudokuCells[i].ValueVar == 1).OnlyEnforceIf(boolVar);
+                    model.Add(sudokuCells[i - 1].ValueVar - sudokuCells[i].ValueVar == 1).OnlyEnforceIf(permutationBoolVar);
                 }
 
                 permutationNumber++;
             }
 
-            model.AddExactlyOne(permutationBoolVars);
+            model.Add(LinearExpr.Sum(permutationBoolVars) == 1).OnlyEnforceIf(boolVar);
         }
 
         protected override void VisualizeInternal()

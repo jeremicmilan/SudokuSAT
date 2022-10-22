@@ -277,7 +277,7 @@ namespace SudokuSAT
                         Grid.Background = null;
                     }
 
-                    if (PossibleValues != null && PossibleValues.Count > 0)
+                    if (Value == null && PossibleValues != null && PossibleValues.Count > 0)
                     {
                         UniformGrid cellGrid = new()
                         {

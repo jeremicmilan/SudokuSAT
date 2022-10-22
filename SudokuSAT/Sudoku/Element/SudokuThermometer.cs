@@ -21,11 +21,11 @@ namespace SudokuSAT
             return new SudokuThermometer(sudoku, sudokuCells);
         }
 
-        public override void AddConstraints(CpModel model)
+        public override void AddConstraints(CpModel model, BoolVar boolVar)
         {
             for (int i = 1; i < SudokuCells.Count; i++)
             {
-                model.Add(SudokuCells[i].ValueVar > SudokuCells[i - 1].ValueVar);
+                model.Add(SudokuCells[i].ValueVar > SudokuCells[i - 1].ValueVar).OnlyEnforceIf(boolVar);
             }
         }
 

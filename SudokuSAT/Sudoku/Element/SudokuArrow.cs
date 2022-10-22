@@ -21,9 +21,16 @@ namespace SudokuSAT
             return new SudokuArrow(sudoku, sudokuCells);
         }
 
-        public override void AddConstraints(CpModel model)
+        public override void AddConstraints(CpModel model, BoolVar boolVar)
         {
-            model.Add(SudokuCells[0].ValueVar == LinearExpr.Sum(SudokuCells.Skip(1).Select(cell => cell.ValueVar)));
+            model.Add(SudokuCells[0].ValueVar == LinearExpr.Sum(SudokuCells.Skip(1).Select(cell => cell.ValueVar)))
+                .OnlyEnforceIf(boolVar);
+        }
+
+        public override void AddNegativeConstraints(CpModel model, BoolVar boolVar)
+        {
+            model.Add(SudokuCells[0].ValueVar != LinearExpr.Sum(SudokuCells.Skip(1).Select(cell => cell.ValueVar)))
+                .OnlyEnforceIf(boolVar);
         }
 
         protected override void VisualizeInternal()
