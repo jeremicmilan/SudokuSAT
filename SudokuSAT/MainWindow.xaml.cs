@@ -258,15 +258,7 @@ namespace SudokuSAT
 
         private void AddSudokuElement(Func<SudokuElement> instantiateSudokuElement)
         {
-            HandleClickFailure(() =>
-            {
-                if (SudokuSolver.IsExploreActive)
-                {
-                    return;
-                }
-
-                Sudoku.AddElement(instantiateSudokuElement());
-            });
+            HandleClickFailure(() => Sudoku.AddElement(instantiateSudokuElement()));
         }
 
         private void HandleClickFailure(Action action)
@@ -327,21 +319,19 @@ namespace SudokuSAT
 
         private void Keyboard_KeyDown(object sender, KeyEventArgs e)
         {
-            if (SudokuSolver.IsExploreActive)
+            HandleClickFailure(() =>
             {
-                return;
-            }
-
-            int? value = Helpers.KeyToValue(e.Key);
-            bool shouldDelete = e.Key == Key.D0 || e.Key == Key.NumPad0 || e.Key == Key.Delete || e.Key == Key.Back;
-            if (value != null)
-            {
-                Sudoku.SetValues(value.Value, Sudoku.SelectedSudokuCells);
-            }
-            else if (shouldDelete)
-            {
-                Sudoku.SetValues(null, Sudoku.SelectedSudokuCells);
-            }
+                int? value = Helpers.KeyToValue(e.Key);
+                bool shouldDelete = e.Key == Key.D0 || e.Key == Key.NumPad0 || e.Key == Key.Delete || e.Key == Key.Back;
+                if (value != null)
+                {
+                    Sudoku.SetValues(value.Value, Sudoku.SelectedSudokuCells);
+                }
+                else if (shouldDelete)
+                {
+                    Sudoku.SetValues(null, Sudoku.SelectedSudokuCells);
+                }
+            });
         }
     }
 }

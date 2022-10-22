@@ -75,32 +75,6 @@ namespace SudokuSAT
             }
         }
 
-        public void Undo()
-        {
-            if (SudokuActions.Any())
-            {
-                SudokuAction sudokuAction = SudokuActions.Pop();
-                sudokuAction.Undo();
-                NextSudokuActions.Push(sudokuAction);
-
-                Visualize();
-                MainWindow.SudokuSolver.Solve(this, updateSolvedValue: false);
-            }
-        }
-
-        public void Redo()
-        {
-            if (NextSudokuActions.Any())
-            {
-                SudokuAction sudokuAction = NextSudokuActions.Pop();
-                sudokuAction.Redo();
-                SudokuActions.Push(sudokuAction);
-
-                Visualize();
-                MainWindow.SudokuSolver.Solve(this, updateSolvedValue: false);
-            }
-        }
-
         public CpModel GenerateModel()
         {
             CpModel model = new();
@@ -188,8 +162,43 @@ namespace SudokuSAT
             }
         }
 
+        public void Undo()
+        {
+            MainWindow.SudokuSolver.CheckIsExploreActive();
+
+            if (SudokuActions.Any())
+            {
+                SudokuAction sudokuAction = SudokuActions.Pop();
+                sudokuAction.Undo();
+                NextSudokuActions.Push(sudokuAction);
+
+                Visualize();
+                MainWindow.SudokuSolver.Solve(this, updateSolvedValue: false);
+            }
+        }
+
+        public void Redo()
+        {
+            MainWindow.SudokuSolver.CheckIsExploreActive();
+
+            if (NextSudokuActions.Any())
+            {
+                SudokuAction sudokuAction = NextSudokuActions.Pop();
+                sudokuAction.Redo();
+                SudokuActions.Push(sudokuAction);
+
+                Visualize();
+                MainWindow.SudokuSolver.Solve(this, updateSolvedValue: false);
+            }
+        }
+
         public void PerformSudokuAction(SudokuAction sudokuAction)
         {
+            if (sudokuAction is not SudokuActionsPossibleValues)
+            {
+                MainWindow.SudokuSolver.CheckIsExploreActive();
+            }
+
             SudokuActions.Push(sudokuAction);
             NextSudokuActions.Clear();
 

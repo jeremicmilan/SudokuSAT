@@ -106,6 +106,14 @@ namespace SudokuSAT
             }
         }
 
+        public void CheckIsExploreActive()
+        {
+            if (IsExploreActive)
+            {
+                throw new Exception("Explore in progress... Stop it or wait for it to finish.");
+            }
+        }
+
         public void Solve(Sudoku sudoku, bool updateSolvedValue)
         {
             CpSolver solver = new()
