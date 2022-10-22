@@ -275,11 +275,14 @@ namespace SudokuSAT
             }
             catch (Exception exception)
             {
-                Dispatcher.Invoke(() =>
+                if (!ClosingWindow)
                 {
-                    StatusBox.Foreground = Brushes.Red;
-                    StatusBox.Text = exception.Message;
-                });
+                    Dispatcher.Invoke(() =>
+                    {
+                        StatusBox.Foreground = Brushes.Red;
+                        StatusBox.Text = exception.Message;
+                    });
+                }
             }
         }
 
@@ -332,6 +335,14 @@ namespace SudokuSAT
                     Sudoku.SetValues(null, Sudoku.SelectedSudokuCells);
                 }
             });
+        }
+
+        private bool ClosingWindow = false;
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            ClosingWindow = true;
+            SudokuSolver.CancellationTokenSource?.Cancel();
         }
     }
 }
