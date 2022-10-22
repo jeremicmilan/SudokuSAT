@@ -194,7 +194,17 @@ namespace SudokuSAT
 
         private void Explore_Click(object sender, RoutedEventArgs e)
         {
-            new Thread(() => HandleClickFailure(() => SudokuSolver.Explore(Sudoku))).Start();
+            new Thread(() => HandleClickFailure(() =>
+            {
+                if (SudokuSolver.IsExploreActive)
+                {
+                    SudokuSolver.IsExploreActive = false;
+                }
+                else
+                {
+                    SudokuSolver.Explore(Sudoku, Sudoku.SelectedSudokuCells);
+                }
+            })).Start();
         }
 
         private void Arrow_Click(object sender, RoutedEventArgs e)

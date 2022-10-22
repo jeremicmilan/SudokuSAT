@@ -24,14 +24,14 @@ namespace SudokuSAT
         }
 
         public bool IsExploreActive = false;
-        public void Explore(Sudoku sudoku)
+        public void Explore(Sudoku sudoku, List<SudokuCell> SudokuCells)
         {
             IsExploreActive = true;
             Window.Dispatcher.Invoke(() => Window.ExploreButton.Content = "Stop");
             try
             {
                 Parallel.ForEach(
-                    sudoku.SudokuCells,
+                    SudokuCells != null && SudokuCells.Any() ? SudokuCells : sudoku.SudokuCells,
                     new() { MaxDegreeOfParallelism = sudoku.Width },
                     (sudokuCell) =>
                 {
@@ -92,16 +92,16 @@ namespace SudokuSAT
 
                 Window.Dispatcher.Invoke(() => sudoku.PerformSudokuAction(new SudokuActionsPossibleValues(sudoku)));
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 if (IsExploreActive)
                 {
-                    IsExploreActive = false;
                     throw;
                 }
             }
             finally
             {
+                IsExploreActive = false;
                 Window.Dispatcher.Invoke(() => Window.ExploreButton.Content = "Explore");
             }
         }
