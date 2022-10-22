@@ -202,11 +202,10 @@ namespace SudokuSAT
             if (Grid != null)
             {
                 Grid.Children.Clear();
-                Grid.SizeChanged += (_, _) => Visualize();
 
                 // Create dummy label for selecting
                 //
-                Label selectLabel = new Label();
+                Label selectLabel = new();
                 Grid.Children.Add(selectLabel);
                 Panel.SetZIndex(selectLabel, 100);
                 selectLabel.AddHandler(UIElement.MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
