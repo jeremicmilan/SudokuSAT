@@ -213,6 +213,7 @@ namespace SudokuSAT
                 //
                 Label selectLabel = new Label();
                 Grid.Children.Add(selectLabel);
+                Panel.SetZIndex(selectLabel, 100);
                 selectLabel.AddHandler(UIElement.MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
                 {
                     IsSudokuCellClicked = true;
