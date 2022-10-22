@@ -25,7 +25,8 @@ namespace SudokuSAT
 
         public int? Value { get; set; }
         public ValueType? Type { get; set; }
-        public HashSet<int> PossibleValues { get; set; } = new();
+        public HashSet<int>? PossibleValues { get; set; } = null;
+        private int? PossibleValue => PossibleValues != null && PossibleValues.Count == 1 ? PossibleValues.First() : null;
         [JsonIgnore] public IntVar? ValueVar { get; set; }
 
         [JsonIgnore] public Grid? Grid { get; set; }
@@ -73,15 +74,9 @@ namespace SudokuSAT
             Visualize();
         }
 
-        public void AddPossibleValue(int value)
+        public void SetPossibleValues(HashSet<int> possibleValues)
         {
-            PossibleValues.Add(value);
-            Visualize();
-        }
-
-        public void AddPossibleValues(HashSet<int> values)
-        {
-            values.ForEach(value => PossibleValues.Add(value));
+            PossibleValues = possibleValues;
             Visualize();
         }
 
@@ -250,9 +245,8 @@ namespace SudokuSAT
 
                 if (Grid.ActualHeight > 0)
                 {
-                    if (Value != null)
+                    if (Value != null || PossibleValue != null)
                     {
-                        Debug.Assert(Type != null);
                         Grid.Children.Add(new Label()
                         {
                             HorizontalAlignment = HorizontalAlignment.Center,
@@ -262,8 +256,8 @@ namespace SudokuSAT
                             MinWidth = Grid.ActualWidth,
                             MinHeight = Grid.ActualHeight,
                             FontSize = Grid.ActualHeight * 0.65,
-                            Foreground = digitToColor[Type.Value],
-                            Content = Value > 0 ? Value : "X"
+                            Foreground = digitToColor[Type ?? ValueType.Solver],
+                            Content = Value > 0 ? Value : (PossibleValue != null ? PossibleValue : "X")
                         });
                     }
 

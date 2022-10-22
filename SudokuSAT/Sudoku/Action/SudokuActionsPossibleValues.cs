@@ -1,19 +1,19 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace SudokuSAT
 {
     public class SudokuActionsPossibleValues : SudokuActionsCell
     {
-        public SudokuActionsPossibleValues(Sudoku sudoku)
+        public SudokuActionsPossibleValues(
+            Sudoku sudoku,
+            Dictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary)
             : base(sudoku)
         {
-            foreach (SudokuCell sudokuCell in sudoku.SudokuCells)
+            foreach ((SudokuCell sudokuCell, HashSet<int>? possibleValues) in sudokuCellToOldPossibleValuesDictionary)
             {
-                if (sudokuCell.PossibleValues.Any())
-                {
-                    SudokuActionCells.Add(new SudokuActionPossibleValues(
-                        Sudoku, sudokuCell, sudokuCell.PossibleValues));
-                }
+                SudokuActionCells.Add(new SudokuActionPossibleValues(
+                    Sudoku, sudokuCell, sudokuCell.PossibleValues, possibleValues));
             }
         }
     }

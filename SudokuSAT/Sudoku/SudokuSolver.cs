@@ -31,6 +31,7 @@ namespace SudokuSAT
             CancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = CancellationTokenSource.Token;
             Window.Dispatcher.Invoke(() => Window.ExploreButton.Content = "Stop");
+            Dictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary = new();
             try
             {
                 Parallel.ForEach(
@@ -71,7 +72,6 @@ namespace SudokuSAT
 
                                 case CpSolverStatus.Feasible:
                                 case CpSolverStatus.Optimal:
-                                    Window.Dispatcher.Invoke(() => sudokuCell.AddPossibleValue(i));
                                     possibleValues.Add(i);
                                     break;
                             }
@@ -85,15 +85,17 @@ namespace SudokuSAT
                                     sudokuCell.SetValue(0, ValueType.Solver);
                                     break;
 
-                                case 1:
-                                    sudokuCell.SetValue(possibleValues.First(), ValueType.Solver);
+                                default:
+                                    sudokuCellToOldPossibleValuesDictionary[sudokuCell] = possibleValues.Count > 0 ? possibleValues : null;
+                                    Window.Dispatcher.Invoke(() => sudokuCell.SetPossibleValues(possibleValues));
                                     break;
                             }
                         });
                     }
                 });
 
-                Window.Dispatcher.Invoke(() => sudoku.PerformSudokuAction(new SudokuActionsPossibleValues(sudoku)));
+                Window.Dispatcher.Invoke(() => sudoku.PerformSudokuAction(
+                    new SudokuActionsPossibleValues(sudoku, sudokuCellToOldPossibleValuesDictionary)));
             }
             catch (Exception)
             {
