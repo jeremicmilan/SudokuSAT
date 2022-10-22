@@ -18,15 +18,18 @@ namespace SudokuSAT
     {
         public MainWindow Window { get; private set; }
 
+        public bool IsExploreActive { get; private set; } = false;
+        public CancellationTokenSource? CancellationTokenSource { get; private set; } = null;
+
         public SudokuSolver(MainWindow window)
         {
             Window = window;
         }
-
-        public bool IsExploreActive = false;
         public void Explore(Sudoku sudoku, List<SudokuCell> SudokuCells)
         {
             IsExploreActive = true;
+            CancellationTokenSource = new CancellationTokenSource();
+            CancellationToken cancellationToken = CancellationTokenSource.Token;
             Window.Dispatcher.Invoke(() => Window.ExploreButton.Content = "Stop");
             try
             {
@@ -51,7 +54,7 @@ namespace SudokuSAT
 
                             CpSolverStatus solverStatus = solver.Solve(model);
 
-                            if (!IsExploreActive)
+                            if (cancellationToken.IsCancellationRequested)
                             {
                                 return;
                             }
@@ -101,8 +104,8 @@ namespace SudokuSAT
             }
             finally
             {
-                IsExploreActive = false;
                 Window.Dispatcher.Invoke(() => Window.ExploreButton.Content = "Explore");
+                IsExploreActive = false;
             }
         }
 

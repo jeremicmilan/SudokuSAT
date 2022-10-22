@@ -196,9 +196,9 @@ namespace SudokuSAT
         {
             new Thread(() => HandleClickFailure(() =>
             {
-                if (SudokuSolver.IsExploreActive)
+                if (SudokuSolver.IsExploreActive && SudokuSolver.CancellationTokenSource != null)
                 {
-                    SudokuSolver.IsExploreActive = false;
+                    SudokuSolver.CancellationTokenSource.Cancel();
                 }
                 else
                 {
