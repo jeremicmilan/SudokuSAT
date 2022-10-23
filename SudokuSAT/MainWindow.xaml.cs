@@ -315,6 +315,7 @@ namespace SudokuSAT
             double height = e.NewSize.Width - 200 /* sidebar */ + 30 /* top */;
             height = Math.Max(800, height);
             MinHeight = height;
+            Height = height;
             MaxHeight = height;
 
             Sudoku.Visualize();
