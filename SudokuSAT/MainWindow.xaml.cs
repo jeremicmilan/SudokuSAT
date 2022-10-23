@@ -46,6 +46,8 @@ namespace SudokuSAT
             {
                 SaveNames.Items.Add(SaveFileToName(fileName));
             }
+
+            SudokuPlaceholder.SizeChanged += (_, _) => Sudoku.Visualize();
         }
 
         private void AddSudoku(Sudoku sudoku)
@@ -322,8 +324,6 @@ namespace SudokuSAT
                 Width = 800 + 200 - 30;
                 MinWidth = Width;
             }
-
-            Sudoku.Visualize();
         }
 
         private void Keyboard_KeyDown(object sender, KeyEventArgs e)
