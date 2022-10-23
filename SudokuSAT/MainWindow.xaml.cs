@@ -313,10 +313,15 @@ namespace SudokuSAT
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             double height = e.NewSize.Width - 200 /* sidebar */ + 30 /* top */;
-            height = Math.Max(800, height);
-            MinHeight = height;
-            Height = height;
-            MaxHeight = height;
+            Height = Math.Max(800, height);
+            MinHeight = Height;
+            MaxHeight = Height;
+
+            if (height < 800)
+            {
+                Width = 800 + 200 - 30;
+                MinWidth = Width;
+            }
 
             Sudoku.Visualize();
         }
