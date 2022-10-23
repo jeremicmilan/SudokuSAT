@@ -138,6 +138,8 @@ namespace SudokuSAT
 
                 ReplaceSudoku(sudoku);
                 AddSudoku(sudoku);
+
+                SudokuSolver.Solve(sudoku, updateSolvedValue: false);
             });
         }
 
