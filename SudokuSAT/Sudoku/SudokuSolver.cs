@@ -79,17 +79,8 @@ namespace SudokuSAT
 
                         Window.Dispatcher.Invoke(() =>
                         {
-                            switch (possibleValues.Count)
-                            {
-                                case 0:
-                                    sudokuCell.SetValue(0, ValueType.Solver);
-                                    break;
-
-                                default:
-                                    sudokuCellToOldPossibleValuesDictionary[sudokuCell] = possibleValues.Count > 0 ? possibleValues : null;
-                                    Window.Dispatcher.Invoke(() => sudokuCell.SetPossibleValues(possibleValues));
-                                    break;
-                            }
+                            sudokuCellToOldPossibleValuesDictionary[sudokuCell] = possibleValues;
+                            Window.Dispatcher.Invoke(() => sudokuCell.SetPossibleValues(possibleValues));
                         });
                     }
                 });
