@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SudokuSAT
@@ -7,7 +8,7 @@ namespace SudokuSAT
     {
         public SudokuActionsPossibleValues(
             Sudoku sudoku,
-            Dictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary)
+            ConcurrentDictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary)
             : base(sudoku)
         {
             foreach ((SudokuCell sudokuCell, HashSet<int>? possibleValues) in sudokuCellToOldPossibleValuesDictionary)

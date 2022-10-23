@@ -92,7 +92,7 @@ namespace SudokuSAT
             Visualize();
         }
 
-        public void SetPossibleValues(HashSet<int> possibleValues)
+        public void SetPossibleValues(HashSet<int>? possibleValues)
         {
             PossibleValues = possibleValues;
             Visualize();

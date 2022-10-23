@@ -1,16 +1,10 @@
 ﻿using System.Threading.Tasks;
 using System.Threading;
 using Google.OrTools.Sat;
-using System.Windows;
-using System.Windows.Controls.Primitives;
-using System.Windows.Controls;
-using System.Windows.Media;
 using System.Linq;
 using System;
-using System.Data;
 using System.Collections.Generic;
-using MoreLinq;
-using System.Windows.Threading;
+using System.Collections.Concurrent;
 
 namespace SudokuSAT
 {
@@ -31,7 +25,7 @@ namespace SudokuSAT
             CancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = CancellationTokenSource.Token;
             Window.Dispatcher.Invoke(() => Window.ExploreButton.Content = "Stop");
-            Dictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary = new();
+            ConcurrentDictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary = new();
             try
             {
                 Parallel.ForEach(
@@ -46,12 +40,14 @@ namespace SudokuSAT
 
                     if (!sudokuCell.Value.HasValue)
                     {
+                        sudokuCellToOldPossibleValuesDictionary[sudokuCell] = sudokuCell.PossibleValues;
                         for (int i = SudokuCell.MinValue; i <= SudokuCell.MaxValue; i++)
                         {
                             CpSolver solver = new();
                             CpModel model = sudokuTemp.GenerateModel();
 
                             model.Add(sudokuTemp.SudokuGrid[sudokuCell.Column, sudokuCell.Row].ValueVar == i);
+                            Window.Dispatcher.Invoke(() => sudokuCell.SetPossibleValues(null));
 
                             CpSolverStatus solverStatus = solver.Solve(model);
 
@@ -77,16 +73,9 @@ namespace SudokuSAT
                             }
                         }
 
-                        Window.Dispatcher.Invoke(() =>
-                        {
-                            sudokuCellToOldPossibleValuesDictionary[sudokuCell] = possibleValues;
-                            Window.Dispatcher.Invoke(() => sudokuCell.SetPossibleValues(possibleValues));
-                        });
+                        Window.Dispatcher.Invoke(() => sudokuCell.SetPossibleValues(possibleValues));
                     }
                 });
-
-                Window.Dispatcher.Invoke(() => sudoku.PerformSudokuAction(
-                    new SudokuActionsPossibleValues(sudoku, sudokuCellToOldPossibleValuesDictionary)));
             }
             catch (Exception)
             {
@@ -97,6 +86,8 @@ namespace SudokuSAT
             }
             finally
             {
+                Window.Dispatcher.Invoke(() => sudoku.PerformSudokuAction(
+                    new SudokuActionsPossibleValues(sudoku, sudokuCellToOldPossibleValuesDictionary)));
                 Window.Dispatcher.Invoke(() => Window.ExploreButton.Content = "Explore");
                 IsExploreActive = false;
             }
