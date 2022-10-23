@@ -27,9 +27,12 @@ namespace SudokuSAT
             }
         }
 
-        protected override SudokuElementWithCellList Instantiate(Sudoku sudoku, List<SudokuCell> sudokuCells)
+        protected override SudokuElementWithCellList Instantiate(
+            Sudoku sudoku,
+            List<SudokuCell> sudokuCells,
+            Grid? grid = null)
         {
-            return new SudokuKillerCage(sudoku, sudokuCells, Sum);
+            return new SudokuKillerCage(sudoku, sudokuCells, Sum, grid);
         }
 
         public override void AddConstraints(CpModel model, BoolVar boolVar)
@@ -44,11 +47,13 @@ namespace SudokuSAT
             }
         }
 
-        protected override void VisualizeInternal()
+        public override void Visualize()
         {
             Debug.Assert(Grid != null);
             int minimumDistance = SudokuCells.Min(cell => cell.Column + cell.Row);
-            SudokuCell? topLeftmostSudokuCell = SudokuCells.Where(cell => cell.Column + cell.Row == minimumDistance).MinBy(cell => cell.Column);
+            SudokuCell? topLeftmostSudokuCell = SudokuCells
+                .Where(cell => cell.Column + cell.Row == minimumDistance)
+                .MinBy(cell => cell.Column);
 
             foreach (SudokuCell sudokuCell in SudokuCells)
             {

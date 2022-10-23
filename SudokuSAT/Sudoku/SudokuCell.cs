@@ -75,9 +75,9 @@ namespace SudokuSAT
             }
         }
 
-        public SudokuCell Clone(Sudoku sudoku)
+        public SudokuCell Clone(Sudoku sudoku, Grid? grid = null)
         {
-            return new(sudoku, Column, Row, Value, Type);
+            return new(sudoku, Column, Row, Value, Type, grid);
         }
 
         public void AddValueConstrainct(CpModel model)
@@ -232,8 +232,16 @@ namespace SudokuSAT
             {
                 Grid.Children.Clear();
 
-                // Create dummy label for selecting
+                // Sometimes (e.g. during load) SudokuPlaceholder will remain the same size
+                // while the grids for cells will initally be zero, before resizing during layout.
+                // As I've failed to trigger redoing the layout, adding a hacky solution.
+                // Resizing only for one of the cells (first), as it is too costly otherwise.
                 //
+                if (Row == 0 && Column == 0)
+                {
+                    Grid.SizeChanged += (_, _) => Sudoku.Visualize();
+                }
+
                 if (recreateElements || SelectLabel == null)
                 {
                     SelectLabel = new();

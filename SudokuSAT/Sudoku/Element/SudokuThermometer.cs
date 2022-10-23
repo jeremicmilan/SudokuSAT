@@ -16,9 +16,12 @@ namespace SudokuSAT
             : base(sudoku, sudokuCells, grid)
         { }
 
-        protected override SudokuElementWithCellList Instantiate(Sudoku sudoku, List<SudokuCell> sudokuCells)
+        protected override SudokuElementWithCellList Instantiate(
+            Sudoku sudoku,
+            List<SudokuCell> sudokuCells,
+            Grid? grid = null)
         {
-            return new SudokuThermometer(sudoku, sudokuCells);
+            return new SudokuThermometer(sudoku, sudokuCells, grid);
         }
 
         public override void AddConstraints(CpModel model, BoolVar boolVar)
@@ -29,7 +32,7 @@ namespace SudokuSAT
             }
         }
 
-        protected override void VisualizeInternal()
+        public override void Visualize()
         {
             Debug.Assert(Grid != null);
             SudokuCell firstSudokuCell = SudokuCells[0];

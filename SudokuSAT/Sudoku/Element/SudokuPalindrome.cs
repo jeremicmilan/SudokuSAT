@@ -16,9 +16,12 @@ namespace SudokuSAT
             : base(sudoku, sudokuCells, grid)
         { }
 
-        protected override SudokuElementWithCellList Instantiate(Sudoku sudoku, List<SudokuCell> sudokuCells)
+        protected override SudokuElementWithCellList Instantiate(
+            Sudoku sudoku,
+            List<SudokuCell> sudokuCells,
+            Grid? grid = null)
         {
-            return new SudokuPalindrome(sudoku, sudokuCells);
+            return new SudokuPalindrome(sudoku, sudokuCells, grid);
         }
 
         public override void AddConstraints(CpModel model, BoolVar boolVar)
@@ -30,7 +33,7 @@ namespace SudokuSAT
             }
         }
 
-        protected override void VisualizeInternal()
+        public override void Visualize()
         {
             Debug.Assert(Grid != null);
             Grid.Children.Add(new Polyline

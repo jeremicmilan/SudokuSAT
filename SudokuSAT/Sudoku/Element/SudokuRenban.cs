@@ -15,9 +15,12 @@ namespace SudokuSAT
             : base(sudoku, sudokuCells, grid)
         { }
 
-        protected override SudokuElementWithCellList Instantiate(Sudoku sudoku, List<SudokuCell> sudokuCells)
+        protected override SudokuElementWithCellList Instantiate(
+            Sudoku sudoku,
+            List<SudokuCell> sudokuCells,
+            Grid? grid = null)
         {
-            return new SudokuRenban(sudoku, sudokuCells);
+            return new SudokuRenban(sudoku, sudokuCells, grid);
         }
 
         public override void AddConstraints(CpModel model, BoolVar boolVar)
@@ -39,7 +42,7 @@ namespace SudokuSAT
             model.Add(LinearExpr.Sum(permutationBoolVars) == 1).OnlyEnforceIf(boolVar);
         }
 
-        protected override void VisualizeInternal()
+        public override void Visualize()
         {
             Debug.Assert(Grid != null);
             Grid.Children.Add(new Polyline

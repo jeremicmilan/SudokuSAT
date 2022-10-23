@@ -16,9 +16,12 @@ namespace SudokuSAT
             : base(sudoku, sudokuCells, elementCount, grid)
         { }
 
-        protected override SudokuElementWithCellList Instantiate(Sudoku sudoku, List<SudokuCell> sudokuCells)
+        protected override SudokuElementWithCellList Instantiate(
+            Sudoku sudoku,
+            List<SudokuCell> sudokuCells,
+            Grid? grid = null)
         {
-            return new SudokuArrowMulti(sudoku, sudokuCells, ElementCount);
+            return new SudokuArrowMulti(sudoku, sudokuCells, ElementCount, grid);
         }
 
         public override SudokuElementLine InstantiateSubElement(List<SudokuCell> sudokuCells, Grid? grid = null)

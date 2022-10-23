@@ -32,9 +32,12 @@ namespace SudokuSAT
             }
         }
 
-        protected abstract SudokuElementWithCellList Instantiate(Sudoku sudoku, List<SudokuCell> sudokuCells);
+        protected abstract SudokuElementWithCellList Instantiate(
+            Sudoku sudoku,
+            List<SudokuCell> sudokuCells,
+            Grid? grid = null);
 
-        public override SudokuElement Clone(Sudoku sudoku)
+        public override SudokuElement Clone(Sudoku sudoku, Grid? grid = null)
         {
             List<SudokuCell> sudokuCells = new();
             foreach (SudokuCell sudokuCell in SudokuCells)
@@ -42,7 +45,7 @@ namespace SudokuSAT
                 sudokuCells.Add(sudoku.SudokuGrid[sudokuCell.Column, sudokuCell.Row]);
             }
 
-            return Instantiate(sudoku, sudokuCells);
+            return Instantiate(sudoku, sudokuCells, grid);
         }
     }
 }

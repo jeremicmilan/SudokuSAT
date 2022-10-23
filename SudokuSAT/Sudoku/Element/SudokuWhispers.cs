@@ -19,9 +19,12 @@ namespace SudokuSAT
             ValueDiff = valueDiff;
         }
 
-        protected override SudokuElementWithCellList Instantiate(Sudoku sudoku, List<SudokuCell> sudokuCells)
+        protected override SudokuElementWithCellList Instantiate(
+            Sudoku sudoku,
+            List<SudokuCell> sudokuCells,
+            Grid? grid = null)
         {
-            return new SudokuWhispers(sudoku, sudokuCells, ValueDiff);
+            return new SudokuWhispers(sudoku, sudokuCells, ValueDiff, grid);
         }
 
         public override void AddConstraints(CpModel model, BoolVar boolVar)
@@ -38,7 +41,7 @@ namespace SudokuSAT
             }
         }
 
-        protected override void VisualizeInternal()
+        public override void Visualize()
         {
             Debug.Assert(Grid != null);
             Grid.Children.Add(new Polyline

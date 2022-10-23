@@ -11,9 +11,9 @@ namespace SudokuSAT
         private static int SudokuElementCount = 0;
         public int SudokuElementId { get; set; }
 
-        protected Sudoku Sudoku { get; private set; }
+        [JsonIgnore] public Sudoku Sudoku { get; private set; }
 
-        [JsonIgnore] public Grid? Grid { get; private set; }
+        [JsonIgnore] public Grid? Grid { get; set; }
 
         protected SudokuElement(Sudoku sudoku, Grid? grid = null)
         {
@@ -29,7 +29,7 @@ namespace SudokuSAT
 
         public string Name => "_" + SudokuElementId + "_" + GetType().Name;
 
-        public abstract SudokuElement Clone(Sudoku sudoku);
+        public abstract SudokuElement Clone(Sudoku sudoku, Grid? grid = null);
 
         public abstract void AddConstraints(CpModel model, BoolVar boolVar);
         public void AddConstraints(CpModel model)
@@ -47,22 +47,6 @@ namespace SudokuSAT
             AddNegativeConstraints(model, boolVar);
         }
 
-        protected abstract void VisualizeInternal();
-        public void Visualize(bool clearGrid = true)
-        {
-            if (clearGrid)
-            {
-                if (Grid == null)
-                {
-                    Grid = new Grid();
-                }
-
-                Debug.Assert(Sudoku.Grid != null);
-                Grid.Children.Clear();
-                Sudoku.Grid.Children.Add(Grid);
-            }
-
-            VisualizeInternal();
-        }
+        public abstract void Visualize();
     }
 }

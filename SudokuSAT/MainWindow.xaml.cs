@@ -76,9 +76,11 @@ namespace SudokuSAT
             GridHeightSlider.Value = sudoku.Height;
             BoxSizeSlider.Value = sudoku.BoxSize;
 
+            Sudoku.Grid = null;
+            sudoku.Grid = SudokuPlaceholder;
+
             Sudoku = sudoku;
-            Sudoku.Grid = SudokuPlaceholder;
-            Sudoku.Visualize(clearGrid: true);
+            Sudoku.Visualize(recreateElements: true);
         }
 
         private void Previous_Click(object sender, RoutedEventArgs e)

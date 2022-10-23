@@ -68,9 +68,10 @@ namespace SudokuSAT
             model.Add(LinearExpr.Sum(subsetBoolVars) == ElementCount).OnlyEnforceIf(boolVar);
         }
 
-        protected override void VisualizeInternal()
+        public override void Visualize()
         {
-            SudokuElementLineVisual.Visualize(clearGrid: false); // TODO: change color
+            SudokuElementLineVisual.Grid = Grid;
+            SudokuElementLineVisual.Visualize(); // TODO: change color
         }
     }
 }
