@@ -43,15 +43,7 @@ namespace SudokuSAT
 
         public override void Visualize()
         {
-            Debug.Assert(Grid != null);
-            Grid.Children.Add(new Polyline
-            {
-                Points = new PointCollection(SudokuCells.Select(cell => cell.CenterPosition)),
-                Stroke = Brushes.Green,
-                StrokeThickness = 15,
-                Opacity = .5,
-                IsHitTestVisible = false,
-            });
+            VisualizeLine(Brushes.Green);
         }
     }
 }

@@ -50,6 +50,7 @@ namespace SudokuSAT
         public override void Visualize()
         {
             Debug.Assert(Grid != null);
+            Debug.Assert(Grid.Children.Count == 0);
             int minimumDistance = SudokuCells.Min(cell => cell.Column + cell.Row);
             SudokuCell? topLeftmostSudokuCell = SudokuCells
                 .Where(cell => cell.Column + cell.Row == minimumDistance)
@@ -59,26 +60,31 @@ namespace SudokuSAT
             {
                 Debug.Assert(sudokuCell.Grid != null);
                 double offsetFactor = 0.08;
-                double widthOffset  = sudokuCell.Grid.ActualWidth  * offsetFactor;
-                double heightOffset = sudokuCell.Grid.ActualHeight * offsetFactor;
-                double strokeDashLength = (sudokuCell.Grid.ActualWidth + sudokuCell.Grid.ActualHeight) / 30;
+                double widthOffset() { return sudokuCell.Grid.ActualWidth * offsetFactor; }
+                double heightOffset() { return sudokuCell.Grid.ActualHeight * offsetFactor; }
+                double strokeDashLength() { return (sudokuCell.Grid.ActualWidth + sudokuCell.Grid.ActualHeight) / 30; } 
                 double offsetForSum = 0;
                 if (topLeftmostSudokuCell != null && sudokuCell == topLeftmostSudokuCell && Sum != null)
                 {
                     offsetForSum = sudokuCell.Grid.ActualHeight * 0.18;
 
-                    Grid.Children.Add(new Label()
+                    Label sumLabel = new()
                     {
                         Content = Sum,
                         HorizontalAlignment = HorizontalAlignment.Left,
                         VerticalAlignment = VerticalAlignment.Top,
-                        RenderTransform = new TranslateTransform(
-                            topLeftmostSudokuCell.TopLeftPosition.X,
-                            topLeftmostSudokuCell.TopLeftPosition.Y),
                         FontSize = offsetForSum * 0.8,
                         Foreground = Brushes.Black,
                         IsHitTestVisible = false,
-                    });
+                    };
+                    void updateSumLabelPosition()
+                    {
+                        sumLabel.RenderTransform = new TranslateTransform(
+                            topLeftmostSudokuCell.TopLeftPosition.X,
+                            topLeftmostSudokuCell.TopLeftPosition.Y);
+                    }
+                    sudokuCell.Grid.SizeChanged += (_, _) => updateSumLabelPosition();
+                    Grid.Children.Add(sumLabel);
                 }
 
                 if (sudokuCell.Top == null || !SudokuCells.Contains(sudokuCell.Top))
@@ -88,17 +94,23 @@ namespace SudokuSAT
                         sudokuCell.Left.Top != null && SudokuCells.Contains(sudokuCell.Left.Top)
                         ? -1 : 1;
                     int rightOffsetDirection = sudokuCell.Right != null && SudokuCells.Contains(sudokuCell.Right) ? 1 : -1;
-                    Grid.Children.Add(new Line()
+                    Line line = new()
                     {
-                        X1 = sudokuCell.TopLeftPosition.X + widthOffset * leftOffsetDirection + offsetForSum,
-                        Y1 = sudokuCell.TopLeftPosition.Y + heightOffset,
-                        X2 = sudokuCell.TopRightPosition.X + widthOffset * rightOffsetDirection,
-                        Y2 = sudokuCell.TopRightPosition.Y + heightOffset,
-                        StrokeDashArray = new DoubleCollection(new[] { strokeDashLength, strokeDashLength }),
                         StrokeThickness = 1,
                         Stroke = Brushes.Black,
                         IsHitTestVisible = false,
-                    });
+                    };
+                    void updateLinePosition()
+                    {
+                        line.X1 = sudokuCell.TopLeftPosition.X + widthOffset() * leftOffsetDirection + offsetForSum;
+                        line.Y1 = sudokuCell.TopLeftPosition.Y + heightOffset();
+                        line.X2 = sudokuCell.TopRightPosition.X + widthOffset() * rightOffsetDirection;
+                        line.Y2 = sudokuCell.TopRightPosition.Y + heightOffset();
+                        line.StrokeDashArray = new DoubleCollection(new[] { strokeDashLength(), strokeDashLength() });
+                    }
+                    updateLinePosition();
+                    sudokuCell.Grid.SizeChanged += (_, _) => updateLinePosition();
+                    Grid.Children.Add(line);
                 }
 
                 if (sudokuCell.Right == null || !SudokuCells.Contains(sudokuCell.Right))
@@ -108,17 +120,23 @@ namespace SudokuSAT
                         sudokuCell.Top.Right != null && SudokuCells.Contains(sudokuCell.Top.Right)
                         ? -1 : 1;
                     int bottomOffsetDirection = sudokuCell.Bottom != null && SudokuCells.Contains(sudokuCell.Bottom) ? 1 : -1;
-                    Grid.Children.Add(new Line()
+                    Line line = new()
                     {
-                        X1 = sudokuCell.TopRightPosition.X - widthOffset,
-                        Y1 = sudokuCell.TopRightPosition.Y + heightOffset * topOffsetDirection,
-                        X2 = sudokuCell.BottomRightPosition.X - widthOffset,
-                        Y2 = sudokuCell.BottomRightPosition.Y + heightOffset * bottomOffsetDirection,
-                        StrokeDashArray = new DoubleCollection(new[] { strokeDashLength, strokeDashLength }),
                         StrokeThickness = 1,
                         Stroke = Brushes.Black,
                         IsHitTestVisible = false,
-                    });
+                    };
+                    void updateLinePosition()
+                    {
+                        line.X1 = sudokuCell.TopRightPosition.X - widthOffset();
+                        line.Y1 = sudokuCell.TopRightPosition.Y + heightOffset() * topOffsetDirection;
+                        line.X2 = sudokuCell.BottomRightPosition.X - widthOffset();
+                        line.Y2 = sudokuCell.BottomRightPosition.Y + heightOffset() * bottomOffsetDirection;
+                        line.StrokeDashArray = new DoubleCollection(new[] { strokeDashLength(), strokeDashLength() });
+                    }
+                    updateLinePosition();
+                    sudokuCell.Grid.SizeChanged += (_, _) => updateLinePosition();
+                    Grid.Children.Add(line);
                 }
 
                 if (sudokuCell.Bottom == null || !SudokuCells.Contains(sudokuCell.Bottom))
@@ -128,17 +146,23 @@ namespace SudokuSAT
                         sudokuCell.Right.Bottom != null && SudokuCells.Contains(sudokuCell.Right.Bottom)
                         ? 1 : -1;
                     int leftOffsetDirection = sudokuCell.Left != null && SudokuCells.Contains(sudokuCell.Left) ? -1 : 1;
-                    Grid.Children.Add(new Line()
+                    Line line = new()
                     {
-                        X1 = sudokuCell.BottomRightPosition.X + widthOffset * rightOffsetDirection,
-                        Y1 = sudokuCell.BottomRightPosition.Y - heightOffset,
-                        X2 = sudokuCell.BottomLeftPosition.X + widthOffset * leftOffsetDirection,
-                        Y2 = sudokuCell.BottomLeftPosition.Y - heightOffset,
-                        StrokeDashArray = new DoubleCollection(new[] { strokeDashLength, strokeDashLength }),
                         StrokeThickness = 1,
                         Stroke = Brushes.Black,
                         IsHitTestVisible = false,
-                    });
+                    };
+                    void updateLinePosition()
+                    {
+                        line.X1 = sudokuCell.BottomRightPosition.X + widthOffset() * rightOffsetDirection;
+                        line.Y1 = sudokuCell.BottomRightPosition.Y - heightOffset();
+                        line.X2 = sudokuCell.BottomLeftPosition.X + widthOffset() * leftOffsetDirection;
+                        line.Y2 = sudokuCell.BottomLeftPosition.Y - heightOffset();
+                        line.StrokeDashArray = new DoubleCollection(new[] { strokeDashLength(), strokeDashLength() });
+                    }
+                    updateLinePosition();
+                    sudokuCell.Grid.SizeChanged += (_, _) => updateLinePosition();
+                    Grid.Children.Add(line);
                 }
 
                 if (sudokuCell.Left == null || !SudokuCells.Contains(sudokuCell.Left))
@@ -148,17 +172,23 @@ namespace SudokuSAT
                         sudokuCell.Bottom.Left != null && SudokuCells.Contains(sudokuCell.Bottom.Left)
                         ? 1 : -1;
                     int topOffsetDirection = sudokuCell.Top != null && SudokuCells.Contains(sudokuCell.Top) ? -1 : 1;
-                    Grid.Children.Add(new Line()
+                    Line line = new()
                     {
-                        X1 = sudokuCell.BottomLeftPosition.X + widthOffset,
-                        Y1 = sudokuCell.BottomLeftPosition.Y + heightOffset * bottomOffsetDirection,
-                        X2 = sudokuCell.TopLeftPosition.X + widthOffset,
-                        Y2 = sudokuCell.TopLeftPosition.Y + heightOffset * topOffsetDirection + offsetForSum,
-                        StrokeDashArray = new DoubleCollection(new[] { strokeDashLength, strokeDashLength }),
                         StrokeThickness = 1,
                         Stroke = Brushes.Black,
                         IsHitTestVisible = false,
-                    });
+                    };
+                    void updateLinePosition()
+                    {
+                        line.X1 = sudokuCell.BottomLeftPosition.X + widthOffset();
+                        line.Y1 = sudokuCell.BottomLeftPosition.Y + heightOffset() * bottomOffsetDirection;
+                        line.X2 = sudokuCell.TopLeftPosition.X + widthOffset();
+                        line.Y2 = sudokuCell.TopLeftPosition.Y + heightOffset() * topOffsetDirection + offsetForSum;
+                        line.StrokeDashArray = new DoubleCollection(new[] { strokeDashLength(), strokeDashLength() });
+                    }
+                    updateLinePosition();
+                    sudokuCell.Grid.SizeChanged += (_, _) => updateLinePosition();
+                    Grid.Children.Add(line);
                 }
             }
         }

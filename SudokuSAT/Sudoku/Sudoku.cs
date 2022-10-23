@@ -214,11 +214,6 @@ namespace SudokuSAT
             PerformSudokuAction(new SudokuActionElement(this, sudokuElement));
         }
 
-        public void RemoveElement(SudokuElement sudokuElement)
-        {
-            SudokuElements.Remove(sudokuElement);
-        }
-
         public void SetValues(int? value, List<SudokuCell> sudokuCells)
         {
             PerformSudokuAction(new SudokuActionsValue(this, sudokuCells, value, ValueType.Given));
@@ -257,7 +252,11 @@ namespace SudokuSAT
         public void Visualize(bool recreateElements = false)
         {
             Debug.Assert(Grid != null);
-            Grid.Children.Clear();
+
+            if (recreateElements)
+            {
+                Grid.Children.Clear();
+            }
 
             if (recreateElements || SudokuUniformGrid == null)
             {
@@ -267,9 +266,8 @@ namespace SudokuSAT
                     Columns = Width,
                     Name = "SudokuCells"
                 };
+                Grid.Children.Add(SudokuUniformGrid);
             }
-
-            Grid.Children.Add(SudokuUniformGrid);
 
             for (var row = 0; row < Height; row++)
             {
@@ -296,20 +294,11 @@ namespace SudokuSAT
                 SudokuElements = SudokuElements
                     .Select(sudokuElement => sudokuElement.Clone(this, new Grid()))
                     .ToList();
-            }
-
-            foreach (SudokuElement sudokuElement in SudokuElements)
-            {
-                // For now let's always redraw sudoku elemenst untill we add support for element resize.
-                //
-                // if (recreateElements || sudokuElement.Grid == null)
+                SudokuElements.ForEach(sudokuElement => Grid.Children.Add(sudokuElement.Grid));
+                foreach (SudokuElement sudokuElement in SudokuElements)
                 {
-                    sudokuElement.Grid = new Grid();
+                    sudokuElement.Visualize();
                 }
-
-                Grid.Children.Add(sudokuElement.Grid);
-
-                sudokuElement.Visualize(/* recreateElements */);
             }
         }
     }

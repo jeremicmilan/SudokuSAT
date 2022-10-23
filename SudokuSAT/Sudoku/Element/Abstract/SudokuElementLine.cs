@@ -1,6 +1,7 @@
 ﻿using Google.OrTools.Sat;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,6 +32,28 @@ namespace SudokuSAT
             }
 
             return true;
+        }
+
+        protected void VisualizeLine(Brush brush)
+        {
+            Debug.Assert(Grid != null);
+            Debug.Assert(Grid.Children.Count == 0);
+            SudokuCell firstSudokuCell = SudokuCells.First();
+            Debug.Assert(firstSudokuCell.Grid != null);
+            Polyline polyline = new()
+            {
+                Stroke = brush,
+                StrokeThickness = 15,
+                Opacity = .5,
+                IsHitTestVisible = false,
+            };
+            void updatePolylinePosition()
+            {
+                polyline.Points = new PointCollection(SudokuCells.Select(cell => cell.CenterPosition));
+            }
+            updatePolylinePosition();
+            firstSudokuCell.Grid.SizeChanged += (_, _) => updatePolylinePosition();
+            Grid.Children.Add(polyline);
         }
     }
 }

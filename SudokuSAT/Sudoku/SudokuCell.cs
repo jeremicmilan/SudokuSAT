@@ -35,17 +35,12 @@ namespace SudokuSAT
                     return null;
                 }
 
-                switch (PossibleValues.Count)
+                return PossibleValues.Count switch
                 {
-                    case 0:
-                        return 0;
-
-                    case 1:
-                        return PossibleValues.First();
-
-                    default:
-                        return null;
-                }
+                    0 => 0,
+                    1 => PossibleValues.First(),
+                    _ => null,
+                };
             }
         }
         public int? ComputedValue => Value ?? PossibleValue;
@@ -221,148 +216,153 @@ namespace SudokuSAT
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
         private Label? SelectLabel { get; set; }
-        private Label? ValueLabel { get; set; }
-        private UniformGrid? PossibleValuesUniformGrid { get; set; }
         private HashSet<int>? VisualizedPossibleValues { get; set; }
-
+        private bool VisualizedIsSelected { get; set; } = false;
+        private int? VisualizedComputedValue { get; set; } = null;
 
         public void Visualize(bool recreateElements = false)
         {
-            if (Grid != null)
+            recreateElements = recreateElements
+                || SelectLabel == null
+                || VisualizedIsSelected != IsSelected
+                || VisualizedComputedValue != ComputedValue
+                || VisualizedPossibleValues != PossibleValues;
+            if (Grid == null || !recreateElements)
             {
-                Grid.Children.Clear();
+                return;
+            }
 
-                // Sometimes (e.g. during load) SudokuPlaceholder will remain the same size
-                // while the grids for cells will initally be zero, before resizing during layout.
-                // As I've failed to trigger redoing the layout, adding a hacky solution.
-                // Resizing only for one of the cells (first), as it is too costly otherwise.
-                //
-                if (Row == 0 && Column == 0)
+            Grid.Children.Clear();
+
+            SelectLabel = new();
+            Panel.SetZIndex(SelectLabel, 100);
+            SelectLabel.AddHandler(UIElement.MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
+            {
+                IsSudokuCellClicked = true;
+
+                bool newIsSelected = !IsSelected;
+                if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
                 {
-                    Grid.SizeChanged += (_, _) => Sudoku.Visualize();
+                    if (Sudoku.SelectedSudokuCells.Count > 1)
+                    {
+                        newIsSelected = true;
+                    }
+
+                    Sudoku.ClearSelection();
                 }
 
-                if (recreateElements || SelectLabel == null)
+                SetIsSelected(newIsSelected);
+                if (!newIsSelected)
                 {
-                    SelectLabel = new();
-                    Panel.SetZIndex(SelectLabel, 100);
-                    SelectLabel.AddHandler(UIElement.MouseLeftButtonDownEvent, new RoutedEventHandler((_, _) =>
-                    {
-                        IsSudokuCellClicked = true;
-
-                        bool newIsSelected = !IsSelected;
-                        if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
-                        {
-                            if (Sudoku.SelectedSudokuCells.Count > 1)
-                            {
-                                newIsSelected = true;
-                            }
-
-                            Sudoku.ClearSelection();
-                        }
-
-                        SetIsSelected(newIsSelected);
-                        if (!newIsSelected)
-                        {
-                            LastDeselectedSudokuCell = this;
-                        }
-
-                        if (!Sudoku.SelectedSudokuCells.Any())
-                        {
-                            Sudoku.ClearSelection();
-                        }
-                    }));
-                    SelectLabel.AddHandler(UIElement.MouseEnterEvent, new RoutedEventHandler((_, _) =>
-                    {
-                        if (Mouse.LeftButton == MouseButtonState.Pressed && !IsSelected && LastDeselectedSudokuCell != this)
-                        {
-                            SetIsSelected(!IsSelected);
-                        }
-                    }));
+                    LastDeselectedSudokuCell = this;
                 }
 
-                Grid.Children.Add(SelectLabel);
-
-                if (Grid.ActualHeight > 0)
+                if (!Sudoku.SelectedSudokuCells.Any())
                 {
-                    if (ComputedValue != null)
+                    Sudoku.ClearSelection();
+                }
+            }));
+            SelectLabel.AddHandler(UIElement.MouseEnterEvent, new RoutedEventHandler((_, _) =>
+            {
+                if (Mouse.LeftButton == MouseButtonState.Pressed && !IsSelected && LastDeselectedSudokuCell != this)
+                {
+                    SetIsSelected(!IsSelected);
+                }
+            }));
+            Grid.Children.Add(SelectLabel);
+
+            if (Grid.ActualHeight > 0)
+            {
+                VisualizedComputedValue = ComputedValue;
+                if (ComputedValue != null)
+                {
+                    double fontSizeFactor = 0.65;
+
+                    Label valueLabel = new()
                     {
-                        if (recreateElements || ValueLabel == null ||
-                            ComputedValue.ToString() != ValueLabel?.Content?.ToString())
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalContentAlignment = HorizontalAlignment.Center,
+                        VerticalContentAlignment = VerticalAlignment.Center,
+                        Foreground = digitToColor[Type ?? ValueType.Solver],
+                        Content = ComputedValue > 0 ? ComputedValue : "X"
+                    };
+                    void updateValueLabel()
+                    {
+                        valueLabel.MinWidth = Grid.ActualWidth;
+                        valueLabel.MinHeight = Grid.ActualHeight;
+                        valueLabel.FontSize = Grid.ActualHeight * fontSizeFactor;
+                    }
+                    updateValueLabel();
+                    Grid.SizeChanged += (_, _) => updateValueLabel();
+                    Grid.Children.Add(valueLabel);
+                }
+
+                VisualizedIsSelected = IsSelected;
+                if (IsSelected)
+                {
+                    Grid.Background = Brushes.Yellow;
+                    Label selectionOrderIdLabel = new()
+                    {
+                        Content = SelectionOrderId,
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        Foreground = Brushes.Orange,
+                    };
+                    void updateSelectionOrderIdLabel()
+                    {
+                        double fontSizeFactor = 0.15;
+                        selectionOrderIdLabel.FontSize = Grid.ActualHeight * fontSizeFactor;
+                    }
+                    updateSelectionOrderIdLabel();
+                    Grid.SizeChanged += (_, _) => updateSelectionOrderIdLabel();
+                    Grid.Children.Add(selectionOrderIdLabel);
+                }
+                else
+                {
+                    Grid.Background = null;
+                }
+
+                VisualizedPossibleValues = PossibleValues;
+                if (ComputedValue == null && PossibleValues != null)
+                {
+                    UniformGrid possibleValuesUniformGrid = new()
+                    {
+                        Rows = 3,
+                        Columns = 3
+                    };
+
+                    for (int i = 1; i <= possibleValuesUniformGrid.Rows * possibleValuesUniformGrid.Columns; i++)
+                    {
+                        if (PossibleValues.Contains(i))
                         {
-                            ValueLabel = new Label()
+                            Label possibleValuesLabel = new()
                             {
                                 HorizontalAlignment = HorizontalAlignment.Center,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 HorizontalContentAlignment = HorizontalAlignment.Center,
                                 VerticalContentAlignment = VerticalAlignment.Center,
-                                MinWidth = Grid.ActualWidth,
-                                MinHeight = Grid.ActualHeight,
-                                FontSize = Grid.ActualHeight * 0.65,
-                                Foreground = digitToColor[Type ?? ValueType.Solver],
-                                Content = ComputedValue > 0 ? ComputedValue : "X"
+                                Foreground = Brushes.Green,
+                                Content = i
                             };
-                        }
-
-                        Grid.Children.Add(ValueLabel);
-                    }
-
-                    if (IsSelected)
-                    {
-                        Grid.Background = Brushes.Yellow;
-                        Grid.Children.Add(new Label()
-                        {
-                            Content = SelectionOrderId,
-                            HorizontalAlignment = HorizontalAlignment.Right,
-                            VerticalAlignment = VerticalAlignment.Bottom,
-                            FontSize = Grid.ActualHeight * 0.15,
-                            Foreground = Brushes.Orange,
-                        });
-                    }
-                    else
-                    {
-                        Grid.Background = null;
-                    }
-
-                    if (ComputedValue == null && PossibleValues != null)
-                    {
-                        if (recreateElements || PossibleValuesUniformGrid != null || PossibleValues != VisualizedPossibleValues)
-                        {
-                            PossibleValuesUniformGrid = new()
+                            void updatePossibleValuesLabel()
                             {
-                                Rows = 3,
-                                Columns = 3
-                            };
-
-                            for (int i = 1; i <= PossibleValuesUniformGrid.Rows * PossibleValuesUniformGrid.Columns; i++)
-                            {
-                                if (PossibleValues.Contains(i))
-                                {
-                                    Label label = new()
-                                    {
-                                        HorizontalAlignment = HorizontalAlignment.Center,
-                                        VerticalAlignment = VerticalAlignment.Center,
-                                        HorizontalContentAlignment = HorizontalAlignment.Center,
-                                        VerticalContentAlignment = VerticalAlignment.Center,
-                                        MinWidth = Grid.ActualWidth / 3,
-                                        MinHeight = Grid.ActualHeight / 3,
-                                        FontSize = Grid.ActualHeight * 0.18,
-                                        Foreground = Brushes.Green,
-                                        Content = i
-                                    };
-                                    PossibleValuesUniformGrid.Children.Add(label);
-                                }
-                                else
-                                {
-                                    PossibleValuesUniformGrid.Children.Add(new Label());
-                                }
+                                double minWidthFactor = 0.33, minHeightFactor = 0.33, fontSizeFactor = 0.18;
+                                possibleValuesLabel.MinWidth = Grid.ActualWidth * minWidthFactor;
+                                possibleValuesLabel.MinHeight = Grid.ActualHeight * minHeightFactor;
+                                possibleValuesLabel.FontSize = Grid.ActualHeight * fontSizeFactor;
                             }
-
+                            updatePossibleValuesLabel();
+                            Grid.SizeChanged += (_, _) => updatePossibleValuesLabel();
+                            possibleValuesUniformGrid.Children.Add(possibleValuesLabel);
                         }
-
-                        Grid.Children.Add(PossibleValuesUniformGrid);
-                        VisualizedPossibleValues = PossibleValues;
+                        else
+                        {
+                            possibleValuesUniformGrid.Children.Add(new Label());
+                        }
                     }
+
+                    Grid.Children.Add(possibleValuesUniformGrid);
                 }
             }
         }
