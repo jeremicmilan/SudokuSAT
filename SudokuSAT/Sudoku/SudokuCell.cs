@@ -26,7 +26,30 @@ namespace SudokuSAT
         public int? Value { get; set; }
         public ValueType? Type { get; set; }
         public HashSet<int>? PossibleValues { get; set; } = null;
-        private int? PossibleValue => PossibleValues != null && PossibleValues.Count == 1 ? PossibleValues.First() : null;
+        private int? PossibleValue
+        {
+            get
+            {
+                if (PossibleValues == null)
+                {
+                    return null;
+                }
+
+                switch (PossibleValues.Count)
+                {
+                    case 0:
+                        return 0;
+
+                    case 1:
+                        return PossibleValues.First();
+
+                    default:
+                        return null;
+                }
+            }
+        }
+        public int? ComputedValue => Value ?? PossibleValue;
+
         [JsonIgnore] public IntVar? ValueVar { get; set; }
 
         [JsonIgnore] public Grid? Grid { get; set; }
@@ -61,9 +84,9 @@ namespace SudokuSAT
         {
             ValueVar = model.NewIntVar(MinValue, MaxValue, "cell_c" + (Column + 1) + "_r" + (Row + 1));
 
-            if (Value.HasValue)
+            if (ComputedValue.HasValue)
             {
-                model.Add(ValueVar == Value.Value);
+                model.Add(ValueVar == ComputedValue.Value);
             }
         }
 
@@ -244,7 +267,7 @@ namespace SudokuSAT
 
                 if (Grid.ActualHeight > 0)
                 {
-                    if (Value != null || PossibleValue != null)
+                    if (ComputedValue != null)
                     {
                         Grid.Children.Add(new Label()
                         {
@@ -256,7 +279,7 @@ namespace SudokuSAT
                             MinHeight = Grid.ActualHeight,
                             FontSize = Grid.ActualHeight * 0.65,
                             Foreground = digitToColor[Type ?? ValueType.Solver],
-                            Content = Value > 0 ? Value : (PossibleValue != null ? PossibleValue : "X")
+                            Content = ComputedValue > 0 ? ComputedValue : "X"
                         });
                     }
 
@@ -277,7 +300,7 @@ namespace SudokuSAT
                         Grid.Background = null;
                     }
 
-                    if (Value == null && PossibleValues != null && PossibleValues.Count > 0)
+                    if (ComputedValue == null && PossibleValues != null)
                     {
                         UniformGrid cellGrid = new()
                         {
