@@ -55,13 +55,19 @@ namespace SudokuSAT
         public SudokuCell() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-        public SudokuCell(Sudoku sudoku, int column, int row, int? value = null, ValueType? type = null, Grid? grid = null)
+        public SudokuCell(
+            Sudoku sudoku,
+            int column, int row,
+            int? value = null, ValueType? type = null,
+            HashSet<int>? possibleValues = null,
+            Grid? grid = null)
         {
             Sudoku = sudoku;
             Column = column;
             Row = row;
             Value = value;
             Type = type;
+            PossibleValues = possibleValues;
 
             Grid = grid;
             if (Grid != null)
@@ -72,7 +78,7 @@ namespace SudokuSAT
 
         public SudokuCell Clone(Sudoku sudoku, Grid? grid = null)
         {
-            return new(sudoku, Column, Row, Value, Type, grid);
+            return new(sudoku, Column, Row, Value, Type, PossibleValues, grid);
         }
 
         public void AddValueConstrainct(CpModel model)
@@ -271,99 +277,96 @@ namespace SudokuSAT
             }));
             Grid.Children.Add(SelectLabel);
 
-            if (Grid.ActualHeight > 0)
+            VisualizedComputedValue = ComputedValue;
+            if (ComputedValue != null)
             {
-                VisualizedComputedValue = ComputedValue;
-                if (ComputedValue != null)
-                {
-                    double fontSizeFactor = 0.65;
+                double fontSizeFactor = 0.65;
 
-                    Label valueLabel = new()
-                    {
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        HorizontalContentAlignment = HorizontalAlignment.Center,
-                        VerticalContentAlignment = VerticalAlignment.Center,
-                        Foreground = digitToColor[Type ?? ValueType.Solver],
-                        Content = ComputedValue > 0 ? ComputedValue : "X"
-                    };
-                    void updateValueLabel()
-                    {
-                        valueLabel.MinWidth = Grid.ActualWidth;
-                        valueLabel.MinHeight = Grid.ActualHeight;
-                        valueLabel.FontSize = Grid.ActualHeight * fontSizeFactor;
-                    }
-                    updateValueLabel();
-                    Grid.SizeChanged += (_, _) => updateValueLabel();
-                    Grid.Children.Add(valueLabel);
+                Label valueLabel = new()
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalContentAlignment = HorizontalAlignment.Center,
+                    VerticalContentAlignment = VerticalAlignment.Center,
+                    Foreground = digitToColor[Type ?? ValueType.Solver],
+                    Content = ComputedValue > 0 ? ComputedValue : "X"
+                };
+                void updateValueLabel()
+                {
+                    valueLabel.MinWidth = Grid.ActualWidth;
+                    valueLabel.MinHeight = Grid.ActualHeight;
+                    valueLabel.FontSize = (Grid.ActualHeight + 1) * fontSizeFactor;
                 }
+                updateValueLabel();
+                Grid.SizeChanged += (_, _) => updateValueLabel();
+                Grid.Children.Add(valueLabel);
+            }
 
-                VisualizedIsSelected = IsSelected;
-                if (IsSelected)
+            VisualizedIsSelected = IsSelected;
+            if (IsSelected)
+            {
+                Grid.Background = Brushes.Yellow;
+                Label selectionOrderIdLabel = new()
                 {
-                    Grid.Background = Brushes.Yellow;
-                    Label selectionOrderIdLabel = new()
-                    {
-                        Content = SelectionOrderId,
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        VerticalAlignment = VerticalAlignment.Bottom,
-                        Foreground = Brushes.Orange,
-                    };
-                    void updateSelectionOrderIdLabel()
-                    {
-                        double fontSizeFactor = 0.15;
-                        selectionOrderIdLabel.FontSize = Grid.ActualHeight * fontSizeFactor;
-                    }
-                    updateSelectionOrderIdLabel();
-                    Grid.SizeChanged += (_, _) => updateSelectionOrderIdLabel();
-                    Grid.Children.Add(selectionOrderIdLabel);
+                    Content = SelectionOrderId,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    Foreground = Brushes.Orange,
+                };
+                void updateSelectionOrderIdLabel()
+                {
+                    double fontSizeFactor = 0.15;
+                    selectionOrderIdLabel.FontSize = Grid.ActualHeight * fontSizeFactor;
                 }
-                else
-                {
-                    Grid.Background = null;
-                }
+                updateSelectionOrderIdLabel();
+                Grid.SizeChanged += (_, _) => updateSelectionOrderIdLabel();
+                Grid.Children.Add(selectionOrderIdLabel);
+            }
+            else
+            {
+                Grid.Background = null;
+            }
 
-                VisualizedPossibleValues = PossibleValues;
-                if (ComputedValue == null && PossibleValues != null)
+            VisualizedPossibleValues = PossibleValues;
+            if (ComputedValue == null && PossibleValues != null)
+            {
+                UniformGrid possibleValuesUniformGrid = new()
                 {
-                    UniformGrid possibleValuesUniformGrid = new()
-                    {
-                        Rows = 3,
-                        Columns = 3
-                    };
+                    Rows = 3,
+                    Columns = 3
+                };
 
-                    for (int i = 1; i <= possibleValuesUniformGrid.Rows * possibleValuesUniformGrid.Columns; i++)
+                for (int i = 1; i <= possibleValuesUniformGrid.Rows * possibleValuesUniformGrid.Columns; i++)
+                {
+                    if (PossibleValues.Contains(i))
                     {
-                        if (PossibleValues.Contains(i))
+                        Label possibleValuesLabel = new()
                         {
-                            Label possibleValuesLabel = new()
-                            {
-                                HorizontalAlignment = HorizontalAlignment.Center,
-                                VerticalAlignment = VerticalAlignment.Center,
-                                HorizontalContentAlignment = HorizontalAlignment.Center,
-                                VerticalContentAlignment = VerticalAlignment.Center,
-                                Foreground = Brushes.Green,
-                                Content = i
-                            };
-                            void updatePossibleValuesLabel()
-                            {
-                                double minWidthFactor = 0.33, minHeightFactor = 0.33, fontSizeFactor = 0.18;
-                                possibleValuesLabel.MinWidth = Grid.ActualWidth * minWidthFactor;
-                                possibleValuesLabel.MinHeight = Grid.ActualHeight * minHeightFactor;
-                                possibleValuesLabel.FontSize = Grid.ActualHeight * fontSizeFactor;
-                            }
-                            updatePossibleValuesLabel();
-                            Grid.SizeChanged += (_, _) => updatePossibleValuesLabel();
-                            possibleValuesUniformGrid.Children.Add(possibleValuesLabel);
-                        }
-                        else
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalContentAlignment = HorizontalAlignment.Center,
+                            VerticalContentAlignment = VerticalAlignment.Center,
+                            Foreground = Brushes.Green,
+                            Content = i
+                        };
+                        void updatePossibleValuesLabel()
                         {
-                            possibleValuesUniformGrid.Children.Add(new Label());
+                            double minWidthFactor = 0.33, minHeightFactor = 0.33, fontSizeFactor = 0.18;
+                            possibleValuesLabel.MinWidth = Grid.ActualWidth * minWidthFactor;
+                            possibleValuesLabel.MinHeight = Grid.ActualHeight * minHeightFactor;
+                            possibleValuesLabel.FontSize = Grid.ActualHeight * fontSizeFactor;
                         }
+                        updatePossibleValuesLabel();
+                        Grid.SizeChanged += (_, _) => updatePossibleValuesLabel();
+                        possibleValuesUniformGrid.Children.Add(possibleValuesLabel);
                     }
-
-                    Grid.Children.Add(possibleValuesUniformGrid);
+                    else
+                    {
+                        possibleValuesUniformGrid.Children.Add(new Label());
+                    }
                 }
+
+                Grid.Children.Add(possibleValuesUniformGrid);
             }
         }
     }
