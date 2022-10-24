@@ -73,8 +73,8 @@ namespace SudokuSAT
             {
                 SudokuCell sudokuCell1 = SudokuCells[i - 1];
                 SudokuCell sudokuCell2 = SudokuCells[i];
-                double coeficient = (sudokuCell1.OrthoAdjacent(sudokuCell2) ? 1 : (Math.Sqrt(2) / 2)) * circleScalingFactor / 2;
                 Debug.Assert(sudokuCell1.Grid != null);
+                double coeficient = (sudokuCell1.OrthoAdjacent(sudokuCell2) ? 1 : (Math.Sqrt(2) / 2)) * circleScalingFactor / 2;
 
                 Line line = new()
                 {
@@ -88,7 +88,7 @@ namespace SudokuSAT
 
                     int columnDirection = sudokuCell2.Column - sudokuCell1.Column;
                     int rowDirection = sudokuCell2.Row - sudokuCell1.Row;
-                    if (i == 1)
+                    if (sudokuCell1 == firstSudokuCell)
                     {
                         // First line should start from circle edge and not the center
                         //
