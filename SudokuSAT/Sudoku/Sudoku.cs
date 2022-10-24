@@ -20,8 +20,8 @@ namespace SudokuSAT
 
         public SudokuCell[,] SudokuGrid { get; set; }
         public List<SudokuElement> SudokuElements { get; set; }
-        public Stack<SudokuAction> SudokuActions { get; private set; } = new();
-        public Stack<SudokuAction> NextSudokuActions { get; private set; } = new();
+        public Stack<SudokuAction> SudokuActions { get; set; } = new();
+        public Stack<SudokuAction> NextSudokuActions { get; set; } = new();
 
         [JsonIgnore] public Grid? Grid { get; set; }
         [JsonIgnore] private UniformGrid? SudokuUniformGrid { get; set; }
@@ -249,16 +249,16 @@ namespace SudokuSAT
             };
         }
 
-        public void Visualize(bool recreateElements = false)
+        public void Visualize(bool recreateGrid = false)
         {
             Debug.Assert(Grid != null);
 
-            if (recreateElements)
+            if (recreateGrid)
             {
                 Grid.Children.Clear();
             }
 
-            if (recreateElements || SudokuUniformGrid == null)
+            if (recreateGrid || SudokuUniformGrid == null)
             {
                 SudokuUniformGrid = new()
                 {
@@ -273,7 +273,7 @@ namespace SudokuSAT
             {
                 for (var column = 0; column < Width; column++)
                 {
-                    if (recreateElements || SudokuGrid[column, row] == null)
+                    if (recreateGrid || SudokuGrid[column, row] == null)
                     {
                         Border border = CreateBorder(column, row);
                         SudokuUniformGrid.Children.Add(border);
@@ -281,22 +281,26 @@ namespace SudokuSAT
                         Grid grid = new();
                         border.Child = grid;
 
-                        SudokuGrid[column, row] = SudokuGrid[column, row]?.Clone(sudoku: this, grid) ??
-                            new SudokuCell(sudoku: this, column, row, grid: grid);
+                        if (SudokuGrid[column, row] != null)
+                        {
+                            SudokuGrid[column, row].Grid = grid;
+                        }
+                        else
+                        {
+                            SudokuGrid[column, row] = new SudokuCell(sudoku: this, column, row, grid: grid);
+                        }
                     }
 
-                    SudokuGrid[column, row].Visualize(recreateElements);
+                    SudokuGrid[column, row].Visualize(recreateGrid);
                 }
             }
 
-            if (recreateElements)
+            if (recreateGrid)
             {
-                SudokuElements = SudokuElements
-                    .Select(sudokuElement => sudokuElement.Clone(this, new Grid()))
-                    .ToList();
-                SudokuElements.ForEach(sudokuElement => Grid.Children.Add(sudokuElement.Grid));
                 foreach (SudokuElement sudokuElement in SudokuElements)
                 {
+                    sudokuElement.Grid = new Grid();
+                    Grid.Children.Add(sudokuElement.Grid);
                     sudokuElement.Visualize();
                 }
             }

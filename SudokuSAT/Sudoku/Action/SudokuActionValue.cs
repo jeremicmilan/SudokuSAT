@@ -5,10 +5,12 @@ namespace SudokuSAT
 {
     public class SudokuActionValue : SudokuActionCell
     {
-        public int? Value { get; private set; }
-        public ValueType? Type { get; private set; }
-        public int? ValueOld { get; private set; }
-        public ValueType? TypeOld { get; private set; }
+        public int? Value { get; set; }
+        public ValueType? Type { get; set; }
+        public int? ValueOld { get; set; }
+        public ValueType? TypeOld { get; set; }
+
+        public SudokuActionValue() { }
 
         public SudokuActionValue(
             Sudoku sudoku, SudokuCell sudokuCell,

@@ -5,7 +5,11 @@ namespace SudokuSAT
 {
     public class SudokuActionElement : SudokuAction
     {
-        SudokuElement SudokuElement;
+        public SudokuElement SudokuElement { get; set; }
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public SudokuActionElement() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         public SudokuActionElement(Sudoku sudoku, SudokuElement sudokuElement)
             : base(sudoku)

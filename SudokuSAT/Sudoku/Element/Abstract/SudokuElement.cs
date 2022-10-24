@@ -11,7 +11,7 @@ namespace SudokuSAT
         private static int SudokuElementCount = 0;
         public int SudokuElementId { get; set; }
 
-        [JsonIgnore] public Sudoku Sudoku { get; private set; }
+        public Sudoku Sudoku { get; set; }
 
         [JsonIgnore] public Grid? Grid { get; set; }
 

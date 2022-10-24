@@ -30,7 +30,11 @@ namespace SudokuSAT
         public int MultiElementCount => (int)MultipleElementCountSlider.Value;
         public static string SaveNameToFile(string saveName) => SavePath + "\\" + saveName + ".save";
         public static string SaveFileToName(string fileName) => Path.GetFileNameWithoutExtension(fileName);
-        public static readonly JsonSerializerSettings JsonSerializerSettings = new() { TypeNameHandling = TypeNameHandling.All };
+        public static readonly JsonSerializerSettings JsonSerializerSettings = new()
+        {
+            TypeNameHandling = TypeNameHandling.All,
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+        };
 
         public Stack<Sudoku> Sudokus { get; private set; } = new();
         public Stack<Sudoku> NextSudokus { get; private set; } = new();
@@ -80,7 +84,8 @@ namespace SudokuSAT
             sudoku.Grid = SudokuPlaceholder;
 
             Sudoku = sudoku;
-            Sudoku.Visualize(recreateElements: true);
+            Sudoku.Visualize(recreateGrid: true);
+            UpdateUndoRedoButtons();
         }
 
         private void Previous_Click(object sender, RoutedEventArgs e)

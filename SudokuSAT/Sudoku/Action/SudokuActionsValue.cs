@@ -6,6 +6,8 @@ namespace SudokuSAT
 {
     public class SudokuActionsValue : SudokuActionsCell
     {
+        public SudokuActionsValue() { }
+
         public SudokuActionsValue(Sudoku sudoku, List<SudokuCell> sudokuCells, int? value, ValueType? type)
             : base(sudoku)
         {

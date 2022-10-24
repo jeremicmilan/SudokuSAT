@@ -18,7 +18,7 @@ namespace SudokuSAT
         public const int MinValue = 1;
         public const int MaxValue = 9;
 
-        private Sudoku Sudoku { get; set; }
+        public Sudoku Sudoku { get; set; }
 
         public int Column { get; set; }
         public int Row { get; set; }

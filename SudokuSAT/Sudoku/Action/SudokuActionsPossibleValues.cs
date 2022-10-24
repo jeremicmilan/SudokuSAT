@@ -6,6 +6,8 @@ namespace SudokuSAT
 {
     public class SudokuActionsPossibleValues : SudokuActionsCell
     {
+        public SudokuActionsPossibleValues() { }
+
         public SudokuActionsPossibleValues(
             Sudoku sudoku,
             ConcurrentDictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary)
