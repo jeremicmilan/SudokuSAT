@@ -33,13 +33,12 @@ namespace SudokuSAT
                     new() { MaxDegreeOfParallelism = sudoku.Width },
                     (sudokuCell) =>
                 {
-                    Thread.CurrentThread.Name = "Explore";
-                    Sudoku sudokuTemp = sudoku.Clone();
+                    Thread.CurrentThread.Name = "Explore_" + sudokuCell.Name;
 
-                    HashSet<int> possibleValues = new();
-
-                    if (!sudokuCell.Value.HasValue)
+                    if (!sudokuCell.ComputedValue.HasValue)
                     {
+                        Sudoku sudokuTemp = sudoku.Clone();
+                        HashSet<int> possibleValues = new();
                         sudokuCellToOldPossibleValuesDictionary[sudokuCell] = sudokuCell.PossibleValues;
                         for (int i = SudokuCell.MinValue; i <= SudokuCell.MaxValue; i++)
                         {
