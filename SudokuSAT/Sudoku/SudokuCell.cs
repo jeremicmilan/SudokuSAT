@@ -316,7 +316,7 @@ namespace SudokuSAT
                 void updateSelectionOrderIdLabel()
                 {
                     double fontSizeFactor = 0.15;
-                    selectionOrderIdLabel.FontSize = Grid.ActualHeight * fontSizeFactor;
+                    selectionOrderIdLabel.FontSize = (Grid.ActualHeight + 1) * fontSizeFactor;
                 }
                 updateSelectionOrderIdLabel();
                 Grid.SizeChanged += (_, _) => updateSelectionOrderIdLabel();
@@ -354,7 +354,7 @@ namespace SudokuSAT
                             double minWidthFactor = 0.33, minHeightFactor = 0.33, fontSizeFactor = 0.18;
                             possibleValuesLabel.MinWidth = Grid.ActualWidth * minWidthFactor;
                             possibleValuesLabel.MinHeight = Grid.ActualHeight * minHeightFactor;
-                            possibleValuesLabel.FontSize = Grid.ActualHeight * fontSizeFactor;
+                            possibleValuesLabel.FontSize = (Grid.ActualHeight + 1) * fontSizeFactor;
                         }
                         updatePossibleValuesLabel();
                         Grid.SizeChanged += (_, _) => updatePossibleValuesLabel();

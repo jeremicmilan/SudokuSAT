@@ -66,7 +66,7 @@ namespace SudokuSAT
                 double offsetForSum = 0;
                 if (topLeftmostSudokuCell != null && sudokuCell == topLeftmostSudokuCell && Sum != null)
                 {
-                    offsetForSum = sudokuCell.Grid.ActualHeight * 0.18;
+                    offsetForSum = (sudokuCell.Grid.ActualHeight + 1) * 0.18;
 
                     Label sumLabel = new()
                     {
