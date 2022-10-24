@@ -20,8 +20,8 @@ namespace SudokuSAT
 
         public SudokuCell[,] SudokuGrid { get; set; }
         public List<SudokuElement> SudokuElements { get; set; }
-        public Stack<SudokuAction> SudokuActions { get; set; } = new();
-        public Stack<SudokuAction> NextSudokuActions { get; set; } = new();
+        public List<SudokuAction> SudokuActions { get; set; } = new();
+        public List<SudokuAction> NextSudokuActions { get; set; } = new();
 
         [JsonIgnore] public Grid? Grid { get; set; }
         [JsonIgnore] private UniformGrid? SudokuUniformGrid { get; set; }
@@ -168,9 +168,10 @@ namespace SudokuSAT
 
             if (SudokuActions.Any())
             {
-                SudokuAction sudokuAction = SudokuActions.Pop();
+                SudokuAction sudokuAction = SudokuActions.Last();
                 sudokuAction.Undo();
-                NextSudokuActions.Push(sudokuAction);
+                SudokuActions.Remove(sudokuAction);
+                NextSudokuActions.Add(sudokuAction);
 
                 Visualize();
                 MainWindow.SudokuSolver.Solve(this, updateSolvedValue: false);
@@ -183,9 +184,10 @@ namespace SudokuSAT
 
             if (NextSudokuActions.Any())
             {
-                SudokuAction sudokuAction = NextSudokuActions.Pop();
+                SudokuAction sudokuAction = NextSudokuActions.Last();
                 sudokuAction.Redo();
-                SudokuActions.Push(sudokuAction);
+                NextSudokuActions.Remove(sudokuAction);
+                SudokuActions.Add(sudokuAction);
 
                 Visualize();
                 MainWindow.SudokuSolver.Solve(this, updateSolvedValue: false);
@@ -199,7 +201,7 @@ namespace SudokuSAT
                 MainWindow.SudokuSolver.CheckIsExploreActive();
             }
 
-            SudokuActions.Push(sudokuAction);
+            SudokuActions.Add(sudokuAction);
             NextSudokuActions.Clear();
 
             sudokuAction.Redo();

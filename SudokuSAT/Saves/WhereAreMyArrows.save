@@ -1767,11 +1767,11 @@
             }
           ]
         },
-        "SudokuElementId": 0,
+        "SudokuElementId": 12,
         "Sudoku": {
           "$ref": "1"
         },
-        "Name": "_0_SudokuArrowMulti"
+        "Name": "_12_SudokuArrowMulti"
       },
       {
         "$id": "84",
@@ -1809,11 +1809,11 @@
             }
           ]
         },
-        "SudokuElementId": 38,
+        "SudokuElementId": 50,
         "Sudoku": {
           "$ref": "1"
         },
-        "Name": "_38_SudokuArrowMulti"
+        "Name": "_50_SudokuArrowMulti"
       },
       {
         "$id": "85",
@@ -1851,11 +1851,11 @@
             }
           ]
         },
-        "SudokuElementId": 112,
+        "SudokuElementId": 124,
         "Sudoku": {
           "$ref": "1"
         },
-        "Name": "_112_SudokuArrowMulti"
+        "Name": "_124_SudokuArrowMulti"
       },
       {
         "$id": "86",
@@ -1893,11 +1893,11 @@
             }
           ]
         },
-        "SudokuElementId": 222,
+        "SudokuElementId": 234,
         "Sudoku": {
           "$ref": "1"
         },
-        "Name": "_222_SudokuArrowMulti"
+        "Name": "_234_SudokuArrowMulti"
       },
       {
         "$id": "87",
@@ -1929,11 +1929,11 @@
             }
           ]
         },
-        "SudokuElementId": 368,
+        "SudokuElementId": 380,
         "Sudoku": {
           "$ref": "1"
         },
-        "Name": "_368_SudokuArrowMulti"
+        "Name": "_380_SudokuArrowMulti"
       },
       {
         "$id": "88",
@@ -1992,160 +1992,85 @@
             }
           ]
         },
-        "SudokuElementId": 121637,
+        "SudokuElementId": 121557,
         "Sudoku": {
           "$ref": "1"
         },
-        "Name": "_121637_SudokuArrowMulti"
+        "Name": "_121557_SudokuArrowMulti"
       }
     ]
   },
   "SudokuActions": {
-    "$type": "System.Collections.Generic.Stack`1[[SudokuSAT.SudokuAction, SudokuSAT]], System.Collections",
+    "$type": "System.Collections.Generic.List`1[[SudokuSAT.SudokuAction, SudokuSAT]], System.Private.CoreLib",
     "$values": [
       {
         "$id": "89",
+        "$type": "SudokuSAT.SudokuActionElement, SudokuSAT",
+        "SudokuElement": {
+          "$ref": "83"
+        },
+        "Sudoku": {
+          "$ref": "1"
+        }
+      },
+      {
+        "$id": "90",
+        "$type": "SudokuSAT.SudokuActionElement, SudokuSAT",
+        "SudokuElement": {
+          "$ref": "84"
+        },
+        "Sudoku": {
+          "$ref": "1"
+        }
+      },
+      {
+        "$id": "91",
+        "$type": "SudokuSAT.SudokuActionElement, SudokuSAT",
+        "SudokuElement": {
+          "$ref": "85"
+        },
+        "Sudoku": {
+          "$ref": "1"
+        }
+      },
+      {
+        "$id": "92",
+        "$type": "SudokuSAT.SudokuActionElement, SudokuSAT",
+        "SudokuElement": {
+          "$ref": "86"
+        },
+        "Sudoku": {
+          "$ref": "1"
+        }
+      },
+      {
+        "$id": "93",
+        "$type": "SudokuSAT.SudokuActionElement, SudokuSAT",
+        "SudokuElement": {
+          "$ref": "87"
+        },
+        "Sudoku": {
+          "$ref": "1"
+        }
+      },
+      {
+        "$id": "94",
         "$type": "SudokuSAT.SudokuActionsPossibleValues, SudokuSAT",
         "SudokuActionCells": {
           "$type": "System.Collections.Generic.List`1[[SudokuSAT.SudokuActionCell, SudokuSAT]], System.Private.CoreLib",
           "$values": [
-            {
-              "$id": "90",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  6
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  6,
-                  7
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "15"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "91",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  9
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "67"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "92",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4,
-                  7,
-                  8
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "35"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "93",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  7
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1,
-                  7,
-                  8
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "40"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "94",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  9
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5,
-                  8,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "62"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
             {
               "$id": "95",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
                 "$values": [
-                  5
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5,
-                  8,
                   9
                 ]
               },
+              "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "23"
+                "$ref": "45"
               },
               "Sudoku": {
                 "$ref": "1"
@@ -2157,18 +2082,15 @@
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
                 "$values": [
-                  6
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
+                  1,
                   6,
-                  9
+                  7,
+                  8
                 ]
               },
+              "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "58"
+                "$ref": "52"
               },
               "Sudoku": {
                 "$ref": "1"
@@ -2183,15 +2105,9 @@
                   8
                 ]
               },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2,
-                  8
-                ]
-              },
+              "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "64"
+                "$ref": "18"
               },
               "Sudoku": {
                 "$ref": "1"
@@ -2203,21 +2119,12 @@
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
                 "$values": [
-                  4
+                  5
                 ]
               },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4,
-                  5,
-                  7,
-                  8,
-                  9
-                ]
-              },
+              "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "68"
+                "$ref": "74"
               },
               "Sudoku": {
                 "$ref": "1"
@@ -2229,20 +2136,12 @@
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
                 "$values": [
-                  7
+                  3
                 ]
               },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5,
-                  7,
-                  8,
-                  9
-                ]
-              },
+              "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "69"
+                "$ref": "22"
               },
               "Sudoku": {
                 "$ref": "1"
@@ -2254,19 +2153,12 @@
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
                 "$values": [
-                  4
+                  7
                 ]
               },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4,
-                  6,
-                  9
-                ]
-              },
+              "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "76"
+                "$ref": "9"
               },
               "Sudoku": {
                 "$ref": "1"
@@ -2278,19 +2170,14 @@
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
                 "$values": [
-                  8
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
                   5,
                   8,
                   9
                 ]
               },
+              "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "24"
+                "$ref": "23"
               },
               "Sudoku": {
                 "$ref": "1"
@@ -2298,835 +2185,6 @@
             },
             {
               "$id": "102",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  7
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  6,
-                  7
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "14"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "103",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  7
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  7,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "80"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "104",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  8
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  7,
-                  8
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "31"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "105",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  7
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  7,
-                  8
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "55"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "106",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2,
-                  4,
-                  7,
-                  8
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "44"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "107",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5,
-                  7,
-                  8,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "71"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "108",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1,
-                  7,
-                  8
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "49"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "109",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  9
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5,
-                  8,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "25"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "110",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2,
-                  7
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "82"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "111",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  8
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2,
-                  7,
-                  8
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "53"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            }
-          ]
-        },
-        "Sudoku": {
-          "$ref": "1"
-        }
-      },
-      {
-        "$id": "112",
-        "$type": "SudokuSAT.SudokuActionsPossibleValues, SudokuSAT",
-        "SudokuActionCells": {
-          "$type": "System.Collections.Generic.List`1[[SudokuSAT.SudokuActionCell, SudokuSAT]], System.Private.CoreLib",
-          "$values": [
-            {
-              "$id": "113",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1,
-                  2,
-                  7,
-                  8
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "42"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "114",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  9
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4,
-                  5,
-                  7,
-                  8,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "32"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "115",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  9
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1,
-                  2,
-                  6,
-                  7,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "78"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "116",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  8
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4,
-                  5,
-                  7,
-                  8,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "70"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "117",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  3
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2,
-                  3,
-                  6,
-                  7,
-                  8
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "50"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "118",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5,
-                  7,
-                  8,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "33"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "119",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  6
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2,
-                  4,
-                  6,
-                  7,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "77"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "120",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2,
-                  3,
-                  5,
-                  6,
-                  8,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "59"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "121",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1,
-                  4,
-                  7,
-                  8
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "43"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "122",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  3
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2,
-                  3,
-                  5,
-                  6,
-                  8,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "60"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "123",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  7
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4,
-                  5,
-                  7,
-                  8,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "34"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "124",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1,
-                  4,
-                  6,
-                  7,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "79"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "125",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5,
-                  6,
-                  8,
-                  9
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "61"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "126",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  8
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2,
-                  4,
-                  7,
-                  8
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "41"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "127",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  6
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1,
-                  6,
-                  7,
-                  8
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "52"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "128",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2
-                ]
-              },
-              "PossibleValuesOld": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1,
-                  2,
-                  3,
-                  6,
-                  7,
-                  8
-                ]
-              },
-              "SudokuCell": {
-                "$ref": "51"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            }
-          ]
-        },
-        "Sudoku": {
-          "$ref": "1"
-        }
-      },
-      {
-        "$id": "129",
-        "$type": "SudokuSAT.SudokuActionElement, SudokuSAT",
-        "SudokuElement": {
-          "$ref": "88"
-        },
-        "Sudoku": {
-          "$ref": "1"
-        }
-      },
-      {
-        "$id": "130",
-        "$type": "SudokuSAT.SudokuActionsPossibleValues, SudokuSAT",
-        "SudokuActionCells": {
-          "$type": "System.Collections.Generic.List`1[[SudokuSAT.SudokuActionCell, SudokuSAT]], System.Private.CoreLib",
-          "$values": [
-            {
-              "$id": "131",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "7"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "132",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  8
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "2"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "133",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "63"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "134",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "6"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "135",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  6
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "26"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "136",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4,
-                  5,
-                  7,
-                  8,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "68"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "137",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4,
-                  6,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "76"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "138",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5,
-                  7,
-                  8,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "69"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "139",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -3143,26 +2201,61 @@
               }
             },
             {
-              "$id": "140",
+              "$id": "103",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
                 "$values": [
-                  2,
-                  7,
-                  8
+                  9
                 ]
               },
               "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "53"
+                "$ref": "12"
               },
               "Sudoku": {
                 "$ref": "1"
               }
             },
             {
-              "$id": "141",
+              "$id": "104",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "17"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "105",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1,
+                  4,
+                  7,
+                  8
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "43"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "106",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -3172,14 +2265,265 @@
               },
               "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "4"
+                "$ref": "54"
               },
               "Sudoku": {
                 "$ref": "1"
               }
             },
             {
-              "$id": "142",
+              "$id": "107",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "48"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "108",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2,
+                  3,
+                  6,
+                  7,
+                  8
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "50"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "109",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  6,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "58"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "110",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "11"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "111",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "28"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "112",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4,
+                  6,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "76"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "113",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  3
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "16"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "114",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  3
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "8"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "115",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "67"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "116",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  7,
+                  8
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "31"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "117",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  6,
+                  7
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "14"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "118",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "19"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "119",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  6,
+                  8,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "61"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "120",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "10"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "121",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -3196,7 +2540,172 @@
               }
             },
             {
-              "$id": "143",
+              "$id": "122",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  8,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "62"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "123",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2,
+                  3,
+                  5,
+                  6,
+                  8,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "60"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "124",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "6"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "125",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1,
+                  2,
+                  6,
+                  7,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "78"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "126",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "27"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "127",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  6
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "36"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "128",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  6
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "38"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "129",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "72"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "130",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  7,
+                  8
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "55"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "131",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -3217,27 +2726,26 @@
               }
             },
             {
-              "$id": "144",
+              "$id": "132",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
                 "$values": [
-                  5,
+                  1,
                   7,
-                  8,
-                  9
+                  8
                 ]
               },
               "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "33"
+                "$ref": "49"
               },
               "Sudoku": {
                 "$ref": "1"
               }
             },
             {
-              "$id": "145",
+              "$id": "133",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -3256,7 +2764,7 @@
               }
             },
             {
-              "$id": "146",
+              "$id": "134",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -3266,14 +2774,210 @@
               },
               "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "72"
+                "$ref": "20"
               },
               "Sudoku": {
                 "$ref": "1"
               }
             },
             {
-              "$id": "147",
+              "$id": "135",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1,
+                  2,
+                  3,
+                  6,
+                  7,
+                  8
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "51"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "136",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "71"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "137",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  6
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "3"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "138",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4,
+                  5,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "68"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "139",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1,
+                  4,
+                  6,
+                  7,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "79"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "140",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1,
+                  2,
+                  7,
+                  8
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "42"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "141",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  8,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "24"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "142",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  7
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "21"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "143",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  7,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "80"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "144",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4,
+                  5,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "34"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "145",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -3293,59 +2997,7 @@
               }
             },
             {
-              "$id": "148",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  7,
-                  8
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "55"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "149",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "28"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "150",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  6
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "73"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "151",
+              "$id": "146",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -3362,17 +3014,106 @@
               }
             },
             {
+              "$id": "147",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "33"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "148",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  3
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "46"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "149",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  6,
+                  7
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "15"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "150",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "13"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "151",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  3
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "66"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
               "$id": "152",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
                 "$values": [
-                  6
+                  8
                 ]
               },
               "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "36"
+                "$ref": "2"
               },
               "Sudoku": {
                 "$ref": "1"
@@ -3401,213 +3142,6 @@
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
                 "$values": [
-                  1,
-                  4,
-                  7,
-                  8
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "43"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "155",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  7,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "80"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "156",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4,
-                  5,
-                  7,
-                  8,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "34"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "157",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1,
-                  2,
-                  3,
-                  6,
-                  7,
-                  8
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "51"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "158",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "13"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "159",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  6,
-                  7
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "15"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "160",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  7,
-                  8
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "31"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "161",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2,
-                  8
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "64"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "162",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "10"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "163",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4,
-                  5,
-                  7,
-                  8,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "70"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "164",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  8
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "18"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "165",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
                   4,
                   5,
                   7,
@@ -3624,81 +3158,7 @@
               }
             },
             {
-              "$id": "166",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1,
-                  7,
-                  8
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "49"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "167",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  6
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "38"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "168",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1,
-                  2,
-                  6,
-                  7,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "78"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "169",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  3
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "66"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "170",
+              "$id": "155",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -3708,14 +3168,50 @@
               },
               "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "45"
+                "$ref": "47"
               },
               "Sudoku": {
                 "$ref": "1"
               }
             },
             {
-              "$id": "171",
+              "$id": "156",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "4"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "157",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  8,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "25"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "158",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -3732,314 +3228,26 @@
               }
             },
             {
-              "$id": "172",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "39"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "173",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  3
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "29"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "174",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "17"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "175",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  7
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "9"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "176",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "20"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "177",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5,
-                  8,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "62"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "178",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5,
-                  8,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "23"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "179",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  3
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "16"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "180",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1,
-                  6,
-                  7,
-                  8
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "52"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "181",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5,
-                  8,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "24"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "182",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  7
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "21"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "183",
+              "$id": "159",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
                 "$values": [
                   2,
-                  3,
-                  6,
                   7,
                   8
                 ]
               },
               "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "50"
+                "$ref": "53"
               },
               "Sudoku": {
                 "$ref": "1"
               }
             },
             {
-              "$id": "184",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4,
-                  7,
-                  8
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "35"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "185",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "30"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "186",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  3
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "81"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "187",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1,
-                  2,
-                  7,
-                  8
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "42"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "188",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  3
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "8"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "189",
+              "$id": "160",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -4061,208 +3269,7 @@
               }
             },
             {
-              "$id": "190",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "12"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "191",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5,
-                  8,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "25"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "192",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2,
-                  3,
-                  5,
-                  6,
-                  8,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "60"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "193",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  2,
-                  7
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "82"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "194",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  3
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "46"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "195",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  6,
-                  7
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "14"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "196",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  6,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "58"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "197",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "67"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "198",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5,
-                  7,
-                  8,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "71"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "199",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  1
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "37"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "200",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "47"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "201",
+              "$id": "161",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -4272,14 +3279,14 @@
               },
               "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "3"
+                "$ref": "26"
               },
               "Sudoku": {
                 "$ref": "1"
               }
             },
             {
-              "$id": "202",
+              "$id": "162",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -4289,119 +3296,14 @@
               },
               "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "27"
+                "$ref": "30"
               },
               "Sudoku": {
                 "$ref": "1"
               }
             },
             {
-              "$id": "203",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "54"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "204",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "48"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "205",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "74"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "206",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  3
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "22"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "207",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  4
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "11"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "208",
-              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
-              "PossibleValues": {
-                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
-                "$values": [
-                  5,
-                  6,
-                  8,
-                  9
-                ]
-              },
-              "PossibleValuesOld": null,
-              "SudokuCell": {
-                "$ref": "61"
-              },
-              "Sudoku": {
-                "$ref": "1"
-              }
-            },
-            {
-              "$id": "209",
+              "$id": "163",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -4421,28 +3323,205 @@
               }
             },
             {
-              "$id": "210",
+              "$id": "164",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
                 "$values": [
-                  1,
-                  4,
-                  6,
-                  7,
-                  9
+                  3
                 ]
               },
               "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "79"
+                "$ref": "81"
               },
               "Sudoku": {
                 "$ref": "1"
               }
             },
             {
-              "$id": "211",
+              "$id": "165",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "37"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "166",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2,
+                  8
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "64"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "167",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4,
+                  7,
+                  8
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "35"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "168",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "69"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "169",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "63"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "170",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  6
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "73"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "171",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  3
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "29"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "172",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4,
+                  5,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "70"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "173",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "7"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "174",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2,
+                  7
+                ]
+              },
+              "PossibleValuesOld": null,
+              "SudokuCell": {
+                "$ref": "82"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "175",
               "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
               "PossibleValues": {
                 "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
@@ -4452,7 +3531,7 @@
               },
               "PossibleValuesOld": null,
               "SudokuCell": {
-                "$ref": "19"
+                "$ref": "39"
               },
               "Sudoku": {
                 "$ref": "1"
@@ -4465,50 +3544,971 @@
         }
       },
       {
-        "$id": "212",
+        "$id": "176",
         "$type": "SudokuSAT.SudokuActionElement, SudokuSAT",
         "SudokuElement": {
-          "$ref": "87"
+          "$ref": "88"
         },
         "Sudoku": {
           "$ref": "1"
         }
       },
       {
-        "$id": "213",
-        "$type": "SudokuSAT.SudokuActionElement, SudokuSAT",
-        "SudokuElement": {
-          "$ref": "86"
+        "$id": "177",
+        "$type": "SudokuSAT.SudokuActionsPossibleValues, SudokuSAT",
+        "SudokuActionCells": {
+          "$type": "System.Collections.Generic.List`1[[SudokuSAT.SudokuActionCell, SudokuSAT]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$id": "178",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  6,
+                  8,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "61"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "179",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  8
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4,
+                  5,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "70"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "180",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  6
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2,
+                  4,
+                  6,
+                  7,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "77"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "181",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  8
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2,
+                  4,
+                  7,
+                  8
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "41"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "182",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  9
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4,
+                  5,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "32"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "183",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  7
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4,
+                  5,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "34"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "184",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "33"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "185",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  6
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1,
+                  6,
+                  7,
+                  8
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "52"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "186",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1,
+                  4,
+                  7,
+                  8
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "43"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "187",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  3
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2,
+                  3,
+                  5,
+                  6,
+                  8,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "60"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "188",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  3
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2,
+                  3,
+                  6,
+                  7,
+                  8
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "50"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "189",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2,
+                  3,
+                  5,
+                  6,
+                  8,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "59"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "190",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1,
+                  2,
+                  3,
+                  6,
+                  7,
+                  8
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "51"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "191",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  9
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1,
+                  2,
+                  6,
+                  7,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "78"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "192",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1,
+                  2,
+                  7,
+                  8
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "42"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "193",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1,
+                  4,
+                  6,
+                  7,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "79"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            }
+          ]
         },
         "Sudoku": {
           "$ref": "1"
         }
       },
       {
-        "$id": "214",
-        "$type": "SudokuSAT.SudokuActionElement, SudokuSAT",
-        "SudokuElement": {
-          "$ref": "85"
-        },
-        "Sudoku": {
-          "$ref": "1"
-        }
-      },
-      {
-        "$id": "215",
-        "$type": "SudokuSAT.SudokuActionElement, SudokuSAT",
-        "SudokuElement": {
-          "$ref": "84"
-        },
-        "Sudoku": {
-          "$ref": "1"
-        }
-      },
-      {
-        "$id": "216",
-        "$type": "SudokuSAT.SudokuActionElement, SudokuSAT",
-        "SudokuElement": {
-          "$ref": "83"
+        "$id": "194",
+        "$type": "SudokuSAT.SudokuActionsPossibleValues, SudokuSAT",
+        "SudokuActionCells": {
+          "$type": "System.Collections.Generic.List`1[[SudokuSAT.SudokuActionCell, SudokuSAT]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$id": "195",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "71"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "196",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  7
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  6,
+                  7
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "14"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "197",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  7
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "69"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "198",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  8,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "23"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "199",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2,
+                  4,
+                  7,
+                  8
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "44"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "200",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  7
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  7,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "80"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "201",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4,
+                  6,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "76"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "202",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2,
+                  7
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "82"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "203",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  8
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  8,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "24"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "204",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4,
+                  7,
+                  8
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "35"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "205",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  8
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2,
+                  7,
+                  8
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "53"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "206",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  8
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  2,
+                  8
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "64"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "207",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  7
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  7,
+                  8
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "55"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "208",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  6
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  6,
+                  7
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "15"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "209",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  9
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  8,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "25"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "210",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  9
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  5,
+                  8,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "62"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "211",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  6
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  6,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "58"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "212",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  7
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1,
+                  7,
+                  8
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "40"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "213",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  8
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  7,
+                  8
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "31"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "214",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  1,
+                  7,
+                  8
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "49"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "215",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4,
+                  5,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "68"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            },
+            {
+              "$id": "216",
+              "$type": "SudokuSAT.SudokuActionPossibleValues, SudokuSAT",
+              "PossibleValues": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  9
+                ]
+              },
+              "PossibleValuesOld": {
+                "$type": "System.Collections.Generic.HashSet`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib",
+                "$values": [
+                  4,
+                  9
+                ]
+              },
+              "SudokuCell": {
+                "$ref": "67"
+              },
+              "Sudoku": {
+                "$ref": "1"
+              }
+            }
+          ]
         },
         "Sudoku": {
           "$ref": "1"
@@ -4517,7 +4517,7 @@
     ]
   },
   "NextSudokuActions": {
-    "$type": "System.Collections.Generic.Stack`1[[SudokuSAT.SudokuAction, SudokuSAT]], System.Collections",
+    "$type": "System.Collections.Generic.List`1[[SudokuSAT.SudokuAction, SudokuSAT]], System.Private.CoreLib",
     "$values": [
     ]
   },
