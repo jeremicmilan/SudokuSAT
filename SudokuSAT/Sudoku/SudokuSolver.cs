@@ -19,17 +19,26 @@ namespace SudokuSAT
         {
             Window = window;
         }
-        public void Explore(Sudoku sudoku, List<SudokuCell> SudokuCells)
+        public void Explore(Sudoku sudoku, List<SudokuCell> sudokuCells)
         {
             IsExploreActive = true;
             CancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = CancellationTokenSource.Token;
             Window.Dispatcher.Invoke(() => Window.ExploreButton.Content = "Stop");
-            ConcurrentDictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary = new();
+            Dictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary = new();
             try
             {
+                foreach (SudokuCell sudokuCell in sudoku.SudokuCells)
+                {
+                    if (!sudokuCell.ComputedValue.HasValue)
+                    {
+                        sudokuCellToOldPossibleValuesDictionary[sudokuCell] = sudokuCell.PossibleValues;
+                        Window.Dispatcher.Invoke(() => sudokuCell.SetPossibleValues(null));
+                    }
+                }
+
                 Parallel.ForEach(
-                    SudokuCells != null && SudokuCells.Any() ? SudokuCells : sudoku.SudokuCells,
+                    sudokuCells != null && sudokuCells.Any() ? sudokuCells : sudoku.SudokuCells,
                     new() { MaxDegreeOfParallelism = sudoku.Width },
                     (sudokuCell) =>
                 {
@@ -39,14 +48,12 @@ namespace SudokuSAT
                     {
                         Sudoku sudokuTemp = sudoku.Clone();
                         HashSet<int> possibleValues = new();
-                        sudokuCellToOldPossibleValuesDictionary[sudokuCell] = sudokuCell.PossibleValues;
                         for (int i = SudokuCell.MinValue; i <= SudokuCell.MaxValue; i++)
                         {
                             CpSolver solver = new();
                             CpModel model = sudokuTemp.GenerateModel();
 
                             model.Add(sudokuTemp.SudokuGrid[sudokuCell.Column, sudokuCell.Row].ValueVar == i);
-                            Window.Dispatcher.Invoke(() => sudokuCell.SetPossibleValues(null));
 
                             CpSolverStatus solverStatus = solver.Solve(model);
 

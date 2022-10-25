@@ -10,7 +10,7 @@ namespace SudokuSAT
 
         public SudokuActionsPossibleValues(
             Sudoku sudoku,
-            ConcurrentDictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary)
+            Dictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary)
             : base(sudoku)
         {
             foreach ((SudokuCell sudokuCell, HashSet<int>? possibleValues) in sudokuCellToOldPossibleValuesDictionary)
