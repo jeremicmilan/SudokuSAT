@@ -184,8 +184,6 @@ namespace SudokuSAT
         public static void ClearIsSudokuCellClicked() => IsSudokuCellClicked = false;
         public static bool IsSudokuCellClicked { get; private set; } = false;
 
-        private static SudokuCell? LastDeselectedSudokuCell { get; set; } = null;
-
         public void SetIsSelected(bool isSelected)
         {
             IsSelected = isSelected;
@@ -258,10 +256,6 @@ namespace SudokuSAT
                 }
 
                 SetIsSelected(newIsSelected);
-                if (!newIsSelected)
-                {
-                    LastDeselectedSudokuCell = this;
-                }
 
                 if (!Sudoku.SelectedSudokuCells.Any())
                 {
@@ -270,7 +264,7 @@ namespace SudokuSAT
             }));
             SelectLabel.AddHandler(UIElement.MouseEnterEvent, new RoutedEventHandler((_, _) =>
             {
-                if (Mouse.LeftButton == MouseButtonState.Pressed && !IsSelected && LastDeselectedSudokuCell != this)
+                if (Mouse.LeftButton == MouseButtonState.Pressed && !IsSelected)
                 {
                     SetIsSelected(!IsSelected);
                 }
