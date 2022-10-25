@@ -34,6 +34,7 @@ namespace SudokuSAT
         {
             TypeNameHandling = TypeNameHandling.All,
             PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            Formatting = Formatting.Indented,
         };
 
         public Stack<Sudoku> Sudokus { get; private set; } = new();

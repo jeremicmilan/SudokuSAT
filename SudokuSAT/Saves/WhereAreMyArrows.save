@@ -4782,8 +4782,7 @@
   },
   "NextSudokuActions": {
     "$type": "System.Collections.Generic.List`1[[SudokuSAT.SudokuAction, SudokuSAT]], System.Private.CoreLib",
-    "$values": [
-    ]
+    "$values": []
   },
   "SudokuCells": {
     "$type": "System.Collections.Generic.List`1[[SudokuSAT.SudokuCell, SudokuSAT]], System.Private.CoreLib",
@@ -5035,7 +5034,6 @@
   },
   "SelectedSudokuCells": {
     "$type": "System.Collections.Generic.List`1[[SudokuSAT.SudokuCell, SudokuSAT]], System.Private.CoreLib",
-    "$values": [
-    ]
+    "$values": []
   }
 }
