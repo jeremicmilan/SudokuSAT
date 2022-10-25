@@ -221,8 +221,8 @@ namespace SudokuSAT
         private void Arrow_Click(object sender, RoutedEventArgs e)
         {
             AddSudokuElement(() => MultiElement ?
-                new SudokuArrowMulti(Sudoku, Sudoku.SelectedSudokuCells, MultiElementCount, new Grid()) :
-                new SudokuArrow(Sudoku, Sudoku.SelectedSudokuCells, new Grid()));
+                new SudokuArrowMulti(Sudoku, Sudoku.SelectedSudokuCells, MultiElementCount, grid: new Grid()) :
+                new SudokuArrow(Sudoku, Sudoku.SelectedSudokuCells, grid: new Grid()));
         }
 
         private void Whispers_Click(object sender, RoutedEventArgs e)
@@ -231,7 +231,7 @@ namespace SudokuSAT
                 Sudoku,
                 Sudoku.SelectedSudokuCells,
                 (int)WhisperValueDiff.Value,
-                new Grid()));
+                grid: new Grid()));
         }
 
         private void Palindrome_Click(object sender, RoutedEventArgs e)
@@ -239,7 +239,7 @@ namespace SudokuSAT
             AddSudokuElement(() => new SudokuPalindrome(
                 Sudoku,
                 Sudoku.SelectedSudokuCells,
-                new Grid()));
+                grid: new Grid()));
         }
 
         private void Renban_Click(object sender, RoutedEventArgs e)
@@ -247,7 +247,7 @@ namespace SudokuSAT
             AddSudokuElement(() => new SudokuRenban(
                 Sudoku,
                 Sudoku.SelectedSudokuCells,
-                new Grid()));
+                grid: new Grid()));
         }
 
         private void KillerCage_Click(object sender, RoutedEventArgs e)
@@ -256,7 +256,7 @@ namespace SudokuSAT
                 Sudoku,
                 Sudoku.SelectedSudokuCells,
                 (int)KillerCageSumSlider.Value,
-                new Grid()));
+                grid: new Grid()));
         }
 
         private void Thermometer_Click(object sender, RoutedEventArgs e)
@@ -264,7 +264,7 @@ namespace SudokuSAT
             AddSudokuElement(() => new SudokuThermometer(
                 Sudoku,
                 Sudoku.SelectedSudokuCells,
-                new Grid()));
+                grid: new Grid()));
         }
 
         private void AddSudokuElement(Func<SudokuElement> instantiateSudokuElement)

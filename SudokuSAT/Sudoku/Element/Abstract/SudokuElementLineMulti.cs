@@ -12,14 +12,19 @@ namespace SudokuSAT
 
         private SudokuElementLine SudokuElementLineVisual { get; set; }
 
-        public SudokuElementLineMulti(Sudoku sudoku, List<SudokuCell> sudokuCells, int elementCount, Grid? grid = null)
-            : base(sudoku, sudokuCells, grid)
+        public SudokuElementLineMulti(
+            Sudoku sudoku,
+            List<SudokuCell> sudokuCells,
+            int elementCount,
+            int? sudokuElementId = null,
+            Grid? grid = null)
+            : base(sudoku, sudokuCells, sudokuElementId, grid)
         {
             ElementCount = elementCount;
-            SudokuElementLineVisual = InstantiateSubElement(sudokuCells, grid);
+            SudokuElementLineVisual = InstantiateSubElement(sudokuCells);
         }
 
-        public abstract SudokuElementLine InstantiateSubElement(List<SudokuCell> sudokuCells, Grid? grid = null);
+        public abstract SudokuElementLine InstantiateSubElement(List<SudokuCell> sudokuCells);
 
         private bool AreConsecutive(List<SudokuCell> sudokuCells)
         {
@@ -68,7 +73,7 @@ namespace SudokuSAT
             model.Add(LinearExpr.Sum(subsetBoolVars) == ElementCount).OnlyEnforceIf(boolVar);
         }
 
-        public override void Visualize()
+        protected override void VisualizeInternal()
         {
             SudokuElementLineVisual.Grid = Grid;
             SudokuElementLineVisual.Visualize(); // TODO: change color

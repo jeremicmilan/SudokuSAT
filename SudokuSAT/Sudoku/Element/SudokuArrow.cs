@@ -13,16 +13,17 @@ namespace SudokuSAT
 {
     public class SudokuArrow : SudokuElementLine
     {
-        public SudokuArrow(Sudoku sudoku, List<SudokuCell> sudokuCells, Grid? grid = null)
-            : base(sudoku, sudokuCells, grid)
-        { }
-
-        protected override SudokuElementWithCellList Instantiate(
+        public SudokuArrow(
             Sudoku sudoku,
             List<SudokuCell> sudokuCells,
+            int? sudokuElementId = null,
             Grid? grid = null)
+            : base(sudoku, sudokuCells, sudokuElementId, grid)
+        { }
+
+        public override SudokuElement Clone(Sudoku sudoku)
         {
-            return new SudokuArrow(sudoku, sudokuCells, grid);
+            return new SudokuArrow(sudoku, SudokuCells, -SudokuElementId, Grid);
         }
 
         public override void AddConstraints(CpModel model, BoolVar boolVar)
@@ -37,7 +38,7 @@ namespace SudokuSAT
                 .OnlyEnforceIf(boolVar);
         }
 
-        public override void Visualize()
+        protected override void VisualizeInternal()
         {
             Debug.Assert(Grid != null);
             Debug.Assert(Grid.Children.Count == 0);

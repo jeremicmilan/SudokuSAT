@@ -13,16 +13,17 @@ namespace SudokuSAT
 {
     public class SudokuThermometer : SudokuElementLine
     {
-        public SudokuThermometer(Sudoku sudoku, List<SudokuCell> sudokuCells, Grid? grid = null)
-            : base(sudoku, sudokuCells, grid)
-        { }
-
-        protected override SudokuElementWithCellList Instantiate(
+        public SudokuThermometer(
             Sudoku sudoku,
             List<SudokuCell> sudokuCells,
+            int? sudokuElementId = null,
             Grid? grid = null)
+            : base(sudoku, sudokuCells, sudokuElementId, grid)
+        { }
+
+        public override SudokuElement Clone(Sudoku sudoku)
         {
-            return new SudokuThermometer(sudoku, sudokuCells, grid);
+            return new SudokuThermometer(sudoku, SudokuCells, -SudokuElementId, Grid);
         }
 
         public override void AddConstraints(CpModel model, BoolVar boolVar)
@@ -33,7 +34,7 @@ namespace SudokuSAT
             }
         }
 
-        public override void Visualize()
+        protected override void VisualizeInternal()
         {
             Debug.Assert(Grid != null);
             Debug.Assert(Grid.Children.Count == 0);

@@ -12,21 +12,23 @@ namespace SudokuSAT
 {
     public class SudokuArrowMulti : SudokuElementLineMulti
     {
-        public SudokuArrowMulti(Sudoku sudoku, List<SudokuCell> sudokuCells, int elementCount, Grid? grid = null)
-            : base(sudoku, sudokuCells, elementCount, grid)
-        { }
-
-        protected override SudokuElementWithCellList Instantiate(
+        public SudokuArrowMulti(
             Sudoku sudoku,
             List<SudokuCell> sudokuCells,
+            int elementCount,
+            int? sudokuElementId = null,
             Grid? grid = null)
+            : base(sudoku, sudokuCells, elementCount, sudokuElementId, grid)
+        { }
+
+        public override SudokuElement Clone(Sudoku sudoku)
         {
-            return new SudokuArrowMulti(sudoku, sudokuCells, ElementCount, grid);
+            return new SudokuArrowMulti(sudoku, SudokuCells, ElementCount, -SudokuElementId, Grid);
         }
 
-        public override SudokuElementLine InstantiateSubElement(List<SudokuCell> sudokuCells, Grid? grid = null)
+        public override SudokuElementLine InstantiateSubElement(List<SudokuCell> sudokuCells)
         {
-            return new SudokuArrow(Sudoku, sudokuCells, grid);
+            return new SudokuArrow(Sudoku, sudokuCells, -SudokuElementId, Grid);
         }
     }
 }

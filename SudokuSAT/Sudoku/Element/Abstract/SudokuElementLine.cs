@@ -12,8 +12,12 @@ namespace SudokuSAT
 {
     public abstract class SudokuElementLine : SudokuElementWithCellList
     {
-        public SudokuElementLine(Sudoku sudoku, List<SudokuCell> sudokuCells, Grid? grid = null)
-            : base(sudoku, sudokuCells, grid)
+        public SudokuElementLine(
+            Sudoku sudoku,
+            List<SudokuCell> sudokuCells,
+            int? sudokuElementId = null,
+            Grid? grid = null)
+            : base(sudoku, sudokuCells, sudokuElementId, grid)
         {
             if (!AreConsecutiveCellsAdjacent(sudokuCells))
             {

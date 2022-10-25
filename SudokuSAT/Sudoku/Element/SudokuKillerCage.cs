@@ -17,22 +17,24 @@ namespace SudokuSAT
     {
         public int? Sum { get; private set; }
 
-        public SudokuKillerCage(Sudoku sudoku, List<SudokuCell> sudokuCells, int? sum, Grid? grid = null)
-            : base(sudoku, sudokuCells, grid)
+        public SudokuKillerCage(
+            Sudoku sudoku,
+            List<SudokuCell> sudokuCells,
+            int? sum,
+            int? sudokuElementId = null,
+            Grid? grid = null)
+            : base(sudoku, sudokuCells, sudokuElementId, grid)
         {
             Sum = sum > 0 ? sum : null;
             if (Sum < 0 || Sum > 45)
             {
-                throw new Exception("Killer cage sum must be between 0 and 45 or non-existant.");
+                throw new Exception("Killer cage sum must be between 0 and 45 or non-existent.");
             }
         }
 
-        protected override SudokuElementWithCellList Instantiate(
-            Sudoku sudoku,
-            List<SudokuCell> sudokuCells,
-            Grid? grid = null)
+        public override SudokuElement Clone(Sudoku sudoku)
         {
-            return new SudokuKillerCage(sudoku, sudokuCells, Sum, grid);
+            return new SudokuKillerCage(sudoku, SudokuCells, Sum, -SudokuElementId, Grid);
         }
 
         public override void AddConstraints(CpModel model, BoolVar boolVar)
@@ -47,7 +49,7 @@ namespace SudokuSAT
             }
         }
 
-        public override void Visualize()
+        protected override void VisualizeInternal()
         {
             Debug.Assert(Grid != null);
             Debug.Assert(Grid.Children.Count == 0);

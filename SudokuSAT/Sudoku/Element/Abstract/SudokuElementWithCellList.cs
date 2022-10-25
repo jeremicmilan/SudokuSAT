@@ -15,8 +15,12 @@ namespace SudokuSAT
 
         protected Dictionary<SudokuCell, int> SudokuCellsOrderDictionary { get; private set; }
 
-        public SudokuElementWithCellList(Sudoku sudoku, List<SudokuCell> sudokuCells, Grid? grid = null)
-            : base(sudoku, grid)
+        public SudokuElementWithCellList(
+            Sudoku sudoku,
+            List<SudokuCell> sudokuCells,
+            int? sudokuElementId = null,
+            Grid? grid = null)
+            : base(sudoku, sudokuElementId, grid)
         {
             if (sudokuCells.Count < 2)
             {
@@ -30,22 +34,6 @@ namespace SudokuSAT
             {
                 SudokuCellsOrderDictionary[sudokuCell] = i++;
             }
-        }
-
-        protected abstract SudokuElementWithCellList Instantiate(
-            Sudoku sudoku,
-            List<SudokuCell> sudokuCells,
-            Grid? grid = null);
-
-        public override SudokuElement Clone(Sudoku sudoku, Grid? grid = null)
-        {
-            List<SudokuCell> sudokuCells = new();
-            foreach (SudokuCell sudokuCell in SudokuCells)
-            {
-                sudokuCells.Add(sudoku.SudokuGrid[sudokuCell.Column, sudokuCell.Row]);
-            }
-
-            return Instantiate(sudoku, sudokuCells, grid);
         }
     }
 }

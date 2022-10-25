@@ -11,16 +11,17 @@ namespace SudokuSAT
 {
     public class SudokuRenban : SudokuElementLine
     {
-        public SudokuRenban(Sudoku sudoku, List<SudokuCell> sudokuCells, Grid? grid = null)
-            : base(sudoku, sudokuCells, grid)
-        { }
-
-        protected override SudokuElementWithCellList Instantiate(
+        public SudokuRenban(
             Sudoku sudoku,
             List<SudokuCell> sudokuCells,
+            int? sudokuElementId = null,
             Grid? grid = null)
+            : base(sudoku, sudokuCells, sudokuElementId, grid)
+        { }
+
+        public override SudokuElement Clone(Sudoku sudoku)
         {
-            return new SudokuRenban(sudoku, sudokuCells, grid);
+            return new SudokuRenban(sudoku, SudokuCells, -SudokuElementId, Grid);
         }
 
         public override void AddConstraints(CpModel model, BoolVar boolVar)
@@ -42,7 +43,7 @@ namespace SudokuSAT
             model.Add(LinearExpr.Sum(permutationBoolVars) == 1).OnlyEnforceIf(boolVar);
         }
 
-        public override void Visualize()
+        protected override void VisualizeInternal()
         {
             VisualizeLine(Brushes.DeepPink);
         }

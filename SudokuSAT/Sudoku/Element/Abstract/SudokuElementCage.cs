@@ -11,8 +11,12 @@ namespace SudokuSAT
 {
     public abstract class SudokuElementCage : SudokuElementWithCellList
     {
-        public SudokuElementCage(Sudoku sudoku, List<SudokuCell> sudokuCells, Grid? grid = null)
-            : base(sudoku, sudokuCells, grid)
+        public SudokuElementCage(
+            Sudoku sudoku,
+            List<SudokuCell> sudokuCells,
+            int? sudokuElementId = null,
+            Grid? grid = null)
+            : base(sudoku, sudokuCells, sudokuElementId, grid)
         {
             HashSet<SudokuCell> sudokuCellsTraversed = new();
             Queue<SudokuCell> sudokuCellsUnvisited = new();

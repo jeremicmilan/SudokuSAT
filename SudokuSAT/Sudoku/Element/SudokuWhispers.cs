@@ -13,18 +13,20 @@ namespace SudokuSAT
     {
         public int ValueDiff { get; private set; }
 
-        public SudokuWhispers(Sudoku sudoku, List<SudokuCell> sudokuCells, int valueDiff, Grid? grid = null)
-            : base(sudoku, sudokuCells, grid)
+        public SudokuWhispers(
+            Sudoku sudoku,
+            List<SudokuCell> sudokuCells,
+            int valueDiff,
+            int? sudokuElementId = null,
+            Grid? grid = null)
+            : base(sudoku, sudokuCells, sudokuElementId, grid)
         {
             ValueDiff = valueDiff;
         }
 
-        protected override SudokuElementWithCellList Instantiate(
-            Sudoku sudoku,
-            List<SudokuCell> sudokuCells,
-            Grid? grid = null)
+        public override SudokuElement Clone(Sudoku sudoku)
         {
-            return new SudokuWhispers(sudoku, sudokuCells, ValueDiff, grid);
+            return new SudokuWhispers(sudoku, SudokuCells, ValueDiff, -SudokuElementId, Grid);
         }
 
         public override void AddConstraints(CpModel model, BoolVar boolVar)
@@ -41,7 +43,7 @@ namespace SudokuSAT
             }
         }
 
-        public override void Visualize()
+        protected override void VisualizeInternal()
         {
             VisualizeLine(Brushes.Green);
         }
