@@ -1,17 +1,20 @@
 ﻿using Google.OrTools.ConstraintSolver;
 using Google.OrTools.Sat;
 using System;
+using System.Windows;
 
 namespace SudokuSAT
 {
     public class SolutionCounter : CpSolverSolutionCallback
     {
-        public const int MaxSolutionCount = 100;
+        private const int MaxSolutionCount = 100;
 
-        SudokuSolver SudokuSolver { get; set; }
-        CpSolver Solver { get; set; }
+        private SudokuSolver SudokuSolver { get; set; }
+        private CpSolver Solver { get; set; }
 
         private int SolutionCount { get; set; }
+
+        private MainWindow Window => SudokuSolver.Window;
 
         public SolutionCounter(SudokuSolver sudokuSolver, CpSolver solver)
         {
@@ -22,11 +25,11 @@ namespace SudokuSAT
         public override void OnSolutionCallback()
         {
             SolutionCount++;
-            SudokuSolver.Window.SolutionCount.Content = SolutionCount;
+            Window.Dispatcher.Invoke(() => Window.SolutionCount.Content = SolutionCount);
 
             if (SolutionCount > MaxSolutionCount)
             {
-                SudokuSolver.Window.SolutionCount.Content = MaxSolutionCount + "+";
+                Window.Dispatcher.Invoke(() => Window.SolutionCount.Content = MaxSolutionCount + "+");
                 Solver.StopSearch();
             }
         }

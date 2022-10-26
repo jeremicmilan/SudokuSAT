@@ -174,7 +174,7 @@ namespace SudokuSAT
                 NextSudokuActions.Add(sudokuAction);
 
                 Visualize();
-                MainWindow.SudokuSolver.Solve(this, updateSolvedValue: false);
+                MainWindow.SolveAsync();
             }
         }
 
@@ -208,7 +208,7 @@ namespace SudokuSAT
             Visualize();
 
             MainWindow.UpdateUndoRedoButtons();
-            MainWindow.SudokuSolver.Solve(this, updateSolvedValue: false);
+            MainWindow.SolveAsync();
         }
 
         public void AddElement(SudokuElement sudokuElement)

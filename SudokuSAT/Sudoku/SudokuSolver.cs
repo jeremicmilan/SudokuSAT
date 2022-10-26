@@ -5,6 +5,7 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Windows.Threading;
 
 namespace SudokuSAT
 {
@@ -109,6 +110,8 @@ namespace SudokuSAT
 
         public void Solve(Sudoku sudoku, bool updateSolvedValue)
         {
+            Window.Dispatcher.Invoke(() => Window.SolutionCount.Content = "...");
+
             CpSolver solver = new()
             {
                 StringParameters = "enumerate_all_solutions:true"
@@ -125,7 +128,7 @@ namespace SudokuSAT
                         + " - model validation: " + model.Validate());
 
                 case CpSolverStatus.Infeasible:
-                    Window.SolutionCount.Content = 0;
+                    Window.Dispatcher.Invoke(() => Window.SolutionCount.Content = 0);
                     break;
 
                 case CpSolverStatus.Feasible:

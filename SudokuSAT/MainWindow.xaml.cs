@@ -104,7 +104,7 @@ namespace SudokuSAT
                 PreviousButton.IsEnabled = false;
             }
 
-            SudokuSolver.Solve(Sudoku, updateSolvedValue: false);
+            SolveAsync();
         }
 
         private void Next_Click(object sender, RoutedEventArgs e)
@@ -122,7 +122,7 @@ namespace SudokuSAT
                 NextButton.IsEnabled = false;
             }
 
-            SudokuSolver.Solve(Sudoku, updateSolvedValue: false);
+            SolveAsync();
         }
 
         private void Generate_Click(object sender, RoutedEventArgs e)
@@ -149,7 +149,7 @@ namespace SudokuSAT
                 ReplaceSudoku(sudoku);
                 AddSudoku(sudoku);
 
-                SudokuSolver.Solve(sudoku, updateSolvedValue: false);
+                SolveAsync();
             });
         }
 
@@ -208,6 +208,14 @@ namespace SudokuSAT
         private void Redo_Click(object sender, RoutedEventArgs e)
         {
             PerformUndoRedoAction(Sudoku.Redo);
+        }
+
+        public void SolveAsync()
+        {
+            new Thread(() => HandleClickFailure(() =>
+            {
+                SudokuSolver.Solve(Sudoku, updateSolvedValue: false);
+            })).Start();
         }
 
         private void Solve_Click(object sender, RoutedEventArgs e)
