@@ -187,16 +187,23 @@ namespace SudokuSAT
             RedoButton.IsEnabled = Sudoku.NextSudokuActions.Any();
         }
 
+        private void PerformUndoRedoAction(Action action)
+        {
+            HandleClickFailure(() =>
+            {
+                action();
+                UpdateUndoRedoButtons();
+            });
+        }
+
         private void Undo_Click(object sender, RoutedEventArgs e)
         {
-            Sudoku.Undo();
-            UpdateUndoRedoButtons();
+            PerformUndoRedoAction(Sudoku.Undo);
         }
 
         private void Redo_Click(object sender, RoutedEventArgs e)
         {
-            Sudoku.Redo();
-            UpdateUndoRedoButtons();
+            PerformUndoRedoAction(Sudoku.Redo);
         }
 
         private void Solve_Click(object sender, RoutedEventArgs e)
