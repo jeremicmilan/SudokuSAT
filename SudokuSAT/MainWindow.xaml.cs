@@ -103,6 +103,8 @@ namespace SudokuSAT
             {
                 PreviousButton.IsEnabled = false;
             }
+
+            SudokuSolver.Solve(Sudoku, updateSolvedValue: false);
         }
 
         private void Next_Click(object sender, RoutedEventArgs e)
@@ -119,6 +121,8 @@ namespace SudokuSAT
             {
                 NextButton.IsEnabled = false;
             }
+
+            SudokuSolver.Solve(Sudoku, updateSolvedValue: false);
         }
 
         private void Generate_Click(object sender, RoutedEventArgs e)
