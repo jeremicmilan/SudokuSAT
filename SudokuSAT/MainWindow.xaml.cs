@@ -70,7 +70,7 @@ namespace SudokuSAT
         private Sudoku CreateSudoku()
         {
             Sudoku = new(GridWidth, GridHeight, BoxSize, SudokuPlaceholder);
-            Sudoku.Visualize();
+            Sudoku.Visualize(recreateGrid: true);
             AddSudoku(Sudoku);
             return Sudoku;
         }
