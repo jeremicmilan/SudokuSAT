@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MoreLinq;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -380,6 +381,11 @@ namespace SudokuSAT
             base.OnClosed(e);
             ClosingWindow = true;
             SudokuSolver.StopSolveAction();
+        }
+
+        private void CopyPossibilities_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(String.Join('\n', PossibilitiesListBox.Items.Flatten()));
         }
     }
 }

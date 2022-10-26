@@ -52,9 +52,10 @@
                     </ListBox.InputBindings>
                 </ListBox>
                 <Label x:Name="PossibilitiesCount" Content="{Binding Items.Count, ElementName=PossibilitiesListBox}" HorizontalAlignment="Left" Margin="108,52,0,169" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="66"/>
-                <Button x:Name="StopButton" Content="Stop" HorizontalAlignment="Left" Margin="75,55,0,0" VerticalAlignment="Top" IsEnabled="False" Click="Stop_Click"/>
+                <Button x:Name="StopButton" Content="Stop" HorizontalAlignment="Left" Margin="75,30,0,0" VerticalAlignment="Top" IsEnabled="False" Click="Stop_Click" Width="33"/>
                 <Button x:Name="UndoButton" Content="Undo" HorizontalAlignment="Left" Margin="89,5,0,0" VerticalAlignment="Top" Click="Undo_Click" IsEnabled="False"/>
                 <Button x:Name="RedoButton" Content="Redo" HorizontalAlignment="Left" Margin="137,5,0,0" VerticalAlignment="Top" Click="Redo_Click" IsEnabled="False"/>
+                <Button x:Name="CopyPossibilitiesButton" Content="Copy" HorizontalAlignment="Left" Margin="76,55,0,0" VerticalAlignment="Top" Click="CopyPossibilities_Click"/>
             </Grid>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" Margin="0,225,0,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="162" Width="180">
