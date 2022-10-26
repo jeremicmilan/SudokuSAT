@@ -164,8 +164,6 @@ namespace SudokuSAT
 
         public void Undo()
         {
-            MainWindow.SudokuSolver.CheckIsExploreActive();
-
             if (SudokuActions.Any())
             {
                 SudokuAction sudokuAction = SudokuActions.Last();
@@ -180,8 +178,6 @@ namespace SudokuSAT
 
         public void Redo()
         {
-            MainWindow.SudokuSolver.CheckIsExploreActive();
-
             if (NextSudokuActions.Any())
             {
                 SudokuAction sudokuAction = NextSudokuActions.Last();
@@ -194,11 +190,11 @@ namespace SudokuSAT
             }
         }
 
-        public void PerformSudokuAction(SudokuAction sudokuAction)
+        public void PerformSudokuAction(SudokuAction sudokuAction, bool solver = false)
         {
-            if (sudokuAction is not SudokuActionsPossibleValues)
+            if (!solver)
             {
-                MainWindow.SudokuSolver.CheckIsExploreActive();
+                MainWindow.SudokuSolver.CheckIsSolveActive();
             }
 
             SudokuActions.Add(sudokuAction);

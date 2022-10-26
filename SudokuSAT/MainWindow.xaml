@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow"
         Height="800"
-        Width="1000"
+        Width="970"
         SizeChanged="Window_SizeChanged"
         KeyDown="Keyboard_KeyDown">
     <Grid MouseLeftButtonDown="MainGrid_Click" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="800*"/>
+            <ColumnDefinition Width="770*"/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         <Border Margin="10,10,10,10" Width="Auto" Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}">
@@ -32,7 +32,7 @@
                 <Border BorderBrush="Black" BorderThickness="1" Margin="0,74,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="134" Width="170" Grid.RowSpan="2">
                     <Grid>
                         <Button x:Name="Load" Content="Load" HorizontalAlignment="Left" Margin="53,30,0,0" VerticalAlignment="Top" Click="Load_Click" Width="40" />
-                        <ListBox x:Name="SaveNames" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="5,55,5,5"/>
+                        <ListBox x:Name="SaveNames" Margin="5,55,5,5"/>
                         <TextBox x:Name="SaveNameTextbox" HorizontalAlignment="Center" Margin="0,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" Height="20" PreviewTextInput="NameValidationTextBox" />
                         <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Margin="5,30,0,0" VerticalAlignment="Top" Click="Save_Click" Width="40" />
                         <Button x:Name="Delete" Content="Delete" HorizontalAlignment="Left" Margin="123,30,0,0" VerticalAlignment="Top" Click="Delete_Click" Width="40" />
@@ -40,11 +40,19 @@
                 </Border>
             </Grid>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Height="82" Width="180" Margin="0,392,0,0">
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Height="253" Width="180" Margin="10,392,0,0">
             <Grid>
-                <Button x:Name="Solve" Content="Solve" Margin="5,5,0,0" VerticalAlignment="Top" Click="Solve_Click" Height="20" HorizontalAlignment="Left" Width="66"/>
-                <Button x:Name="ExploreButton" Content="Explore" Margin="5,30,0,30" Click="Explore_Click" Height="20" HorizontalAlignment="Left" Width="66"/>
-                <Label x:Name="SolutionCount" Content="" HorizontalAlignment="Left" Margin="5,50,0,3" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="66" Height="27"/>
+                <Button x:Name="SolveButton" Content="Solve" Margin="5,5,0,0" VerticalAlignment="Top" Click="Solve_Click" Height="20" HorizontalAlignment="Left" Width="66"/>
+                <Label x:Name="SolutionCount" Content="" HorizontalAlignment="Left" Margin="108,25,0,196" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="66"/>
+                <Button x:Name="ExploreButton" Content="Explore" Margin="5,30,0,0" Click="Explore_Click" Height="20" HorizontalAlignment="Left" Width="66" VerticalAlignment="Top"/>
+                <Button x:Name="PossibilitiesButton" Content="Possibilities" HorizontalAlignment="Left" Margin="5,55,0,0" VerticalAlignment="Top" Width="66" Click="Possibilities_Click"/>
+                <ListBox x:Name="PossibilitiesListBox" Margin="5,80,5,0" Height="166" VerticalAlignment="Top" SelectionMode="Multiple">
+                    <ListBox.InputBindings>
+                        <KeyBinding Command="ApplicationCommands.SelectAll" Modifiers="Ctrl" Key="A"/>
+                    </ListBox.InputBindings>
+                </ListBox>
+                <Label x:Name="PossibilitiesCount" Content="{Binding Items.Count, ElementName=PossibilitiesListBox}" HorizontalAlignment="Left" Margin="108,52,0,169" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="66"/>
+                <Button x:Name="StopButton" Content="Stop" HorizontalAlignment="Left" Margin="75,55,0,0" VerticalAlignment="Top" IsEnabled="False" Click="Stop_Click"/>
                 <Button x:Name="UndoButton" Content="Undo" HorizontalAlignment="Left" Margin="89,5,0,0" VerticalAlignment="Top" Click="Undo_Click" IsEnabled="False"/>
                 <Button x:Name="RedoButton" Content="Redo" HorizontalAlignment="Left" Margin="137,5,0,0" VerticalAlignment="Top" Click="Redo_Click" IsEnabled="False"/>
             </Grid>
@@ -66,7 +74,7 @@
                 <TextBox Text="{Binding Value, ElementName=MultipleElementCountSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="95,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center" Height="20"/>
             </Grid>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" Margin="0,479,0,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180" Height="124">
+        <Border BorderBrush="Black" BorderThickness="1" Margin="0,650,0,10" Grid.Column="1" HorizontalAlignment="Center" Width="180">
             <TextBlock x:Name="StatusBox" TextWrapping="Wrap" VerticalAlignment="Top" Height="62" HorizontalAlignment="Left"/>
         </Border>
     </Grid>

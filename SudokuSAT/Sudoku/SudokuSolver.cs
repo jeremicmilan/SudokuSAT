@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Windows.Threading;
+using System.Reflection.Metadata;
+using OperationsResearch;
+using System.Diagnostics;
 
 namespace SudokuSAT
 {
@@ -13,96 +16,68 @@ namespace SudokuSAT
     {
         public MainWindow Window { get; private set; }
 
-        public bool IsExploreActive { get; private set; } = false;
-        public CancellationTokenSource? CancellationTokenSource { get; private set; } = null;
+        private CancellationTokenSource CancellationTokenSource { get; set; } = new();
+        private CancellationToken CancellationToken { get; set; }
+
+
+        public volatile bool IsSolveActive = false;
 
         public SudokuSolver(MainWindow window)
         {
             Window = window;
         }
-        public void Explore(Sudoku sudoku, List<SudokuCell> sudokuCells)
+
+        public void HandleSolveAction(Action solveAction)
         {
-            IsExploreActive = true;
-            CancellationTokenSource = new CancellationTokenSource();
-            CancellationToken cancellationToken = CancellationTokenSource.Token;
-            Window.Dispatcher.Invoke(() => Window.ExploreButton.Content = "Stop");
-            Dictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary = new();
-            try
+            IsSolveActive = true;
+
+            Window.SolveButton.IsEnabled = false;
+            Window.ExploreButton.IsEnabled = false;
+            Window.PossibilitiesButton.IsEnabled = false;
+            Window.StopButton.IsEnabled = true;
+
+            CancellationTokenSource = new();
+            CancellationToken = CancellationTokenSource.Token;
+
+            new Thread(() => Window.HandleFailure(() =>
             {
-                foreach (SudokuCell sudokuCell in sudoku.SudokuCells)
+                try
                 {
-                    if (!sudokuCell.ComputedValue.HasValue)
+                    solveAction();
+                }
+                catch (Exception)
+                {
+                    if (IsSolveActive)
                     {
-                        sudokuCellToOldPossibleValuesDictionary[sudokuCell] = sudokuCell.PossibleValues;
-                        Window.Dispatcher.Invoke(() => sudokuCell.SetPossibleValues(null));
+                        throw;
                     }
                 }
-
-                Parallel.ForEach(
-                    sudokuCells != null && sudokuCells.Any() ? sudokuCells : sudoku.SudokuCells,
-                    new() { MaxDegreeOfParallelism = sudoku.Width },
-                    (sudokuCell) =>
+                finally
                 {
-                    Thread.CurrentThread.Name = "Explore_" + sudokuCell.Name;
-
-                    if (!sudokuCell.ComputedValue.HasValue)
+                    Window.Dispatcher.Invoke(() =>
                     {
-                        Sudoku sudokuTemp = sudoku.Clone();
-                        HashSet<int> possibleValues = new();
-                        for (int i = SudokuCell.MinValue; i <= SudokuCell.MaxValue; i++)
-                        {
-                            CpSolver solver = new();
-                            CpModel model = sudokuTemp.GenerateModel();
+                        Window.SolveButton.IsEnabled = true;
+                        Window.ExploreButton.IsEnabled = true;
+                        Window.PossibilitiesButton.IsEnabled = true;
+                        Window.StopButton.IsEnabled = false;
+                    });
 
-                            model.Add(sudokuTemp.SudokuGrid[sudokuCell.Column, sudokuCell.Row].ValueVar == i);
-
-                            CpSolverStatus solverStatus = solver.Solve(model);
-
-                            if (cancellationToken.IsCancellationRequested)
-                            {
-                                return;
-                            }
-
-                            switch (solverStatus)
-                            {
-                                case CpSolverStatus.Unknown:
-                                case CpSolverStatus.ModelInvalid:
-                                    throw new Exception("Solver status: " + solverStatus
-                                        + " - model validation: " + model.Validate());
-
-                                case CpSolverStatus.Infeasible:
-                                    break;
-
-                                case CpSolverStatus.Feasible:
-                                case CpSolverStatus.Optimal:
-                                    possibleValues.Add(i);
-                                    break;
-                            }
-                        }
-
-                        Window.Dispatcher.Invoke(() => sudokuCell.SetPossibleValues(possibleValues));
-                    }
-                });
-            }
-            catch (Exception)
-            {
-                if (IsExploreActive)
-                {
-                    throw;
+                    IsSolveActive = false;
                 }
-            }
-            finally
+            })).Start();
+        }
+
+        public void StopSolveAction()
+        {
+            if (IsSolveActive)
             {
-                Window.Dispatcher.Invoke(() => sudoku.PerformSudokuAction(
-                    new SudokuActionsPossibleValues(sudoku, sudokuCellToOldPossibleValuesDictionary)));
-                Window.Dispatcher.Invoke(() => Window.ExploreButton.Content = "Explore");
-                IsExploreActive = false;
+                CancellationTokenSource.Cancel();
             }
         }
 
-        public void CheckIsExploreActive()
+        public void CheckIsSolveActive()
         {
-            if (IsExploreActive)
+            if (IsSolveActive)
             {
                 throw new Exception("Explore in progress... Stop it or wait for it to finish.");
             }
@@ -135,9 +110,144 @@ namespace SudokuSAT
                 case CpSolverStatus.Optimal:
                     if (updateSolvedValue)
                     {
-                        sudoku.PerformSudokuAction(new SudokuActionsValue(sudoku, solver));
+                        Window.Dispatcher.Invoke(() => sudoku.PerformSudokuAction(
+                            new SudokuActionsValue(sudoku, solver),
+                            solver: true));
                     }
                     break;
+            }
+        }
+
+        public void Explore(Sudoku sudoku, List<SudokuCell> sudokuCells)
+        {
+            Dictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary = new();
+            try
+            {
+                foreach (SudokuCell sudokuCell in sudoku.SudokuCells)
+                {
+                    if (!sudokuCell.ComputedValue.HasValue)
+                    {
+                        sudokuCellToOldPossibleValuesDictionary[sudokuCell] = sudokuCell.PossibleValues;
+                        Window.Dispatcher.Invoke(() => sudokuCell.SetPossibleValues(null));
+                    }
+                }
+
+                Parallel.ForEach(
+                    sudokuCells != null && sudokuCells.Any() ? sudokuCells : sudoku.SudokuCells,
+                    new() { MaxDegreeOfParallelism = sudoku.Width },
+                    (sudokuCell) =>
+                {
+                    Thread.CurrentThread.Name = "Explore_" + sudokuCell.Name;
+
+                    if (!sudokuCell.ComputedValue.HasValue)
+                    {
+                        Sudoku sudokuTemp = sudoku.Clone();
+                        HashSet<int> possibleValues = new();
+                        for (int i = SudokuCell.MinValue; i <= SudokuCell.MaxValue; i++)
+                        {
+                            CpSolver solver = new();
+                            CpModel model = sudokuTemp.GenerateModel();
+
+                            model.Add(sudokuTemp.SudokuGrid[sudokuCell.Column, sudokuCell.Row].ValueVar == i);
+
+                            CpSolverStatus solverStatus = solver.Solve(model);
+
+                            if (CancellationToken.IsCancellationRequested)
+                            {
+                                return;
+                            }
+
+                            switch (solverStatus)
+                            {
+                                case CpSolverStatus.Unknown:
+                                case CpSolverStatus.ModelInvalid:
+                                    throw new Exception("Solver status: " + solverStatus
+                                        + " - model validation: " + model.Validate());
+
+                                case CpSolverStatus.Infeasible:
+                                    break;
+
+                                case CpSolverStatus.Feasible:
+                                case CpSolverStatus.Optimal:
+                                    possibleValues.Add(i);
+                                    break;
+                            }
+                        }
+
+                        Window.Dispatcher.Invoke(() => sudokuCell.SetPossibleValues(possibleValues));
+                    }
+                });
+            }
+            finally
+            {
+                if (sudokuCellToOldPossibleValuesDictionary.Count > 0)
+                {
+                    Window.Dispatcher.Invoke(() => sudoku.PerformSudokuAction(
+                        new SudokuActionsPossibleValues(sudoku, sudokuCellToOldPossibleValuesDictionary),
+                        solver: true));
+                }
+            }
+        }
+
+        internal void Possibilities(Sudoku sudoku, List<SudokuCell> sudokuCells)
+        {
+            List<List<int>> solutions = new();
+            CpSolverStatus solverStatus = CpSolverStatus.Unknown;
+            Window.Dispatcher.Invoke(() =>
+            {
+                Window.PossibilitiesListBox.Items.Clear();
+            });
+            for (int i = 0; i < SolutionCounter.MaxSolutionCount; i++)
+            {
+                CpSolver solver = new();
+                CpModel model = sudoku.GenerateModel();
+
+                foreach (List<int> solution in solutions)
+                {
+                    Debug.Assert(solution.Count == sudokuCells.Count);
+                    List<BoolVar> boolVars = new();
+                    for (int j = 0; j < solution.Count; j++)
+                    {
+                        BoolVar boolVar = model.NewBoolVar("possibilities_solution" + i + "_" + sudokuCells[j].Name);
+                        model.Add(sudokuCells[j].ValueVar == solution[j]).OnlyEnforceIf(boolVar);
+                        model.Add(sudokuCells[j].ValueVar != solution[j]).OnlyEnforceIf(boolVar.Not());
+                        boolVars.Add(boolVar);
+                    }
+
+                    model.AddBoolOr(boolVars.Select(boolVar => boolVar.Not()));
+                }
+
+                solverStatus = solver.Solve(model);
+
+                if (CancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                if (solverStatus == CpSolverStatus.Infeasible)
+                {
+                    break;
+                }
+
+                switch (solverStatus)
+                {
+                    case CpSolverStatus.Unknown:
+                    case CpSolverStatus.ModelInvalid:
+                        throw new Exception("Solver status: " + solverStatus
+                            + " - model validation: " + model.Validate());
+
+                    case CpSolverStatus.Feasible:
+                    case CpSolverStatus.Optimal:
+                        List<int> solution = sudokuCells.Select(sudokuCell => (int)solver.Value(sudokuCell.ValueVar)).ToList();
+                        solutions.Add(solution);
+                        Window.Dispatcher.Invoke(() =>
+                        {
+                            Window.PossibilitiesListBox.Items.Add(string.Join(',', solution));
+                            Window.PossibilitiesListBox.Items.SortDescriptions.Add(
+                                new System.ComponentModel.SortDescription("", System.ComponentModel.ListSortDirection.Ascending));
+                        });
+                        break;
+                }
             }
         }
     }

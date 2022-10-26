@@ -127,12 +127,12 @@ namespace SudokuSAT
 
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
-            HandleClickFailure(() => CreateSudoku());
+            HandleFailure(() => CreateSudoku());
         }
 
         private void Load_Click(object sender, RoutedEventArgs e)
         {
-            HandleClickFailure(() =>
+            HandleFailure(() =>
             {
                 if (SelectedSaveName == "")
                 {
@@ -155,7 +155,7 @@ namespace SudokuSAT
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            HandleClickFailure(() =>
+            HandleFailure(() =>
             {
                 if (SaveNameTextbox.Text == "")
                 {
@@ -178,7 +178,7 @@ namespace SudokuSAT
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            HandleClickFailure(() =>
+            HandleFailure(() =>
             {
                 File.Delete(SaveNameToFile(SelectedSaveName));
                 SaveNames.Items.Remove(SelectedSaveName);
@@ -193,8 +193,9 @@ namespace SudokuSAT
 
         private void PerformUndoRedoAction(Action action)
         {
-            HandleClickFailure(() =>
+            HandleFailure(() =>
             {
+                SudokuSolver.CheckIsSolveActive();
                 action();
                 UpdateUndoRedoButtons();
             });
@@ -212,7 +213,7 @@ namespace SudokuSAT
 
         public void SolveAsync()
         {
-            new Thread(() => HandleClickFailure(() =>
+            new Thread(() => HandleFailure(() =>
             {
                 SudokuSolver.Solve(Sudoku, updateSolvedValue: false);
             })).Start();
@@ -220,22 +221,23 @@ namespace SudokuSAT
 
         private void Solve_Click(object sender, RoutedEventArgs e)
         {
-            HandleClickFailure(() => SudokuSolver.Solve(Sudoku, updateSolvedValue: true));
+            SudokuSolver.HandleSolveAction(() => SudokuSolver.Solve(Sudoku, updateSolvedValue: true));
         }
 
         private void Explore_Click(object sender, RoutedEventArgs e)
         {
-            new Thread(() => HandleClickFailure(() =>
-            {
-                if (SudokuSolver.IsExploreActive && SudokuSolver.CancellationTokenSource != null)
-                {
-                    SudokuSolver.CancellationTokenSource.Cancel();
-                }
-                else
-                {
-                    SudokuSolver.Explore(Sudoku, Sudoku.SelectedSudokuCells);
-                }
-            })).Start();
+            SudokuSolver.HandleSolveAction(() => SudokuSolver.Explore(Sudoku, Sudoku.SelectedSudokuCells));
+        }
+
+        private void Possibilities_Click(object sender, RoutedEventArgs e)
+        {
+            SudokuSolver.HandleSolveAction(() => SudokuSolver.Possibilities(Sudoku, Sudoku.SelectedSudokuCells));
+        }
+
+        private void Stop_Click(object sender, RoutedEventArgs e)
+        {
+            SudokuSolver.StopSolveAction();
+            StopButton.IsEnabled = false;
         }
 
         private void Arrow_Click(object sender, RoutedEventArgs e)
@@ -289,10 +291,10 @@ namespace SudokuSAT
 
         private void AddSudokuElement(Func<SudokuElement> instantiateSudokuElement)
         {
-            HandleClickFailure(() => Sudoku.AddElement(instantiateSudokuElement()));
+            HandleFailure(() => Sudoku.AddElement(instantiateSudokuElement()));
         }
 
-        private void HandleClickFailure(Action action)
+        public void HandleFailure(Action action)
         {
             try
             {
@@ -357,7 +359,7 @@ namespace SudokuSAT
 
         private void Keyboard_KeyDown(object sender, KeyEventArgs e)
         {
-            HandleClickFailure(() =>
+            HandleFailure(() =>
             {
                 int? value = Helpers.KeyToValue(e.Key);
                 bool shouldDelete = e.Key == Key.D0 || e.Key == Key.NumPad0 || e.Key == Key.Delete || e.Key == Key.Back;
@@ -377,7 +379,7 @@ namespace SudokuSAT
         {
             base.OnClosed(e);
             ClosingWindow = true;
-            SudokuSolver.CancellationTokenSource?.Cancel();
+            SudokuSolver.StopSolveAction();
         }
     }
 }

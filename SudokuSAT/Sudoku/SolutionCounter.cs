@@ -7,7 +7,7 @@ namespace SudokuSAT
 {
     public class SolutionCounter : CpSolverSolutionCallback
     {
-        private const int MaxSolutionCount = 100;
+        public const int MaxSolutionCount = 100;
 
         private SudokuSolver SudokuSolver { get; set; }
         private CpSolver Solver { get; set; }
