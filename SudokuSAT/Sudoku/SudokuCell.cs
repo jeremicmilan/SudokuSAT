@@ -224,6 +224,8 @@ namespace SudokuSAT
         private bool VisualizedIsSelected { get; set; } = false;
         private int? VisualizedComputedValue { get; set; } = null;
 
+        private static SudokuCell? LastClickedSudokuCell = null;
+
         public void Visualize(bool recreateElements = false)
         {
             recreateElements = recreateElements
@@ -256,6 +258,7 @@ namespace SudokuSAT
                 }
 
                 SetIsSelected(newIsSelected);
+                LastClickedSudokuCell = this;
 
                 if (!Sudoku.SelectedSudokuCells.Any())
                 {
@@ -264,9 +267,9 @@ namespace SudokuSAT
             }));
             SelectLabel.AddHandler(UIElement.MouseEnterEvent, new RoutedEventHandler((_, _) =>
             {
-                if (Mouse.LeftButton == MouseButtonState.Pressed && !IsSelected)
+                if (Mouse.LeftButton == MouseButtonState.Pressed && !IsSelected && LastClickedSudokuCell != this)
                 {
-                    SetIsSelected(!IsSelected);
+                    SetIsSelected(true);
                 }
             }));
             Grid.Children.Add(SelectLabel);
