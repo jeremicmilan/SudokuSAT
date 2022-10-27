@@ -195,6 +195,7 @@ namespace SudokuSAT
             if (!solver)
             {
                 MainWindow.SudokuSolver.CheckIsSolveActive();
+                MainWindow.SudokuSolver.ClearExploreIfNeeded(this);
             }
 
             SudokuActions.Add(sudokuAction);

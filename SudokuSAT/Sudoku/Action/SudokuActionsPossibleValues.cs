@@ -10,10 +10,10 @@ namespace SudokuSAT
 
         public SudokuActionsPossibleValues(
             Sudoku sudoku,
-            Dictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary)
+            Dictionary<SudokuCell, HashSet<int>?> oldPossibleValues)
             : base(sudoku)
         {
-            foreach ((SudokuCell sudokuCell, HashSet<int>? possibleValues) in sudokuCellToOldPossibleValuesDictionary)
+            foreach ((SudokuCell sudokuCell, HashSet<int>? possibleValues) in oldPossibleValues)
             {
                 SudokuActionCells.Add(new SudokuActionPossibleValues(
                     Sudoku, sudokuCell, sudokuCell.PossibleValues, possibleValues));

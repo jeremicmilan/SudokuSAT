@@ -118,20 +118,29 @@ namespace SudokuSAT
             }
         }
 
+        internal void ClearExploreIfNeeded(Sudoku sudoku)
+        {
+            Dictionary<SudokuCell, HashSet<int>?> oldPossibleValues = new();
+            foreach (SudokuCell sudokuCell in sudoku.SudokuCells)
+            {
+                if (sudokuCell.PossibleValues != null && sudokuCell.PossibleValues.Count > 0)
+                {
+                    oldPossibleValues[sudokuCell] = sudokuCell.PossibleValues;
+                    sudokuCell.PossibleValues = null;
+                }
+            }
+
+            if (oldPossibleValues.Count > 0)
+            {
+                sudoku.PerformSudokuAction(new SudokuActionsPossibleValues(sudoku, oldPossibleValues), solver: true);
+            }
+        }
+
         public void Explore(Sudoku sudoku, List<SudokuCell> sudokuCells)
         {
-            Dictionary<SudokuCell, HashSet<int>?> sudokuCellToOldPossibleValuesDictionary = new();
+            ConcurrentDictionary<SudokuCell, HashSet<int>?> oldPossibleValues = new();
             try
             {
-                foreach (SudokuCell sudokuCell in sudoku.SudokuCells)
-                {
-                    if (!sudokuCell.ComputedValue.HasValue)
-                    {
-                        sudokuCellToOldPossibleValuesDictionary[sudokuCell] = sudokuCell.PossibleValues;
-                        Window.Dispatcher.Invoke(() => sudokuCell.SetPossibleValues(null));
-                    }
-                }
-
                 Parallel.ForEach(
                     sudokuCells != null && sudokuCells.Any() ? sudokuCells : sudoku.SudokuCells,
                     new() { MaxDegreeOfParallelism = sudoku.Width },
@@ -139,7 +148,7 @@ namespace SudokuSAT
                 {
                     Thread.CurrentThread.Name = "Explore_" + sudokuCell.Name;
 
-                    if (!sudokuCell.ComputedValue.HasValue)
+                    if (!sudokuCell.ComputedValue.HasValue && sudokuCell.PossibleValues == null)
                     {
                         Sudoku sudokuTemp = sudoku.Clone();
                         HashSet<int> possibleValues = new();
@@ -174,16 +183,18 @@ namespace SudokuSAT
                             }
                         }
 
+                        oldPossibleValues[sudokuCell] = null;
                         Window.Dispatcher.Invoke(() => sudokuCell.SetPossibleValues(possibleValues));
                     }
                 });
             }
             finally
             {
-                if (sudokuCellToOldPossibleValuesDictionary.Count > 0)
+                if (oldPossibleValues.Count > 0)
                 {
                     Window.Dispatcher.Invoke(() => sudoku.PerformSudokuAction(
-                        new SudokuActionsPossibleValues(sudoku, sudokuCellToOldPossibleValuesDictionary),
+                        new SudokuActionsPossibleValues(sudoku, oldPossibleValues.ToDictionary(
+                            kvp => kvp.Key, kvp => kvp.Value, oldPossibleValues.Comparer)),
                         solver: true));
                 }
             }
