@@ -15,8 +15,8 @@ namespace SudokuSAT
 {
     public class SudokuCell
     {
-        public const int MinValue = 1;
-        public const int MaxValue = 9;
+        public int MinValue => 1;
+        public int MaxValue => new[] { Sudoku.BoxSize * Sudoku.BoxSize, Sudoku.Width, Sudoku.Height }.Max();
 
         public Sudoku Sudoku { get; set; }
 

@@ -152,7 +152,7 @@ namespace SudokuSAT
                     {
                         Sudoku sudokuTemp = sudoku.Clone();
                         HashSet<int> possibleValues = new();
-                        for (int i = SudokuCell.MinValue; i <= SudokuCell.MaxValue; i++)
+                        for (int i = sudokuCell.MinValue; i <= sudokuCell.MaxValue; i++)
                         {
                             CpSolver solver = new();
                             CpModel model = sudokuTemp.GenerateModel();
