@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -54,6 +55,8 @@ namespace SudokuSAT
             }
 
             SudokuPlaceholder.SizeChanged += (_, _) => Sudoku.Visualize();
+
+            Process.GetCurrentProcess().ProcessorAffinity = (IntPtr)(~((~0) << Environment.ProcessorCount - 2) << 2);
         }
 
         private void AddSudoku(Sudoku sudoku)
