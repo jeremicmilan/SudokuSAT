@@ -26,7 +26,7 @@ namespace SudokuSAT
         public int? Value { get; set; }
         public ValueType? Type { get; set; }
         public HashSet<int>? PossibleValues { get; set; } = null;
-        private int? PossibleValue
+        public int? PossibleValue
         {
             get
             {

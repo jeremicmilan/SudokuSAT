@@ -123,7 +123,8 @@ namespace SudokuSAT
             Dictionary<SudokuCell, HashSet<int>?> oldPossibleValues = new();
             foreach (SudokuCell sudokuCell in sudoku.SudokuCells)
             {
-                if (sudokuCell.PossibleValues != null && sudokuCell.PossibleValues.Count > 0)
+                if (sudokuCell.PossibleValue == null &&
+                    sudokuCell.PossibleValues != null && sudokuCell.PossibleValues.Count > 0)
                 {
                     oldPossibleValues[sudokuCell] = sudokuCell.PossibleValues;
                     sudokuCell.PossibleValues = null;
