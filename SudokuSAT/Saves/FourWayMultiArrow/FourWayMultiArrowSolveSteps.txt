@@ -1,0 +1,74 @@
+1) Looking at the horizontal multi-arrow of length 7 we conclude that the possible options are [9, 7, 2, 5, 4, 1, 3] and [9, 8, 1, 7, 5, 2, 3]. We can bifurcate to come to this conclussion (it's probably faster :)), or we can follow the logic below (there's bound to be a simpler way as well :)):
+    The 4 normal arrow circles must be in the first 5 cells of the multi-Arrow, which means we have 1 degree of freedom. 1 degree of freedom means that all arrows are overlapping, as the shortest arrow we can make is of length 3 (as we cannot repeat digits due to sudoku rules).
+    The 4 arrow circles cannot be consecutive, as the longest descending run of arrow circles we can make is 3 - examples [9, 6, 3, 2, 1], [9, 5, 4, 1, 3], etc. This means that at some point in this run of normal arrow circles we will have a descending run of digits which ends with a low digit which is not a normal arrow circle (digit X) followed by a high digit (digit Y) which is a normal arrow circle (after which numbers start to descend until the last two digits on the multi-arrow that are not normal arrow circles). One of the consequences of this reasoning is that all cells on the multi-arrow must be a part of at least one normal arrow, as we lost 1 degree of freedom we had before (leaving us with no degrees of freedom).
+    The digit X cannot be first on the multi-arrow, as that is losing another degree of freedom which we do not have.
+    The digit X must be 1 or 2, and that is because:
+        The digit X cannot be 5 or higher as we cannot pick a valid digit for digit before the digit X.
+        The digit X cannot be 4, as the only option is [9, 4, 5], which does not work as there is not enough degrees of freedom (we cannot make 3 normal arrows starting with 5 onwards).
+        The digit X cannot be 3, but this is more difficult to prove. The options are [9, 6, 3], [8, 5, 3], [7, 4, 3] (all of which do not work as any higher digit after 3 will remove 2 degrees of freedom, instead of only one), then [9, 3, 6], [8, 3, 5], [7, 3, 4] (the last digit in the sequence 6, 5, 4 is too low to be the highest digit on the descending run and make three normal arrows).
+    The digit Y must be 5 or higher:
+        Reminder: the digit Y is a normal arrow circle.
+        The digit Y cannot be 1 or 2, as those digits cannot be in the normal arrow circle (on this multi-line).
+        The digit Y cannot be 3, as the only option is to be followed by 2 and 1 (in any order), but that is not possible as we take all the options from the digit X.
+        The digit Y cannot be 4, as that option would look like this [14, 8, 6, 2, 4, 3, 1], and we cannot put 14 in a sudoku grid.
+    The pair of the digit X and the digit Y can only be [2, 5] and [1, 7] (there's bound to be a better way here than to do this small bifurcation, but this is hopefully not too bad):
+        Invalid options:
+            [1, 5] would give as the beginning of the multi-arrow [7, 6, 1, 5] after which we cannot create two more normal arrows.
+            [1, 6] would give as the beginning of the multi-arrow [8, 7, 1, 6] after which we cannot create two more normal arrows, or [1, 6] would give as the beginning of the multi-arrow [7, 1, 6] after which we cannot create three more normal arrows.
+            [1, 8] would give as the beginning of the multi-arrow [9, 1, 8] after which we cannot create three more normal arrows.
+            [1, 9] would place the digit X as the first digit, which we already proved is not possible.
+            [2, 6] would give as the beginning of the multi-arrow [8, 2, 6] after which we cannot create three more normal arrows.
+            [2, 7] would give as the beginning of the multi-arrow [9, 2, 7] after which we cannot create three more normal arrows.
+            [2, 8] would place the digit X as the first digit, which we already proved is not possible.
+            [2, 9] would place the digit X as the first digit, which we already proved is not possible.
+        Valid options:
+            [2, 5] would give as the beginning of the multi-arrow [9, 7, 2, 5] which gives us the only option [9, 7, 2, 5, 4, 1, 3].
+            [1, 7] would give as the beginning of the multi-arrow [9, 8, 1, 7] which gives us the only option [9, 8, 1, 7, 5, 2, 3].
+2) Similar reasoning gives us that the options for the vertical multi-arrow of length 7 are the same: [9, 7, 2, 5, 4, 1, 3] and [9, 8, 1, 7, 5, 2, 3].
+3) Looking at box 1, we can see that r1c3, r2c1 and r2c2 are composed of digits that are not on the multi-arrows of length 7, and those digits are 4, 6 and 8.
+4) The only option for the vertical multi-arrow is [9, 7, 2, 5, 4, 1, 3], as the other option has 8 in r3c3 which collides with conclussions from step 3. We can place [9, 7, 2, 5, 4, 1, 3] in c3 (rows 2 through 8). The only options for r1c3 and r9c3 are 6 and 8. This means that the 4 in box 1 is in r2c1 or r2c2, which eliminates [9, 7, 2, 5, 4, 1, 3] as the option for the horizontal multi-arrow of length 7 (as it contains a 4). We can now place digits [9, 8, 1, 7, 5, 2, 3] in r2 (columns 3 through 9). This eliminates the 8 from r2 in box 1 placing 8 in r1c3 and 6 in r9c3.
+5) Looking at multi-arrow of length 5:
+    We conclude that the normal arrow circles must be in all cells except the tip (r6c7, r7c8, r8c9 and r9c9). For r6c7 to be a normal arrow circle, it can only be if r6c7 and r5c6 are the same digit (digit Z).
+    r7c8 can be either equal to digit Z or 2*Z.
+        If it were 2*Z the options are 2, 4, 6, 8 (none of which are possible):
+            2 is not an option as it is visible in the column.
+            4 is not an option, as it would mean that r8c9 is 6 or 8, which would make r9c9 10 or higher, which is not possible.
+            6 is not an option, as it would mean that r8c9 is 9, which would make r9c9 15 or higher, which is not possible.
+            8 is not an option, as it would mean that r8c9 is 12, which is not possible.
+        Hence, r7c8 is equal to the digit Z.
+    r7c8 sees 1 in the row and 2 in the column, which would mean that the minimum for Z is 3.
+    Z cannot be 4 or higher as it would mean r8c9 is 8 or higher, which would make r9c9 12 or higher.
+    Hence, Z is 3, which makes this multi-arrow made up of digits [9, 6, 3, 3, 3], which can be placed in r9c9, r8c9, r7c8, r6c7 and r5c6 respectively.
+6) Looking at multi-arrow of length 6:
+    We similarly conclude that the normal arrow circles are in boxes 8 and 9 (r7c6, r8c7, r9c8 and r9c9), as we cannot repeat digits in box 5.
+    Looking at r6c5, the only options are 2, 5, 6, 7, 8 and 9, as 1, 3, and 4 are visible by sudoku. r6c5 cannot be 5 or higher as 5 would give minimum of 6 for r7c6, and minimum of 6 for r8c7, and minimum of 12 for r9c8 which is not possible. Hence the only option for r6c5 is 2.
+    r7c6 can only be 2 (normal arrow of length 2), as 4 (next lowest digit by sudoku) gives minimum of 6 for r8c7, which gives minimum of 10 for r9c8, which is not possible.
+    r8c7 must be 2 or higher (as it must be a normal arrow circle). The options are 2, 4, 7 and 8 by sudoku. 7 or 8 obviously do not work as they make box 9 impossible. 4 does not work as it makes r9c8 be 6, 8 or 9, where only 8 is possible by sudoku, which is too high for a 9 in r9c9. Hence, r8c7 must be a 2.
+    r9c8 must be a normal arrow circle. Also, r9c8 must be odd as r9c9 is 9 and all the other digits on the multi-arrow (so far) are even. To make r9c8 odd, r5c4 must be odd and the options are 1, 7 and 9 by sudoku, out of which 7 and 9 are obviously too high. This makes r5c4 equal to 1, which makes r9c8 equal to 7.
+7) Sudoku gives us a 2 in r5c9.
+8) Looking at multi-arrow of size 9:
+    The last 5 digits on the multi-arrow (r4c4, r4c5, r4c6, r5c7, r5c8) are 4 or higher by sudoku.
+    4 normal arrow circles are somewhere in cells r4c6, r5c7, r5c8, r6c9, r7c9, r8c9 and r9c9.
+        r9c9 is not a normal arrow circle, as it would mean that r7c9 is 1, 2, or 3 which is not allowed by sudoku.
+        r5c8 is not a normal arrow circle:
+            Sudoku allows r5c8 to be 4, 6, 8 and 9.
+            As a normal arrow circle, r5c8 cannot be 4 or 6 as all the digits after it are 4 or higher and r5c7 is in the same box (and can't be repeated by sudoku), making the minim equal to 8 (which is higher than 4 and 6).
+            As a normal arrow circle, r5c8 cannot be 8, as it would place 4s in r5c7 an r4c6, which would effectively mean that r4c6 is not a normal arrow circle, but r5c7 and r5c8 are. However, in column 9 out of three remaining cells we cannot make 2 normal arrow circles, as the 8 in r5c8 is preventing r7c9 from being a normal arrow circle. Also, the only way r8c9 can be a normal arrow circle if r7c9 is 1 and r8c9 is 9, but that is not allowed by sudoku, as it places two 9s in box 9.
+            As a normal arrow circle, r5c8 cannot be 9 following the similar logic as with the 8, but it even more aggressively eliminates r7c9 and r8c9 as normal arrow circles.
+        r7c9 is not a normal arrow circle, as the options allowed by sudoku are 1, 5, 7 and 8, which cannot be a sum of the next two digits on the multi-arrow which are both different (in the same box) and 4 or higher.
+    Hence, 4 normal circle arrows on this multi-arrow are in r4c6, r5c7, r7c9 and r8c9.
+    As r4c6 is a normal arrow circle, that places a 9 in r4c6 with a 4, 5 pair in r4c4, r4c5.
+    As r5c7 is a normal arrow circle, it must be 9, as r4c6 is 9.
+    Options for r7c9 by sudoku are 4, 5 and 8. To make r8c9 work, the only option for r7c9 is 5 and for r6c9 is 1 (as r6c9 cannot be 2 by sudoku).
+    To make r7c9 as a normal arrow circle, r5c8 must be 4.
+9) Looking at multi-arrow of size 8:
+    r5c1 and r6c2 can only be 6 or higher by sudoku.
+    4 normal arrow circles are somewhere in cells r4c1, r5c1, r6c2, r7c2, r8c2 and r8c1.
+        r7c2 cannot be a normal arrow circle, as if it were it would have to be a minimum of 13.
+        r8c2 cannot be a normal arrow circle, as if it were it would have to be a minimum of 10, as r7c2 is minimum of 4 by sudoku and r6c2 is minimum of 6 by sudoku.
+    Hence, 4 normal arrow circles are in cells r4c1, r5c1, r6c2 and r8c1.
+    The first three cells on the multi-arrow (r8c1, r8c2 and r7c2) get resolved to 9, 5 and 4 respectively, as they are all a minimum of 4 and r7c2 sees 5 in the row.
+    The rest of the multi-arrow, starting with r6c2 must be 9 (r6c2), 6 (r5c1), 3 (r4c1) with a 1, 2 pair at the end (r3c1 and r3c2), as we have to decrease the digits as we go down the multi-arrow and when we minimize the r3c1 and r3c2, there are no more degrees of freedom.
+10) To finish up, relatively easy sudoku solving should be needed.
+
+I hope you enjoyed the puzzle! Thanks for solving! :)
