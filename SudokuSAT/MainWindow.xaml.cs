@@ -30,7 +30,8 @@ namespace SudokuSAT
         public string SelectedSaveName => (string)SaveNames.SelectedItem;
         public bool MultiElement => MultiElementCheckbox.IsChecked != null && MultiElementCheckbox.IsChecked.Value;
         public int MultiElementCount => (int)MultipleElementCountSlider.Value;
-        public static string SaveNameToFile(string saveName) => SavePath + "\\" + saveName + ".save";
+        public static string SaveNameToFolder(string saveName) => SavePath + "\\" + saveName;
+        public static string SaveNameToFile(string saveName) => SaveNameToFolder(saveName) + "\\" + saveName + ".save";
         public static string SaveFileToName(string fileName) => Path.GetFileNameWithoutExtension(fileName);
         public static readonly JsonSerializerSettings JsonSerializerSettings = new()
         {
@@ -49,7 +50,7 @@ namespace SudokuSAT
             SudokuSolver = new(this);
             Sudoku = CreateSudoku(); // Assigning to make the compiler happy
 
-            foreach (string fileName in Directory.GetFiles(SavePath))
+            foreach (string fileName in Directory.GetFiles(SavePath, "*.save", SearchOption.AllDirectories))
             {
                 SaveNames.Items.Add(SaveFileToName(fileName));
             }
@@ -161,12 +162,13 @@ namespace SudokuSAT
         {
             HandleFailure(() =>
             {
-                if (SaveNameTextbox.Text == "")
+                string saveName = SaveNameTextbox.Text;
+                if (saveName == "")
                 {
                     throw new Exception("Please specify save name.");
                 }
 
-                string fileName = SaveNameToFile(SaveNameTextbox.Text);
+                string fileName = SaveNameToFile(saveName);
                 string sudokuJson = JsonConvert.SerializeObject(Sudoku, JsonSerializerSettings);
 
                 if (File.Exists(fileName))
@@ -174,6 +176,7 @@ namespace SudokuSAT
                     throw new Exception("Save with the specified name already exists.");
                 }
 
+                Directory.CreateDirectory(SaveNameToFolder(saveName));
                 File.Create(fileName).Close();
                 File.WriteAllText(fileName, sudokuJson);
                 SaveNames.Items.Add(SaveNameTextbox.Text);
@@ -184,7 +187,7 @@ namespace SudokuSAT
         {
             HandleFailure(() =>
             {
-                File.Delete(SaveNameToFile(SelectedSaveName));
+                Directory.Delete(SaveNameToFolder(SelectedSaveName), recursive: true);
                 SaveNames.Items.Remove(SelectedSaveName);
             });
         }
