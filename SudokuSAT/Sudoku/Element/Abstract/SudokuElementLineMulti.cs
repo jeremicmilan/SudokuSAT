@@ -57,17 +57,6 @@ namespace SudokuSAT
                 subsetBoolVars.Add(subsetBoolVar);
                 SudokuElementLine sudokuElementLine = InstantiateSubElement(sudokuCells);
                 sudokuElementLine.AddConstraints(model, subsetBoolVar);
-
-                /* TODO: Code for 'exactly', but it turned out pretty slow...
-                List<List<SudokuCell>> sudokuCellsSubsetsWithoutSudokuCell = new();
-                sudokuCellsSubsetsWithoutSudokuCell.AddRange(sudokuCellsSubsets);
-                sudokuCellsSubsetsWithoutSudokuCell.Remove(sudokuCells);
-                foreach (List<SudokuCell> sudokuCellsWithoutSudokuCell in sudokuCellsSubsetsWithoutSudokuCell)
-                {
-                    sudokuElementLine = InstantiateSubElement(sudokuCellsWithoutSudokuCell);
-                    sudokuElementLine.AddNegativeConstraints(model, subsetBoolVar);
-                }
-                */
             }
 
             model.Add(LinearExpr.Sum(subsetBoolVars) == ElementCount).OnlyEnforceIf(boolVar);
