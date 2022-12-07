@@ -26,19 +26,6 @@ namespace SudokuSAT
 
         public abstract SudokuElementLine InstantiateSubElement(List<SudokuCell> sudokuCells);
 
-        private bool AreConsecutive(List<SudokuCell> sudokuCells)
-        {
-            for (int i = 1; i < sudokuCells.Count; i++)
-            {
-                if (SudokuCellsOrderDictionary[sudokuCells[i]] - SudokuCellsOrderDictionary[sudokuCells[i - 1]] != 1)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
         public override void AddConstraints(CpModel model, BoolVar boolVar)
         {
             List<List<SudokuCell>> sudokuCellsSubsets = SudokuCells

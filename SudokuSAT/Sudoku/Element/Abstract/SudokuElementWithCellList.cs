@@ -35,5 +35,18 @@ namespace SudokuSAT
                 SudokuCellsOrderDictionary[sudokuCell] = i++;
             }
         }
+
+        protected bool AreConsecutive(List<SudokuCell> sudokuCells)
+        {
+            for (int i = 1; i < sudokuCells.Count; i++)
+            {
+                if (SudokuCellsOrderDictionary[sudokuCells[i]] - SudokuCellsOrderDictionary[sudokuCells[i - 1]] != 1)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }
