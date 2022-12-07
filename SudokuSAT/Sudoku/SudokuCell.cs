@@ -206,18 +206,16 @@ namespace SudokuSAT
             { ValueType.User,   Brushes.Blue  }
         };
 
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-        private Point TranslatePoint(Point point) => Grid.TranslatePoint(point, Sudoku.Grid);
-        [JsonIgnore] public Point CenterPosition      => TranslatePoint(new Point(.5 * Grid.ActualWidth, .5 * Grid.ActualHeight));
-        [JsonIgnore] public Point TopPosition         => TranslatePoint(new Point(.5 * Grid.ActualWidth, 0                     ));
-        [JsonIgnore] public Point BottomPosition      => TranslatePoint(new Point(.5 * Grid.ActualWidth, Grid.ActualHeight     ));
-        [JsonIgnore] public Point LeftPosition        => TranslatePoint(new Point(0                    , .5 * Grid.ActualHeight));
-        [JsonIgnore] public Point RightPosition       => TranslatePoint(new Point(Grid.ActualWidth     , .5 * Grid.ActualHeight));
-        [JsonIgnore] public Point TopLeftPosition     => TranslatePoint(new Point(0                    , 0                     ));
-        [JsonIgnore] public Point TopRightPosition    => TranslatePoint(new Point(Grid.ActualWidth     , 0                     ));
-        [JsonIgnore] public Point BottomLeftPosition  => TranslatePoint(new Point(0                    , Grid.ActualHeight     ));
-        [JsonIgnore] public Point BottomRightPosition => TranslatePoint(new Point(Grid.ActualWidth     , Grid.ActualHeight     ));
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+        private Point TranslatePoint(Point point)           { Debug.Assert(Grid != null); return Grid.TranslatePoint(point, Sudoku.Grid); }
+        [JsonIgnore] public Point CenterPosition      { get { Debug.Assert(Grid != null); return TranslatePoint(new Point(.5 * Grid.ActualWidth, .5 * Grid.ActualHeight)); } }
+        [JsonIgnore] public Point TopPosition         { get { Debug.Assert(Grid != null); return TranslatePoint(new Point(.5 * Grid.ActualWidth, 0                     )); } }
+        [JsonIgnore] public Point BottomPosition      { get { Debug.Assert(Grid != null); return TranslatePoint(new Point(.5 * Grid.ActualWidth, Grid.ActualHeight     )); } }
+        [JsonIgnore] public Point LeftPosition        { get { Debug.Assert(Grid != null); return TranslatePoint(new Point(0                    , .5 * Grid.ActualHeight)); } }
+        [JsonIgnore] public Point RightPosition       { get { Debug.Assert(Grid != null); return TranslatePoint(new Point(Grid.ActualWidth     , .5 * Grid.ActualHeight)); } }
+        [JsonIgnore] public Point TopLeftPosition     { get { Debug.Assert(Grid != null); return TranslatePoint(new Point(0                    , 0                     )); } }
+        [JsonIgnore] public Point TopRightPosition    { get { Debug.Assert(Grid != null); return TranslatePoint(new Point(Grid.ActualWidth     , 0                     )); } }
+        [JsonIgnore] public Point BottomLeftPosition  { get { Debug.Assert(Grid != null); return TranslatePoint(new Point(0                    , Grid.ActualHeight     )); } }
+        [JsonIgnore] public Point BottomRightPosition { get { Debug.Assert(Grid != null); return TranslatePoint(new Point(Grid.ActualWidth     , Grid.ActualHeight     )); } }
 
         private Label? SelectLabel { get; set; }
         private HashSet<int>? VisualizedPossibleValues { get; set; }
