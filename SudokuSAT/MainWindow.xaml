@@ -73,6 +73,8 @@
                 <CheckBox x:Name="MultiElementCheckbox" Content="Multi" Margin="0,0,5,5" HorizontalAlignment="Right" Width="49" Height="15" VerticalAlignment="Bottom"/>
                 <Slider x:Name="MultipleElementCountSlider" HorizontalAlignment="Left" Margin="5,140,0,0" VerticalAlignment="Top" Width="88" SmallChange="1" IsSnapToTickEnabled="True" TickFrequency="1" Minimum="1" Value="2"/>
                 <TextBox Text="{Binding Value, ElementName=MultipleElementCountSlider, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Margin="95,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="19" TextAlignment="Center" Height="20"/>
+                <Button Content="X" HorizontalAlignment="Left" Margin="136,5,0,0" VerticalAlignment="Top" Click="X_Click"/>
+                <Button Content="V" HorizontalAlignment="Left" Margin="152,5,0,0" VerticalAlignment="Top" Click="V_Click"/>
             </Grid>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" Margin="0,650,0,10" Grid.Column="1" HorizontalAlignment="Center" Width="180">

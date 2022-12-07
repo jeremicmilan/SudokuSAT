@@ -296,6 +296,22 @@ namespace SudokuSAT
                 grid: new Grid()));
         }
 
+        private void X_Click(object sender, RoutedEventArgs e)
+        {
+            AddSudokuElement(() => new SudokuX(
+                Sudoku,
+                Sudoku.SelectedSudokuCells,
+                grid: new Grid()));
+        }
+
+        private void V_Click(object sender, RoutedEventArgs e)
+        {
+            AddSudokuElement(() => new SudokuV(
+                Sudoku,
+                Sudoku.SelectedSudokuCells,
+                grid: new Grid()));
+        }
+
         private void AddSudokuElement(Func<SudokuElement> instantiateSudokuElement)
         {
             HandleFailure(() => Sudoku.AddElement(instantiateSudokuElement()));
