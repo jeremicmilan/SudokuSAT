@@ -21,7 +21,7 @@ namespace SudokuSAT
 
         public override void AddConstraints(CpModel model, BoolVar boolVar)
         {
-            model.Add(FirstSudokuCell.ValueVar + SecondSudokuCell.ValueVar == 5);
+            model.Add(FirstSudokuCell.ValueVar + SecondSudokuCell.ValueVar == 5).OnlyEnforceIf(boolVar);
         }
 
         protected override void VisualizeInternal()

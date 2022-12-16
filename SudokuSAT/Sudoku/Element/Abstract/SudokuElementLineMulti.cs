@@ -21,9 +21,10 @@ namespace SudokuSAT
             : base(sudoku, sudokuCells, sudokuElementId, grid)
         {
             ElementCount = elementCount;
-            SudokuElementLineVisual = InstantiateSubElement(sudokuCells);
+            SudokuElementLineVisual = InstantiateVisual(sudokuCells);
         }
 
+        public virtual SudokuElementLine InstantiateVisual(List<SudokuCell> sudokuCells) => InstantiateSubElement(sudokuCells);
         public abstract SudokuElementLine InstantiateSubElement(List<SudokuCell> sudokuCells);
 
         public override void AddConstraints(CpModel model, BoolVar boolVar)
