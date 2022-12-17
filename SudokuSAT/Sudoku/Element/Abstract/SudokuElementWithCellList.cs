@@ -27,7 +27,15 @@ namespace SudokuSAT
                 throw new Exception("Element must have at least 2 cells.");
             }
 
-            SudokuCells = sudokuCells;
+            SudokuCells = new();
+            foreach (SudokuCell sudokuCell in sudokuCells)
+            {
+                // If we are creating this through clone,
+                // we need to point to cells in the correct sudoku object.
+                //
+                SudokuCells.Add(sudoku.SudokuGrid[sudokuCell.Column, sudokuCell.Row]);
+            }
+
             SudokuCellsOrderDictionary = new();
             int i = 0;
             foreach (SudokuCell sudokuCell in SudokuCells)
