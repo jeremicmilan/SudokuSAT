@@ -18,7 +18,7 @@ namespace SudokuSAT
         protected SudokuElement(Sudoku sudoku, int? sudokuElementId = null, Grid? grid = null)
         {
             Sudoku = sudoku;
-            
+
             SudokuElementId = sudokuElementId ?? ++SudokuElementCount;
             if (SudokuElementCount < SudokuElementId) SudokuElementCount = SudokuElementId;
 
