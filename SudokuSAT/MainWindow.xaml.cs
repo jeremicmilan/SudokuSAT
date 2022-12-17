@@ -75,6 +75,7 @@ namespace SudokuSAT
         private Sudoku CreateSudoku()
         {
             Sudoku = new(GridWidth, GridHeight, BoxSize, SudokuPlaceholder);
+            Sudoku.SudokuRulesets = new List<SudokuRuleset> { new SudokuRulesetSudoku(Sudoku) };
             Sudoku.Visualize(recreateGrid: true);
             AddSudoku(Sudoku);
             return Sudoku;
@@ -149,6 +150,13 @@ namespace SudokuSAT
                 if (sudoku == null)
                 {
                     throw new Exception("Failed to parse sudoku from file.");
+                }
+
+                // Old saves do not have SudokuRulesets initialized.
+                //
+                if (sudoku.SudokuRulesets == null)
+                {
+                    sudoku.SudokuRulesets = new List<SudokuRuleset> { new SudokuRulesetSudoku(sudoku) };
                 }
 
                 ReplaceSudoku(sudoku);

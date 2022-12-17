@@ -20,6 +20,8 @@ namespace SudokuSAT
 
         public SudokuCell[,] SudokuGrid { get; set; }
         public List<SudokuElement> SudokuElements { get; set; }
+        public List<SudokuRuleset> SudokuRulesets { get; set; }
+
         public List<SudokuAction> SudokuActions { get; set; } = new();
         public List<SudokuAction> NextSudokuActions { get; set; } = new();
 
@@ -35,9 +37,19 @@ namespace SudokuSAT
         {
             Width = width;
             Height = height;
-            SudokuGrid = new SudokuCell[Width, Height];
-            SudokuElements = new();
             BoxSize = boxSize;
+            SudokuGrid = new SudokuCell[Width, Height];
+            for (var row = 0; row < Height; row++)
+            {
+                for (var column = 0; column < Width; column++)
+                {
+                    SudokuGrid[column, row] = new SudokuCell(sudoku: this, column, row);
+                }
+            }
+
+            SudokuElements = new();
+            SudokuRulesets = new();
+
             Grid = grid;
         }
 
@@ -52,6 +64,11 @@ namespace SudokuSAT
             foreach (SudokuElement sudokuElement in SudokuElements)
             {
                 sudoku.SudokuElements.Add(sudokuElement.Clone(sudoku));
+            }
+
+            foreach (SudokuRuleset sudokuRuleset in SudokuRulesets)
+            {
+                sudoku.SudokuRulesets.Add(sudokuRuleset.Clone(sudoku));
             }
 
             return sudoku;
@@ -79,10 +96,8 @@ namespace SudokuSAT
         {
             CpModel model = new();
             AddCellConstraints(model); // This must always be first
-            AddColumnConstraints(model);
-            AddRowConstraints(model);
-            AddBoxConstraints(model);
             AddElementConstraints(model);
+            AddRulesetConstraints(model);
             return model;
         }
 
@@ -94,71 +109,19 @@ namespace SudokuSAT
             }
         }
 
-        private void AddColumnConstraints(CpModel model)
-        {
-            for (var column = 0; column < Width; column++)
-            {
-                AddAllDifferent(model, GetColumn(column));
-            }
-        }
-
-        private SudokuCell[] GetColumn(int columnNumber)
-        {
-            return Enumerable.Range(0, SudokuGrid.GetLength(1))
-                    .Select(x => SudokuGrid[columnNumber, x])
-                    .ToArray();
-        }
-
-        private void AddRowConstraints(CpModel model)
-        {
-            for (var row = 0; row < Height; row++)
-            {
-                AddAllDifferent(model, GetRow(row));
-            }
-        }
-
-        private SudokuCell[] GetRow(int rowNumber)
-        {
-            return Enumerable.Range(0, SudokuGrid.GetLength(0))
-                    .Select(x => SudokuGrid[x, rowNumber])
-                    .ToArray();
-        }
-
-        private void AddBoxConstraints(CpModel model)
-        {
-            for (int columnBox = 0; columnBox <= Width / BoxSize; columnBox++)
-            {
-                for (int rowBox = 0; rowBox <= Height / BoxSize; rowBox++)
-                {
-                    List<SudokuCell> boxCells = new();
-
-                    for (int column = columnBox * BoxSize;
-                        column < Math.Min((columnBox + 1) * BoxSize, Width);
-                        column++)
-                    {
-                        for (int row = rowBox * BoxSize;
-                            row < Math.Min((rowBox + 1) * BoxSize, Height);
-                            row++)
-                        {
-                            boxCells.Add(SudokuGrid[column, row]);
-                        }
-                    }
-
-                    AddAllDifferent(model, boxCells);
-                }
-            }
-        }
-
-        private static void AddAllDifferent(CpModel model, IEnumerable<SudokuCell> cells)
-        {
-            model.AddAllDifferent(cells.Select(cell => cell.ValueVar));
-        }
-
         private void AddElementConstraints(CpModel model)
         {
             foreach (SudokuElement sudokuElement in SudokuElements)
             {
                 sudokuElement.AddConstraints(model);
+            }
+        }
+
+        private void AddRulesetConstraints(CpModel model)
+        {
+            foreach (SudokuRuleset sudokuRuleset in SudokuRulesets)
+            {
+                sudokuRuleset.AddConstraints(model);
             }
         }
 
@@ -272,7 +235,7 @@ namespace SudokuSAT
             {
                 for (var column = 0; column < Width; column++)
                 {
-                    if (recreateGrid || SudokuGrid[column, row] == null)
+                    if (recreateGrid)
                     {
                         Border border = CreateBorder(column, row);
                         SudokuUniformGrid.Children.Add(border);
@@ -280,14 +243,7 @@ namespace SudokuSAT
                         Grid grid = new();
                         border.Child = grid;
 
-                        if (SudokuGrid[column, row] != null)
-                        {
-                            SudokuGrid[column, row].Grid = grid;
-                        }
-                        else
-                        {
-                            SudokuGrid[column, row] = new SudokuCell(sudoku: this, column, row, grid: grid);
-                        }
+                        SudokuGrid[column, row].Grid = grid;
                     }
 
                     SudokuGrid[column, row].Visualize(recreateGrid);
