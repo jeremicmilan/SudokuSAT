@@ -76,6 +76,8 @@ namespace SudokuSAT
         {
             Sudoku = new(GridWidth, GridHeight, BoxSize, SudokuPlaceholder);
             Sudoku.SudokuRulesets = new List<SudokuRuleset> { new SudokuRulesetSudoku(Sudoku) };
+            UpdateRulesetToolbar();
+
             Sudoku.Visualize(recreateGrid: true);
             AddSudoku(Sudoku);
             return Sudoku;
@@ -83,16 +85,21 @@ namespace SudokuSAT
 
         private void ReplaceSudoku(Sudoku sudoku)
         {
-            GridWidthSlider.Value = sudoku.Width;
-            GridHeightSlider.Value = sudoku.Height;
-            BoxSizeSlider.Value = sudoku.BoxSize;
-
             Sudoku.Grid = null;
             sudoku.Grid = SudokuPlaceholder;
 
             Sudoku = sudoku;
             Sudoku.Visualize(recreateGrid: true);
-            UpdateUndoRedoButtons();
+
+            // Update tool-bar
+            //
+            UpdateUndoRedoToolbar();
+
+            GridWidthSlider.Value = sudoku.Width;
+            GridHeightSlider.Value = sudoku.Height;
+            BoxSizeSlider.Value = sudoku.BoxSize;
+
+            UpdateRulesetToolbar();
         }
 
         private void Previous_Click(object sender, RoutedEventArgs e)
@@ -154,10 +161,7 @@ namespace SudokuSAT
 
                 // Old saves do not have SudokuRulesets initialized.
                 //
-                if (sudoku.SudokuRulesets == null)
-                {
-                    sudoku.SudokuRulesets = new List<SudokuRuleset> { new SudokuRulesetSudoku(sudoku) };
-                }
+                sudoku.SudokuRulesets ??= new List<SudokuRuleset> { new SudokuRulesetSudoku(sudoku) };
 
                 ReplaceSudoku(sudoku);
                 AddSudoku(sudoku);
@@ -200,7 +204,7 @@ namespace SudokuSAT
             });
         }
 
-        public void UpdateUndoRedoButtons()
+        public void UpdateUndoRedoToolbar()
         {
             UndoButton.IsEnabled = Sudoku.SudokuActions.Any();
             RedoButton.IsEnabled = Sudoku.NextSudokuActions.Any();
@@ -212,7 +216,7 @@ namespace SudokuSAT
             {
                 SudokuSolver.CheckIsSolveActive();
                 action();
-                UpdateUndoRedoButtons();
+                UpdateUndoRedoToolbar();
             });
         }
 
@@ -414,6 +418,66 @@ namespace SudokuSAT
         private void CopyPossibilities_Click(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(String.Join('\n', PossibilitiesListBox.Items.Flatten()));
+        }
+
+        public void UpdateRulesetToolbar()
+        {
+            CheckboxRulesetSudoku.IsChecked = Sudoku.SudokuRulesets
+                .Any(ruleset => ruleset.GetType() == typeof(SudokuRulesetSudoku));
+
+            SudokuRulesetOrthoPairSumMax? sudokuRulesetOrthoPairSumMax = Sudoku.GetSudokuRuleset<SudokuRulesetOrthoPairSumMax>();
+            CheckboxRulesetOrthoPairSumMax.IsChecked = sudokuRulesetOrthoPairSumMax != null;
+            SliderRulesetOrthoPairSumMax.Value = sudokuRulesetOrthoPairSumMax?.Sum ?? SliderRulesetOrthoPairSumMax.Value;
+
+            SudokuRulesetOrthoPairSumMin? sudokuRulesetOrthoPairSumMin = Sudoku.GetSudokuRuleset<SudokuRulesetOrthoPairSumMin>();
+            CheckboxRulesetOrthoPairSumMin.IsChecked = sudokuRulesetOrthoPairSumMin != null;
+            SliderRulesetOrthoPairSumMin.Value = sudokuRulesetOrthoPairSumMin?.Sum ?? SliderRulesetOrthoPairSumMin.Value;
+        }
+
+        private void CheckboxRulesetSudoku_Checked(object sender, RoutedEventArgs e)
+        {
+            Sudoku?.PerformRulesetAction(new SudokuRulesetSudoku(Sudoku));
+        }
+
+        private void CheckboxRulesetSudoku_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Sudoku?.PerformRulesetAction<SudokuRulesetSudoku>(sudokuRuleset: null);
+        }
+
+        private void CheckboxRulesetOrthoPairSumMax_Checked(object sender, RoutedEventArgs e)
+        {
+            Sudoku?.PerformRulesetAction(new SudokuRulesetOrthoPairSumMax(Sudoku, (int)SliderRulesetOrthoPairSumMax.Value));
+        }
+
+        private void CheckboxRulesetOrthoPairSumMax_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Sudoku?.PerformRulesetAction<SudokuRulesetOrthoPairSumMax>(sudokuRuleset: null);
+        }
+
+        private void SliderRulesetOrthoPairSumMax_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (CheckboxRulesetOrthoPairSumMax.IsChecked ?? false)
+            {
+                Sudoku?.PerformRulesetAction(new SudokuRulesetOrthoPairSumMax(Sudoku, (int)SliderRulesetOrthoPairSumMax.Value));
+            }
+        }
+
+        private void CheckboxRulesetOrthoPairSumMin_Checked(object sender, RoutedEventArgs e)
+        {
+            Sudoku?.PerformRulesetAction(new SudokuRulesetOrthoPairSumMin(Sudoku, (int)SliderRulesetOrthoPairSumMin.Value));
+        }
+
+        private void CheckboxRulesetOrthoPairSumMin_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Sudoku?.PerformRulesetAction<SudokuRulesetOrthoPairSumMin>(sudokuRuleset: null);
+        }
+
+        private void SliderRulesetOrthoPairSumMin_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (CheckboxRulesetOrthoPairSumMin.IsChecked ?? false)
+            {
+                Sudoku?.PerformRulesetAction(new SudokuRulesetOrthoPairSumMin(Sudoku, (int)SliderRulesetOrthoPairSumMin.Value));
+            }
         }
     }
 }

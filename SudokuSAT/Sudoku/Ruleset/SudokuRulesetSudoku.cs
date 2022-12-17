@@ -1,11 +1,4 @@
-﻿using Google.OrTools.Sat;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Media.Media3D;
+﻿using System.Collections.Generic;
 
 namespace SudokuSAT
 {

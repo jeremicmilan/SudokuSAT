@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Controls.Primitives;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows;
-using Google.OrTools.Sat;
-using System.Windows.Input;
+﻿using Google.OrTools.Sat;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 
 namespace SudokuSAT
 {
@@ -92,6 +91,108 @@ namespace SudokuSAT
             }
         }
 
+        public List<List<SudokuCell>> GetRows()
+        {
+            List<List<SudokuCell>> rows = new();
+            for (int row = 0; row < Height; row++)
+            {
+                rows.Add(GetRow(row));
+            }
+
+            return rows;
+        }
+
+        public List<SudokuCell> GetRow(int rowNumber)
+        {
+            return Enumerable.Range(0, SudokuGrid.GetLength(0))
+                .Select(x => SudokuGrid[x, rowNumber])
+                .ToList();
+        }
+
+        public List<List<SudokuCell>> GetColumns()
+        {
+            List<List<SudokuCell>> columns = new();
+            for (int column = 0; column < Width; column++)
+            {
+                columns.Add(GetColumn(column));
+            }
+
+            return columns;
+        }
+
+        public List<SudokuCell> GetColumn(int columnNumber)
+        {
+            return Enumerable.Range(0, SudokuGrid.GetLength(1))
+                .Select(x => SudokuGrid[columnNumber, x])
+                .ToList();
+        }
+
+        public List<List<SudokuCell>> GetBoxes()
+        {
+            List<List<SudokuCell>> boxes = new();
+            for (int columnBox = 0; columnBox <= Width / BoxSize; columnBox++)
+            {
+                for (int rowBox = 0; rowBox <= Height / BoxSize; rowBox++)
+                {
+                    List<SudokuCell> boxCells = new();
+
+                    for (int column = columnBox * BoxSize;
+                        column < Math.Min((columnBox + 1) * BoxSize, Width);
+                        column++)
+                    {
+                        for (int row = rowBox * BoxSize;
+                            row < Math.Min((rowBox + 1) * BoxSize, Height);
+                            row++)
+                        {
+                            boxCells.Add(SudokuGrid[column, row]);
+                        }
+                    }
+
+                    boxes.Add(boxCells);
+                }
+            }
+
+            return boxes;
+        }
+
+        public TSudokuRuleset? GetSudokuRuleset<TSudokuRuleset>()
+            where TSudokuRuleset : SudokuRuleset
+        {
+            return (TSudokuRuleset?)SudokuRulesets
+                ?.Where(ruleset => ruleset.GetType() == typeof(TSudokuRuleset))
+                ?.FirstOrDefault();
+        }
+
+        public void RemoveRulesetIfExists<TSudokuRuleset>()
+            where TSudokuRuleset : SudokuRuleset
+        {
+            TSudokuRuleset? sudokuRuleset = GetSudokuRuleset<TSudokuRuleset>();
+            if (sudokuRuleset != null)
+            {
+                SudokuRulesets.Remove(sudokuRuleset);
+
+            }
+        }
+
+        public void PerformRulesetAction<TSudokuRuleset>(TSudokuRuleset? sudokuRuleset)
+            where TSudokuRuleset : SudokuRuleset
+        {
+            TSudokuRuleset? sudokuRulesetOld = GetSudokuRuleset<TSudokuRuleset>();
+            bool sameAsOld = sudokuRuleset == null && sudokuRulesetOld == null
+                || sudokuRuleset != null && sudokuRulesetOld != null && sudokuRuleset.Equal(sudokuRulesetOld);
+            if (!sameAsOld)
+            {
+                PerformSudokuAction(new SudokuActionRuleset<TSudokuRuleset>(this, sudokuRuleset, sudokuRulesetOld));
+            }
+        }
+
+        public void AddOrUpdateRuleset<TSudokuRuleset>(TSudokuRuleset sudokuRuleset)
+            where TSudokuRuleset : SudokuRuleset
+        {
+            RemoveRulesetIfExists<TSudokuRuleset>();
+            SudokuRulesets.Add(sudokuRuleset);
+        }
+
         public CpModel GenerateModel()
         {
             CpModel model = new();
@@ -167,7 +268,7 @@ namespace SudokuSAT
             sudokuAction.Redo();
             Visualize();
 
-            MainWindow.UpdateUndoRedoButtons();
+            MainWindow.UpdateUndoRedoToolbar();
             MainWindow.SolveAsync();
         }
 

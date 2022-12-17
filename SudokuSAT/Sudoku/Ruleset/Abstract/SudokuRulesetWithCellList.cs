@@ -1,9 +1,4 @@
-﻿using Google.OrTools.Sat;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Controls;
+﻿using System.Collections.Generic;
 
 namespace SudokuSAT
 {
@@ -22,6 +17,11 @@ namespace SudokuSAT
                 //
                 SudokuCells.Add(sudoku.SudokuGrid[sudokuCell.Column, sudokuCell.Row]);
             }
+        }
+
+        public override bool Equal(SudokuRuleset other)
+        {
+            return base.Equal(other) && SudokuCells == ((SudokuRulesetWithCellList)other).SudokuCells;
         }
     }
 }

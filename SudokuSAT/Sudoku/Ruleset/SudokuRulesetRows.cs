@@ -1,11 +1,5 @@
-﻿using Google.OrTools.Sat;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Media.Media3D;
 
 namespace SudokuSAT
 {
@@ -22,19 +16,9 @@ namespace SudokuSAT
 
         private static List<SudokuRuleset> GetRulesetsRows(Sudoku sudoku)
         {
-            List<SudokuRuleset> sudokuRulesets = new();
-            for (int row = 0; row < sudoku.Height; row++)
-            {
-                sudokuRulesets.Add(new SudokuRulesetCellsUnique(sudoku, GetRow(sudoku, row)));
-            }
-
-            return sudokuRulesets;
-        }
-
-        private static List<SudokuCell> GetRow(Sudoku sudoku, int rowNumber)
-        {
-            return Enumerable.Range(0, sudoku.SudokuGrid.GetLength(0))
-                .Select(x => sudoku.SudokuGrid[x, rowNumber])
+            return sudoku
+                .GetRows()
+                .Select(column => (SudokuRuleset)new SudokuRulesetCellsUnique(sudoku, column))
                 .ToList();
         }
     }

@@ -1,9 +1,5 @@
 ﻿using Google.OrTools.Sat;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Controls;
 
 namespace SudokuSAT
 {
@@ -23,6 +19,11 @@ namespace SudokuSAT
             {
                 sudokuRuleset.AddConstraints(model);
             }
+        }
+
+        public override bool Equal(SudokuRuleset other)
+        {
+            return base.Equal(other) && SudokuRulesets == ((SudokuRulesetComposite)other).SudokuRulesets;
         }
     }
 }

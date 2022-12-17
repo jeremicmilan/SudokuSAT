@@ -40,18 +40,29 @@
                 </Border>
             </Grid>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Height="253" Width="180" Margin="10,392,0,0">
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Height="94" Width="180" Margin="0,392,0,0">
+            <Grid>
+                <CheckBox x:Name="CheckboxRulesetSudoku" Margin="5,5,110,71" Checked="CheckboxRulesetSudoku_Checked" Unchecked="CheckboxRulesetSudoku_Unchecked" Content="Sudoku" IsChecked="False"/>
+                <CheckBox x:Name="CheckboxRulesetOrthoPairSumMax" Margin="5,21,66,55" Checked="CheckboxRulesetOrthoPairSumMax_Checked" Unchecked="CheckboxRulesetOrthoPairSumMax_Unchecked" Content="Ortho max sum"/>
+                <Slider x:Name="SliderRulesetOrthoPairSumMax" HorizontalAlignment="Left" Margin="112,18,0,0" VerticalAlignment="Top" Width="42" SmallChange="1" IsSnapToTickEnabled="True" TickFrequency="1" Minimum="10" Value="14" Maximum="16" ValueChanged="SliderRulesetOrthoPairSumMax_ValueChanged"/>
+                <TextBox Text="{Binding Value, ElementName=SliderRulesetOrthoPairSumMax, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" Margin="154,17,5,0" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center" Height="20"/>
+                <CheckBox x:Name="CheckboxRulesetOrthoPairSumMin" Margin="5,37,66,39" Checked="CheckboxRulesetOrthoPairSumMin_Checked" Unchecked="CheckboxRulesetOrthoPairSumMin_Unchecked" Content="Ortho min sum"/>
+                <Slider x:Name="SliderRulesetOrthoPairSumMin" HorizontalAlignment="Left" Margin="112,0,0,0" VerticalAlignment="Center" Width="42" SmallChange="1" IsSnapToTickEnabled="True" TickFrequency="1" Minimum="4" Value="6" ValueChanged="SliderRulesetOrthoPairSumMin_ValueChanged"/>
+                <TextBox Text="{Binding Value, ElementName=SliderRulesetOrthoPairSumMin, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="NumberValidationTextBox" Margin="154,0,5,0" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Height="20"/>
+            </Grid>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Height="154" Width="180" Margin="0,491,0,0">
             <Grid>
                 <Button x:Name="SolveButton" Content="Solve" Margin="5,5,0,0" VerticalAlignment="Top" Click="Solve_Click" Height="20" HorizontalAlignment="Left" Width="66"/>
-                <Label x:Name="SolutionCount" Content="" HorizontalAlignment="Left" Margin="108,25,0,196" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="66"/>
+                <Label x:Name="SolutionCount" Content="" HorizontalAlignment="Left" Margin="108,25,0,0" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="66" Height="28" VerticalAlignment="Top"/>
                 <Button x:Name="ExploreButton" Content="Explore" Margin="5,30,0,0" Click="Explore_Click" Height="20" HorizontalAlignment="Left" Width="66" VerticalAlignment="Top"/>
                 <Button x:Name="PossibilitiesButton" Content="Possibilities" HorizontalAlignment="Left" Margin="5,55,0,0" VerticalAlignment="Top" Width="66" Click="Possibilities_Click"/>
-                <ListBox x:Name="PossibilitiesListBox" Margin="5,80,5,0" Height="166" VerticalAlignment="Top" SelectionMode="Multiple">
+                <ListBox x:Name="PossibilitiesListBox" Margin="5,80,5,0" Height="67" VerticalAlignment="Top" SelectionMode="Multiple">
                     <ListBox.InputBindings>
                         <KeyBinding Command="ApplicationCommands.SelectAll" Modifiers="Ctrl" Key="A"/>
                     </ListBox.InputBindings>
                 </ListBox>
-                <Label x:Name="PossibilitiesCount" Content="{Binding Items.Count, ElementName=PossibilitiesListBox}" HorizontalAlignment="Left" Margin="108,52,0,169" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="66"/>
+                <Label x:Name="PossibilitiesCount" Content="{Binding Items.Count, ElementName=PossibilitiesListBox}" HorizontalAlignment="Left" Margin="108,53,0,0" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="66" Height="27" VerticalAlignment="Top"/>
                 <Button x:Name="StopButton" Content="Stop" HorizontalAlignment="Left" Margin="75,30,0,0" VerticalAlignment="Top" IsEnabled="False" Click="Stop_Click" Width="33"/>
                 <Button x:Name="UndoButton" Content="Undo" HorizontalAlignment="Left" Margin="89,5,0,0" VerticalAlignment="Top" Click="Undo_Click" IsEnabled="False"/>
                 <Button x:Name="RedoButton" Content="Redo" HorizontalAlignment="Left" Margin="137,5,0,0" VerticalAlignment="Top" Click="Redo_Click" IsEnabled="False"/>

@@ -1,8 +1,4 @@
 ﻿using Google.OrTools.Sat;
-using Newtonsoft.Json;
-using System;
-using System.Diagnostics;
-using System.Windows.Controls;
 
 namespace SudokuSAT
 {
@@ -20,5 +16,10 @@ namespace SudokuSAT
         public string Name => GetType().Name;
 
         public abstract void AddConstraints(CpModel model);
+
+        public virtual bool Equal(SudokuRuleset other)
+        {
+            return GetType() == other.GetType() && Sudoku == other.Sudoku;
+        }
     }
 }
