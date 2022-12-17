@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-
-namespace SudokuSAT
+﻿namespace SudokuSAT
 {
     public class SudokuActionValue : SudokuActionCell
     {

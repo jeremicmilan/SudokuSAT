@@ -1,6 +1,4 @@
-﻿using Google.OrTools.Sat;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 
 namespace SudokuSAT
 {

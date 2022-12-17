@@ -1,14 +1,11 @@
-﻿using System.Threading.Tasks;
-using System.Threading;
-using Google.OrTools.Sat;
-using System.Linq;
+﻿using Google.OrTools.Sat;
 using System;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
-using System.Windows.Threading;
-using System.Reflection.Metadata;
-using OperationsResearch;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SudokuSAT
 {

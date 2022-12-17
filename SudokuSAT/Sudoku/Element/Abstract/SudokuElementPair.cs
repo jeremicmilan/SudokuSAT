@@ -1,19 +1,15 @@
-﻿using Google.OrTools.Sat;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
-using System.Windows.Shapes;
 
 namespace SudokuSAT
 {
     public abstract class SudokuElementPair : SudokuElementLine
     {
-        public SudokuCell FirstSudokuCell  { get { Debug.Assert(SudokuCells.Count == 2); return SudokuCells[0]; } }
+        public SudokuCell FirstSudokuCell { get { Debug.Assert(SudokuCells.Count == 2); return SudokuCells[0]; } }
         public SudokuCell SecondSudokuCell { get { Debug.Assert(SudokuCells.Count == 2); return SudokuCells[1]; } }
 
         public SudokuElementPair(
@@ -59,20 +55,20 @@ namespace SudokuSAT
             {
                 double labelScalingFactor = 0.4;
                 Point centerPosition = FirstSudokuCell.CenterPosition;
-                label.Width  = FirstSudokuCell.Grid.ActualWidth;
+                label.Width = FirstSudokuCell.Grid.ActualWidth;
                 label.Height = FirstSudokuCell.Grid.ActualHeight;
                 label.FontSize = FirstSudokuCell.Grid.ActualWidth * labelScalingFactor;
                 Point midpointPosition = new(
                     (FirstSudokuCell.CenterPosition.X + SecondSudokuCell.CenterPosition.X) / 2,
                     (FirstSudokuCell.CenterPosition.Y + SecondSudokuCell.CenterPosition.Y) / 2);
                 label.Margin = new Thickness(
-                    midpointPosition.X - FirstSudokuCell.Grid.ActualWidth  / 2,
+                    midpointPosition.X - FirstSudokuCell.Grid.ActualWidth / 2,
                     midpointPosition.Y - FirstSudokuCell.Grid.ActualHeight / 2,
                     0,
                     0);
             }
             updateLabelPosition();
-            FirstSudokuCell.Grid.SizeChanged  += (_, _) => updateLabelPosition();
+            FirstSudokuCell.Grid.SizeChanged += (_, _) => updateLabelPosition();
             SecondSudokuCell.Grid.SizeChanged += (_, _) => updateLabelPosition();
             Grid.Children.Add(label);
         }

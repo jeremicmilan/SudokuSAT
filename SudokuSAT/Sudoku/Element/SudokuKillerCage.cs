@@ -2,11 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -64,7 +61,7 @@ namespace SudokuSAT
                 double offsetFactor = 0.08;
                 double widthOffset() { return sudokuCell.Grid.ActualWidth * offsetFactor; }
                 double heightOffset() { return sudokuCell.Grid.ActualHeight * offsetFactor; }
-                double strokeDashLength() { return (sudokuCell.Grid.ActualWidth + sudokuCell.Grid.ActualHeight) / 30; } 
+                double strokeDashLength() { return (sudokuCell.Grid.ActualWidth + sudokuCell.Grid.ActualHeight) / 30; }
                 double offsetForSum = 0;
                 if (topLeftmostSudokuCell != null && sudokuCell == topLeftmostSudokuCell && Sum != null)
                 {

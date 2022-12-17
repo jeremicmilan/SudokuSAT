@@ -31,10 +31,10 @@ namespace SudokuSAT
         {
             List<List<SudokuCell>> sudokuCellsSubsets = SudokuCells
                 .Subsets()
-                .Where (sudokuCells => sudokuCells.Count >= 2)
+                .Where(sudokuCells => sudokuCells.Count >= 2)
                 .Select(sudokuCells => sudokuCells.OrderBy(cell => SudokuCellsOrderDictionary[cell]).ToList())
-                .Where (AreConsecutive)
-                .Where (sudokuCells => AreConsecutiveCellsAdjacent(sudokuCells.ToList()))
+                .Where(AreConsecutive)
+                .Where(sudokuCells => AreConsecutiveCellsAdjacent(sudokuCells.ToList()))
                 .Select(sudokuCells => sudokuCells.ToList())
                 .ToList();
             int i = 0;

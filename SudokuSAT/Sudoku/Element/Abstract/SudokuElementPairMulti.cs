@@ -1,7 +1,5 @@
 ﻿using Google.OrTools.Sat;
-using MoreLinq;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Controls;
 
 namespace SudokuSAT
@@ -33,7 +31,7 @@ namespace SudokuSAT
             {
                 BoolVar pairBoolVar = model.NewBoolVar(Name + "_" + i);
                 pairBoolVars.Add(pairBoolVar);
-                SudokuElementPair sudokuElementPair = InstantiateSubElement(new List<SudokuCell>{ SudokuCells[i], SudokuCells[i + 1] });
+                SudokuElementPair sudokuElementPair = InstantiateSubElement(new List<SudokuCell> { SudokuCells[i], SudokuCells[i + 1] });
                 sudokuElementPair.AddConstraints(model, pairBoolVar);
             }
 

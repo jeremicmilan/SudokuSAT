@@ -1,11 +1,7 @@
 ﻿using Google.OrTools.Sat;
-using MoreLinq;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace SudokuSAT
 {

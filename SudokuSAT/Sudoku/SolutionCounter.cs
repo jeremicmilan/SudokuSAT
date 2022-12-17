@@ -1,7 +1,4 @@
-﻿using Google.OrTools.ConstraintSolver;
-using Google.OrTools.Sat;
-using System;
-using System.Windows;
+﻿using Google.OrTools.Sat;
 
 namespace SudokuSAT
 {
